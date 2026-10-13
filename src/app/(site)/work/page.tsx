@@ -4,13 +4,10 @@ import { ClosingCta, PageHead } from "@/components/site/blocks";
 import { WorkBrowser } from "@/components/work/work-browser";
 import { INDUSTRIES } from "@/content/industries";
 import { PROJECTS } from "@/content/projects";
+import { PAGE_SEO } from "@/content/seo";
+import { pageMeta } from "@/lib/seo";
 
-export const metadata: Metadata = {
-  title: "Work",
-  description:
-    "Websites, web apps, online stores and mobile apps designed and built by Venlynk, each labelled with how it was delivered.",
-  alternates: { canonical: "/work" },
-};
+export const metadata: Metadata = pageMeta({ ...PAGE_SEO.work, path: "/work" });
 
 export default function WorkPage() {
   const web = PROJECTS.filter((p) => p.kind === "web").length;

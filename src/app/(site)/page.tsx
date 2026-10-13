@@ -1,11 +1,16 @@
+import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 
 import { BrandMark } from "@/components/brand/brand-mark";
 import { ConsultPill } from "@/components/home/a/consult-pill";
 import { HeroMark } from "@/components/home/a/hero-mark";
-import { accent, delay, Head, ScrubText } from "@/components/site/blocks";
 import { HomeFx } from "@/components/home/a/home-fx";
+import { accent, delay, Head, ScrubText } from "@/components/site/blocks";
+import { JsonLd } from "@/components/site/json-ld";
+import { PAGE_SEO } from "@/content/seo";
+import { SITE } from "@/content/site";
+import { pageMeta } from "@/lib/seo";
 import {
   BRANDS,
   CLOSING,
@@ -25,14 +30,24 @@ import {
   VALUES,
   WORK_ROWS,
 } from "@/content/home";
-import { SITE } from "@/content/site";
 
+export const metadata: Metadata = pageMeta({ ...PAGE_SEO.home, path: "/", absolute: true });
 
 export default function HomePage() {
   const heroText = HERO.lines.join(" ").replace(/\*/g, "");
 
   return (
     <div className="ha-home" data-link-root="">
+      <JsonLd
+        data={{
+          "@context": "https://schema.org",
+          "@type": "WebSite",
+          "@id": `${SITE.url}/#website`,
+          name: SITE.name,
+          url: SITE.url,
+          publisher: { "@id": `${SITE.url}/#organization` },
+        }}
+      />
       <svg className="ha-link" aria-hidden="true" preserveAspectRatio="none">
         <defs>
           <linearGradient id="ha-lg" x1="0" y1="0" x2="0" y2="1">
@@ -380,7 +395,11 @@ export default function HomePage() {
       {/* FAQ */}
       <section className="ha-block wrap" id="faq" data-node="">
         <div className="ha-faq">
-          <Head title="Questions before you call" text="Still unsure? Ask us anything on a 30 minute call." />
+          <Head
+            title="Questions before you call"
+            text="Still unsure? Ask us anything on a 30 minute call."
+            more={{ label: "Read notes from the studio", href: "/insights" }}
+          />
           <div data-fade="">
             {HOME_FAQ.map((f) => (
               <details key={f.q}>

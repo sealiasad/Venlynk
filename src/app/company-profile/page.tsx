@@ -8,7 +8,7 @@ import "@/styles/company-deck.css";
 export const metadata: Metadata = {
   title: `${DECK.title} ${DECK.year}`,
   description:
-    "Venlynk company profile — digital product studio for websites, web apps, and mobile products.",
+    "Venlynk company profile: a digital product studio for websites, web apps and mobile products.",
   robots: {
     index: false,
     follow: false,

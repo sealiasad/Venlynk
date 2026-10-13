@@ -3,12 +3,10 @@ import Link from "next/link";
 
 import { ClosingCta, delay, PageHead } from "@/components/site/blocks";
 import { INSIGHTS } from "@/content/insights";
+import { PAGE_SEO } from "@/content/seo";
+import { pageMeta } from "@/lib/seo";
 
-export const metadata: Metadata = {
-  title: "Insights",
-  description: "Practical notes on product design, engineering and AI from the Venlynk studio.",
-  alternates: { canonical: "/insights" },
-};
+export const metadata: Metadata = pageMeta({ ...PAGE_SEO.insights, path: "/insights" });
 
 const date = (d: string) => new Date(d).toLocaleDateString("en-GB", { day: "numeric", month: "long", year: "numeric" });
 

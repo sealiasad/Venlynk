@@ -673,3 +673,44 @@
     background: rgba(8, 8, 11, 0.94);
   }
 }
+
+/* Related services line at the end of an article. */
+.pa-prose__more {
+  margin-top: 2.5rem !important;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--ha-line);
+  font-size: 1.0625rem !important;
+  color: var(--ha-muted);
+}
+
+/* Still image of the 3D mark for phones, tablets and reduced motion. */
+.ha-mark--still {
+  height: auto;
+  top: 50%;
+  translate: 0 -50%;
+  object-fit: contain;
+  opacity: 1;
+  animation: ha-mark-in 1.2s var(--ha-ease) both;
+}
+@keyframes ha-mark-in {
+  from {
+    opacity: 0;
+  }
+}
+@media (hover: hover) and (pointer: fine) and (min-width: 900px) {
+  .ha-mark--still:not(.is-on) {
+    display: none;
+  }
+}
+@media (max-width: 820px) {
+  .ha-mark--still {
+    opacity: 0.5;
+    animation: none;
+  }
+}
+
+/* Labels on brand blue cards: lighter for 4.5:1 contrast. */
+.ha-prob--hl small,
+.ha-res--blue small {
+  color: #eef0ff;
+}

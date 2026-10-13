@@ -4,14 +4,11 @@ import Link from "next/link";
 
 import { ClosingCta, delay, Head, PageHead } from "@/components/site/blocks";
 import { PLANS, STEPS } from "@/content/home";
+import { PAGE_SEO } from "@/content/seo";
 import { PRACTICES, servicesIn } from "@/content/services";
+import { pageMeta } from "@/lib/seo";
 
-export const metadata: Metadata = {
-  title: "Services",
-  description:
-    "Three practices, eleven services: product and UX design, websites, mobile apps, online stores, Etsy, Odoo, AI and automation, SEO, AEO, ASO and growth.",
-  alternates: { canonical: "/services" },
-};
+export const metadata: Metadata = pageMeta({ ...PAGE_SEO.services, path: "/services" });
 
 export default function ServicesPage() {
   return (

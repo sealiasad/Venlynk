@@ -169,7 +169,7 @@ export function MotionProvider() {
         const words = block.querySelectorAll(".sw");
         gsap.fromTo(
           words,
-          { opacity: 0.16 },
+          { opacity: 0.5 },
           {
             opacity: 1,
             stagger: 0.08,

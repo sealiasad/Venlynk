@@ -1,10 +1,15 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import { Fragment } from "react";
 
 import { ClosingCta, PageHead } from "@/components/site/blocks";
+import { JsonLd } from "@/components/site/json-ld";
 import { getInsight, INSIGHTS } from "@/content/insights";
+import { INSIGHT_LINKS } from "@/content/seo";
+import { getService } from "@/content/services";
 import { SITE } from "@/content/site";
+import { absUrl, breadcrumbLd, pageMeta } from "@/lib/seo";
 
 type Props = { params: Promise<{ slug: string }> };
 
@@ -16,12 +21,13 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;
   const a = getInsight(slug);
   if (!a) return { title: "Article not found" };
-  return {
+  return pageMeta({
     title: a.title,
     description: a.excerpt,
-    alternates: { canonical: `/insights/${a.slug}` },
-    openGraph: { type: "article", title: a.title, description: a.excerpt, publishedTime: a.date },
-  };
+    path: `/insights/${a.slug}`,
+    type: "article",
+    publishedTime: a.date,
+  });
 }
 
 export default async function ArticlePage({ params }: Props) {
@@ -29,20 +35,33 @@ export default async function ArticlePage({ params }: Props) {
   const a = getInsight(slug);
   if (!a) notFound();
   const others = INSIGHTS.filter((x) => x.slug !== a.slug);
+  const related = (INSIGHT_LINKS[a.slug]?.services ?? []).map((x) => getService(x)).filter((x) => x !== undefined);
 
   const jsonLd = {
     "@context": "https://schema.org",
     "@type": "Article",
     headline: a.title,
     datePublished: a.date,
-    author: { "@type": "Organization", name: SITE.name },
-    publisher: { "@type": "Organization", name: SITE.name },
+    dateModified: a.date,
+    author: { "@type": "Organization", name: SITE.name, url: SITE.url },
+    publisher: { "@id": `${SITE.url}/#organization` },
     description: a.excerpt,
+    image: absUrl("/opengraph-image"),
+    mainEntityOfPage: absUrl(`/insights/${a.slug}`),
+    url: absUrl(`/insights/${a.slug}`),
   };
 
   return (
     <>
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
+      <JsonLd
+        data={[
+          jsonLd,
+          breadcrumbLd([
+            { name: "Insights", path: "/insights" },
+            { name: a.title, path: `/insights/${a.slug}` },
+          ]),
+        ]}
+      />
       <article>
         <PageHead
           crumb={{ label: "All insights", href: "/insights" }}
@@ -66,6 +85,20 @@ export default async function ArticlePage({ params }: Props) {
                 );
               return <p key={i}>{b.text}</p>;
             })}
+            {related.length ? (
+              <p className="pa-prose__more">
+                Related services:{" "}
+                {related.map((svc, i) => (
+                  <Fragment key={svc.slug}>
+                    {i ? ", " : null}
+                    <Link className="link" href={`/services/${svc.slug}`}>
+                      {svc.title}
+                    </Link>
+                  </Fragment>
+                ))}
+                .
+              </p>
+            ) : null}
           </div>
         </div>
       </article>

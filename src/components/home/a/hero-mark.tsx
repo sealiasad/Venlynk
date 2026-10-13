@@ -1,21 +1,31 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 
 import { MARK_PATH } from "@/components/brand/mark-path";
 
 /**
  * The Venlynk mark as a live 3D object. Extruded from the real logo path,
  * floats, turns toward the pointer and drops away as the page scrolls.
- * Three.js is loaded on the client only, after first paint.
+ * Three.js is loaded on the client only, after first paint, and only on
+ * desktops with a fine pointer. Phones, tablets, data saver and reduced
+ * motion get a still image of the same mark instead.
  */
 export function HeroMark() {
   const ref = useRef<HTMLCanvasElement>(null);
+  const [still, setStill] = useState(false);
 
   useEffect(() => {
     const canvas = ref.current;
     if (!canvas) return;
     const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const desktop = window.matchMedia("(hover: hover) and (pointer: fine) and (min-width: 900px)").matches;
+    const saveData = (navigator as Navigator & { connection?: { saveData?: boolean } }).connection?.saveData === true;
+    if (!desktop || reduced || saveData) {
+      // Deferred so the still is chosen after hydration, not during render.
+      const id = requestAnimationFrame(() => setStill(true));
+      return () => cancelAnimationFrame(id);
+    }
     let stop = false;
     let cleanup = () => {};
 
@@ -104,14 +114,25 @@ export function HeroMark() {
       const clock = new THREE.Clock();
       let raf = 0;
       let visible = true;
+      // Only render while the mark is on screen and the tab is visible.
+      const run = () => {
+        if (!raf && visible && !document.hidden) raf = requestAnimationFrame(loop);
+      };
+      const halt = () => {
+        cancelAnimationFrame(raf);
+        raf = 0;
+      };
       const io = new IntersectionObserver(([e]) => {
         visible = e.isIntersecting;
+        if (visible) run();
+        else halt();
       });
       io.observe(canvas);
+      const onVisibility = () => (document.hidden ? halt() : run());
+      document.addEventListener("visibilitychange", onVisibility);
 
       const loop = () => {
         raf = requestAnimationFrame(loop);
-        if (!visible) return;
         const t = clock.getElapsedTime();
         const tx = -0.25 + my * 0.5 + sp * 0.6;
         const ty = -0.5 + mx * 0.9 + (reduced ? 0 : t * 0.12) + sp * 1.2;
@@ -126,8 +147,9 @@ export function HeroMark() {
       canvas.dataset.ready = "true";
 
       cleanup = () => {
-        cancelAnimationFrame(raf);
+        halt();
         io.disconnect();
+        document.removeEventListener("visibilitychange", onVisibility);
         window.removeEventListener("resize", size);
         window.removeEventListener("pointermove", onMove);
         window.removeEventListener("scroll", onScroll);
@@ -146,5 +168,20 @@ export function HeroMark() {
     };
   }, []);
 
-  return <canvas ref={ref} className="ha-mark" aria-hidden="true" />;
+  return (
+    <>
+      <canvas ref={ref} className="ha-mark" aria-hidden="true" hidden={still} />
+      {/* Server rendered so phones get the mark at first paint; hidden on desktops that run the live 3D version. */}
+      {/* eslint-disable-next-line @next/next/no-img-element */}
+      <img
+        className={`ha-mark ha-mark--still${still ? " is-on" : ""}`}
+        src="/images/brand/hero-mark-still.webp"
+        alt=""
+        aria-hidden="true"
+        width={892}
+        height={902}
+        fetchPriority="high"
+      />
+    </>
+  );
 }

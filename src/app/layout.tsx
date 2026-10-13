@@ -2,7 +2,10 @@ import type { Metadata, Viewport } from "next";
 import localFont from "next/font/local";
 
 import { MotionProvider } from "@/components/motion/motion-provider";
-import { SITE } from "@/content/site";
+import { CONTACT, FOUNDER } from "@/content/home";
+import { SITE, SOCIALS } from "@/content/site";
+import { ldJson } from "@/lib/seo";
+
 
 import "./globals.css";
 import "@/styles/tokens.css";
@@ -34,13 +37,11 @@ export const metadata: Metadata = {
   metadataBase: new URL(SITE.url),
   title: { default: SITE.title, template: `%s | ${SITE.name}` },
   description: SITE.description,
-  alternates: { canonical: "/" },
   openGraph: {
     type: "website",
     siteName: SITE.name,
     title: SITE.title,
     description: SITE.description,
-    url: SITE.url,
   },
   twitter: { card: "summary_large_image", title: SITE.title, description: SITE.description },
 };
@@ -54,11 +55,29 @@ const motionBoot = `(function(){var d=document.documentElement;if(!window.matchM
 const orgJsonLd = {
   "@context": "https://schema.org",
   "@type": "Organization",
+  "@id": `${SITE.url}/#organization`,
   name: SITE.name,
   url: SITE.url,
+  logo: `${SITE.url}/images/brand/venlynk-logo-512.png`,
   email: SITE.email,
+  telephone: CONTACT.phone,
   slogan: SITE.tagline,
   description: SITE.description,
+  founder: {
+    "@type": "Person",
+    name: FOUNDER.name,
+    jobTitle: FOUNDER.role,
+    sameAs: [FOUNDER.linkedin],
+  },
+  areaServed: CONTACT.markets,
+  contactPoint: {
+    "@type": "ContactPoint",
+    contactType: "sales",
+    email: SITE.email,
+    telephone: CONTACT.phone,
+    availableLanguage: ["English"],
+  },
+  ...(SOCIALS.some((x) => x.href) ? { sameAs: SOCIALS.filter((x) => x.href).map((x) => x.href) } : {}),
 };
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
@@ -68,7 +87,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
         <script dangerouslySetInnerHTML={{ __html: motionBoot }} />
         <script
           type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(orgJsonLd) }}
+          dangerouslySetInnerHTML={{ __html: ldJson(orgJsonLd) }}
         />
       </head>
       <body>

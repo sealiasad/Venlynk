@@ -4,9 +4,13 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 
 import { ClosingCta, delay, Head, PageHead, ProjectCard } from "@/components/site/blocks";
+import { JsonLd } from "@/components/site/json-ld";
+import { RelatedInsights } from "@/components/site/related-insights";
 import { getIndustry, INDUSTRIES } from "@/content/industries";
 import { getProjectsBy } from "@/content/projects";
+import { insightsFor } from "@/content/seo";
 import { getService } from "@/content/services";
+import { breadcrumbLd, pageMeta } from "@/lib/seo";
 
 type Props = { params: Promise<{ slug: string }> };
 
@@ -18,7 +22,11 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;
   const ind = getIndustry(slug);
   if (!ind) return { title: "Industry not found" };
-  return { title: ind.title, description: ind.intro, alternates: { canonical: `/industries/${ind.slug}` } };
+  return pageMeta({
+    title: `${ind.title} websites and apps`,
+    description: ind.intro,
+    path: `/industries/${ind.slug}`,
+  });
 }
 
 export default async function IndustryPage({ params }: Props) {
@@ -30,6 +38,12 @@ export default async function IndustryPage({ params }: Props) {
 
   return (
     <>
+      <JsonLd
+        data={breadcrumbLd([
+          { name: "Industries", path: "/industries" },
+          { name: ind.title, path: `/industries/${ind.slug}` },
+        ])}
+      />
       <PageHead crumb={{ label: "All industries", href: "/industries" }} eyebrow="Industry" title={ind.title} lead={ind.intro} />
 
       <section className="ha-block wrap">
@@ -52,6 +66,8 @@ export default async function IndustryPage({ params }: Props) {
           ))}
         </div>
       </section>
+
+      <RelatedInsights slugs={insightsFor({ industry: ind.slug })} />
 
       <section className="ha-block wrap">
         <Head title="Services we bring" more={{ label: "All services", href: "/services" }} />

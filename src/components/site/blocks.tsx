@@ -214,7 +214,12 @@ export function ResultsVisual({ project }: { project: Project }) {
 export function ProjectCard({ project, priority = false, sizes }: { project: Project; priority?: boolean; sizes?: string }) {
   const lead = project.results?.[0];
   return (
-    <Link className="pa-card" href={`/work/${project.slug}`} data-cursor="View">
+    <Link
+      className="pa-card"
+      href={`/work/${project.slug}`}
+      aria-label={`${project.client} case study`}
+      data-cursor="View"
+    >
       <span className="pa-card__media">
         {project.image ? (
           <Image

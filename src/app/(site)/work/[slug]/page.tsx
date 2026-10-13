@@ -4,9 +4,12 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 
 import { ClosingCta, delay, LabelPill, ProjectCard, ResultsVisual } from "@/components/site/blocks";
+import { JsonLd } from "@/components/site/json-ld";
 import { industryTitle } from "@/content/industries";
 import { getNextProject, getProject, PROJECTS } from "@/content/projects";
+import { CASE_TYPE } from "@/content/seo";
 import { getPractice, getService } from "@/content/services";
+import { breadcrumbLd, pageMeta } from "@/lib/seo";
 
 type Props = { params: Promise<{ slug: string }> };
 
@@ -18,12 +21,14 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;
   const p = getProject(slug);
   if (!p) return { title: "Project not found" };
-  return {
-    title: `${p.client} case study`,
+  const type = CASE_TYPE[p.slug];
+  return pageMeta({
+    title: type ? `${p.client}: ${type} case study` : `${p.client} case study`,
     description: p.summary,
-    alternates: { canonical: `/work/${p.slug}` },
-    openGraph: { title: `${p.client} · Venlynk`, description: p.summary, images: p.image ? [p.image] : undefined },
-  };
+    path: `/work/${p.slug}`,
+    image: p.image,
+    imageAlt: p.imageAlt,
+  });
 }
 
 export default async function CasePage({ params }: Props) {
@@ -42,6 +47,12 @@ export default async function CasePage({ params }: Props) {
 
   return (
     <article>
+      <JsonLd
+        data={breadcrumbLd([
+          { name: "Work", path: "/work" },
+          { name: p.client, path: `/work/${p.slug}` },
+        ])}
+      />
       <section className="pa-head pa-head--case">
         <div className="pa-head__bg" aria-hidden="true" data-parallax="0.3" />
         <div className="wrap pa-head__inner">

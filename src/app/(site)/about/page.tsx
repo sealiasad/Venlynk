@@ -3,18 +3,30 @@ import Image from "next/image";
 
 import { BrandMark } from "@/components/brand/brand-mark";
 import { ClosingCta, delay, Head, PageHead } from "@/components/site/blocks";
+import { JsonLd } from "@/components/site/json-ld";
 import { ABOUT, CAREER, CAREER_BRANDS, FOUNDER, INTRO, NUMBERS, VALUES } from "@/content/home";
+import { PAGE_SEO } from "@/content/seo";
+import { SITE } from "@/content/site";
+import { absUrl, pageMeta } from "@/lib/seo";
 
-export const metadata: Metadata = {
-  title: "About",
-  description:
-    "Venlynk is a product design and engineering studio led by Syed Asad Ali. Strategy, design and engineering in one team, from brief to release and after.",
-  alternates: { canonical: "/about" },
-};
+export const metadata: Metadata = pageMeta({ ...PAGE_SEO.about, path: "/about" });
 
 export default function AboutPage() {
   return (
     <>
+      <JsonLd
+        data={{
+          "@context": "https://schema.org",
+          "@type": "Person",
+          name: FOUNDER.name,
+          jobTitle: FOUNDER.role,
+          worksFor: { "@id": `${SITE.url}/#organization` },
+          description: FOUNDER.bio,
+          knowsAbout: FOUNDER.skills,
+          sameAs: [FOUNDER.linkedin],
+          image: absUrl(FOUNDER.avatar),
+        }}
+      />
       <PageHead eyebrow="About Venlynk" title={ABOUT.title} lead={ABOUT.lead} />
 
       <section className="ha-block wrap pa-tight">

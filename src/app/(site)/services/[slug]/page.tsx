@@ -4,8 +4,14 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 
 import { ClosingCta, delay, Head, ProjectCard, ToolTiles } from "@/components/site/blocks";
+import { JsonLd } from "@/components/site/json-ld";
+import { RelatedInsights } from "@/components/site/related-insights";
+import { CONTACT } from "@/content/home";
 import { getProjectsBy } from "@/content/projects";
+import { insightsFor, SERVICE_SEO } from "@/content/seo";
 import { getPractice, getService, SERVICES, servicesIn } from "@/content/services";
+import { SITE } from "@/content/site";
+import { absUrl, breadcrumbLd, pageMeta } from "@/lib/seo";
 
 type Props = { params: Promise<{ slug: string }> };
 
@@ -17,11 +23,14 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;
   const s = getService(slug);
   if (!s) return { title: "Service not found" };
-  return {
-    title: s.title,
-    description: `${s.question} ${s.intro}`,
-    alternates: { canonical: `/services/${s.slug}` },
-  };
+  const seo = SERVICE_SEO[s.slug];
+  return pageMeta({
+    title: seo?.title ?? s.title,
+    description: seo?.description ?? `${s.question} ${s.intro}`,
+    path: `/services/${s.slug}`,
+    image: s.image,
+    imageAlt: s.imageAlt,
+  });
 }
 
 export default async function ServicePage({ params }: Props) {
@@ -44,7 +53,25 @@ export default async function ServicePage({ params }: Props) {
 
   return (
     <>
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqLd) }} />
+      <JsonLd
+        data={[
+          faqLd,
+          {
+            "@context": "https://schema.org",
+            "@type": "Service",
+            name: s.title,
+            serviceType: s.title,
+            description: s.intro,
+            url: absUrl(`/services/${s.slug}`),
+            provider: { "@id": `${SITE.url}/#organization` },
+            areaServed: CONTACT.markets,
+          },
+          breadcrumbLd([
+            { name: "Services", path: "/services" },
+            { name: s.title, path: `/services/${s.slug}` },
+          ]),
+        ]}
+      />
       <section className="pa-head pa-head--svc">
         <div className="pa-head__bg" aria-hidden="true" data-parallax="0.3" />
         <div className="wrap pa-svc-hero">
@@ -116,6 +143,8 @@ export default async function ServicePage({ params }: Props) {
           </div>
         </section>
       ) : null}
+
+      <RelatedInsights slugs={insightsFor({ service: s.slug })} />
 
       <section className="ha-block wrap">
         <div className="ha-faq">

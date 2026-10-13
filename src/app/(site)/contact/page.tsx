@@ -4,13 +4,11 @@ import { ContactForm } from "@/components/contact/contact-form";
 import { PageHead } from "@/components/site/blocks";
 import { CopyEmail } from "@/components/site/copy-email";
 import { CONTACT } from "@/content/home";
+import { PAGE_SEO } from "@/content/seo";
 import { SITE } from "@/content/site";
+import { pageMeta } from "@/lib/seo";
 
-export const metadata: Metadata = {
-  title: "Start a project",
-  description: "Tell Venlynk about your website, app, store or AI project. We reply within one working day.",
-  alternates: { canonical: "/contact" },
-};
+export const metadata: Metadata = pageMeta({ ...PAGE_SEO.contact, path: "/contact" });
 
 const NEXT = [
   { title: "We read every brief", body: "Someone on the team reads it and replies within one working day." },

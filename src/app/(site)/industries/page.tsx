@@ -4,13 +4,10 @@ import Link from "next/link";
 import { ClosingCta, delay, PageHead } from "@/components/site/blocks";
 import { INDUSTRIES } from "@/content/industries";
 import { PROJECTS } from "@/content/projects";
+import { PAGE_SEO } from "@/content/seo";
+import { pageMeta } from "@/lib/seo";
 
-export const metadata: Metadata = {
-  title: "Industries",
-  description:
-    "Health, travel and mobility, real estate, SaaS and fintech, commerce, education and non profit, media and faith. The sectors Venlynk has shipped products in.",
-  alternates: { canonical: "/industries" },
-};
+export const metadata: Metadata = pageMeta({ ...PAGE_SEO.industries, path: "/industries" });
 
 export default function IndustriesPage() {
   return (
