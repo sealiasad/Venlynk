@@ -3,70 +3,6 @@
    mobile spacing, footer and mobile menu.
    ========================================================= */
 
-/* ---------- Icon tiles (glossy, slightly 3D) ---------- */
-.ic {
-  position: relative;
-  display: inline-grid;
-  place-items: center;
-  flex: none;
-  width: 3.25rem;
-  height: 3.25rem;
-  border-radius: 1rem;
-  color: #fff;
-  background:
-    radial-gradient(120% 90% at 30% 0%, rgba(255, 255, 255, 0.45), transparent 55%),
-    linear-gradient(155deg, #7778ff 0%, #4546f8 45%, #2a2bb8 100%);
-  box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 0.45),
-    inset 0 -6px 12px rgba(10, 10, 60, 0.35),
-    0 10px 22px -8px rgba(69, 70, 248, 0.7),
-    0 2px 4px rgba(0, 0, 0, 0.25);
-  transform: translateZ(0);
-  transition: transform 0.5s var(--ha-ease, ease);
-}
-.ic::after {
-  content: "";
-  position: absolute;
-  inset: 1px;
-  border-radius: inherit;
-  border: 1px solid rgba(255, 255, 255, 0.14);
-  pointer-events: none;
-}
-.ic svg {
-  position: relative;
-  width: 1.55rem;
-  height: 1.55rem;
-  filter: drop-shadow(0 1px 1px rgba(10, 10, 60, 0.45));
-}
-.ic--light {
-  color: var(--ha-brand, #4546f8);
-  background:
-    radial-gradient(120% 90% at 30% 0%, #fff, transparent 60%),
-    linear-gradient(155deg, #ffffff 0%, #e4e5ff 60%, #c9caff 100%);
-  box-shadow:
-    inset 0 1px 0 #fff,
-    inset 0 -6px 12px rgba(69, 70, 248, 0.18),
-    0 10px 22px -8px rgba(8, 8, 11, 0.55);
-}
-.ic--light svg {
-  filter: none;
-}
-.ic--ink {
-  color: #fff;
-  background:
-    radial-gradient(120% 90% at 30% 0%, rgba(165, 166, 255, 0.5), transparent 60%),
-    linear-gradient(155deg, #2a2b3a 0%, #14151c 100%);
-  box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 0.25),
-    0 10px 22px -8px rgba(8, 8, 11, 0.6);
-}
-a:hover .ic,
-.ha-prob:hover .ic,
-.ha-plan:hover .ic,
-.pa-get__item:hover .ic {
-  transform: translateY(-3px) rotate(-4deg);
-}
-
 /* Card tops that hold an icon */
 .ha-prob__top,
 .ha-card__top,
@@ -95,19 +31,8 @@ a:hover .ic,
   justify-content: space-between;
   align-items: flex-start;
 }
-.ha-step__top .ic {
-  width: 2.75rem;
-  height: 2.75rem;
-  border-radius: 0.85rem;
-}
-.ha-step__top .ic svg {
-  width: 1.3rem;
-  height: 1.3rem;
-}
 .ha-plan__top {
-  flex-direction: column;
-  align-items: flex-start;
-  gap: 1.25rem;
+  display: block;
 }
 .pa-get__top {
   justify-content: space-between;
@@ -126,10 +51,6 @@ a:hover .ic,
 }
 .pa-ind__top {
   justify-content: space-between;
-}
-.ha-val {
-  grid-template-columns: 3.25rem 1fr;
-  gap: 1.25rem;
 }
 .ha-val__n {
   display: block;
@@ -161,15 +82,6 @@ a:hover .ic,
   align-items: center;
   gap: 1rem;
   color: inherit;
-}
-.ha-ind .ic {
-  width: 2.75rem;
-  height: 2.75rem;
-  border-radius: 0.85rem;
-}
-.ha-ind .ic svg {
-  width: 1.3rem;
-  height: 1.3rem;
 }
 .ha-ind__body {
   display: flex;
@@ -745,15 +657,6 @@ a:hover .ic,
   }
   .pa-prose {
     font-size: 1.0625rem;
-  }
-  .ic {
-    width: 2.75rem;
-    height: 2.75rem;
-    border-radius: 0.85rem;
-  }
-  .ic svg {
-    width: 1.3rem;
-    height: 1.3rem;
   }
 
   /* Filters scroll sideways: fade the right edge so it reads as a scroller */

@@ -5,7 +5,6 @@ import { BrandMark } from "@/components/brand/brand-mark";
 import { ConsultPill } from "@/components/home/a/consult-pill";
 import { HeroMark } from "@/components/home/a/hero-mark";
 import { accent, delay, Head, ScrubText } from "@/components/site/blocks";
-import { Icon } from "@/components/ui/icon";
 import { HomeFx } from "@/components/home/a/home-fx";
 import {
   BRANDS,
@@ -110,7 +109,6 @@ export default function HomePage() {
           {PROBLEMS.map((p, i) => (
             <div className={`ha-prob${p.highlight ? " ha-prob--hl" : ""}`} key={p.label} data-fade="" style={delay(i)}>
               <div className="ha-prob__top">
-                <Icon name={p.icon} tone={p.highlight ? "light" : "brand"} />
                 <small>{p.label}</small>
               </div>
               <h3>{p.text}</h3>
@@ -138,7 +136,6 @@ export default function HomePage() {
             >
               <span className="ha-card__shine" aria-hidden="true" />
               <span className="ha-card__top">
-                <Icon name={p.icon} tone={p.tone === "blue" ? "light" : "brand"} />
                 <span className="ha-card__n">{p.n}</span>
                 <span className="ha-go" aria-hidden="true">↗</span>
               </span>
@@ -226,7 +223,6 @@ export default function HomePage() {
         <div className="ha-inds">
           {INDUSTRIES.map((ind, i) => (
             <Link className="ha-ind" href={`/industries/${ind.slug}`} key={ind.title} data-fade="" style={delay(i, 50)}>
-              <Icon name={ind.icon} />
               <span className="ha-ind__body">
                 <b>{ind.title}</b>
                 <span>{ind.clients}</span>
@@ -311,7 +307,6 @@ export default function HomePage() {
             <li className="ha-step" key={s.n} data-fade="" style={delay(i, 100)}>
               <span className="ha-step__top">
                 <b aria-hidden="true">{s.n}</b>
-                <Icon name={s.icon} tone={i === 3 ? "light" : "brand"} />
               </span>
               <div>
                 <h3>{s.title}</h3>
@@ -329,7 +324,6 @@ export default function HomePage() {
           {PLANS.map((p, i) => (
             <div className="ha-plan" key={p.title} data-tilt="" data-fade="" style={delay(i)}>
               <span className="ha-plan__top">
-                <Icon name={p.icon} tone={i === 1 ? "brand" : "ink"} />
                 <b>{p.length}</b>
               </span>
               <div>
@@ -373,11 +367,8 @@ export default function HomePage() {
         <div className="ha-vals">
           {VALUES.map((v, i) => (
             <div className="ha-val" key={v.title} data-fade="" style={delay(i)}>
-              <Icon name={v.icon} />
+              <span aria-hidden="true">{String(i + 1).padStart(2, "0")}</span>
               <div>
-                <span className="ha-val__n" aria-hidden="true">
-                  {String(i + 1).padStart(2, "0")}
-                </span>
                 <h3>{v.title}</h3>
                 <p>{v.text}</p>
               </div>

@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 
-import { Icon } from "@/components/ui/icon";
 import { ClosingCta, delay, Head, PageHead } from "@/components/site/blocks";
 import { PLANS, STEPS } from "@/content/home";
 import { PRACTICES, servicesIn } from "@/content/services";
@@ -35,7 +34,6 @@ export default function ServicesPage() {
         <section className="ha-block wrap pa-practice" id={practice.slug} key={practice.slug}>
           <div className={`pa-practice__card ha-card--${practice.tone}`} data-fade="">
             <span className="pa-practice__top">
-              <Icon name={practice.icon} tone={practice.tone === "blue" ? "light" : "brand"} />
               <span className="ha-card__n">Practice {practice.n}</span>
             </span>
             <h2>{practice.title}</h2>
@@ -68,7 +66,6 @@ export default function ServicesPage() {
             <li className="ha-step" key={s.n} data-fade="" style={delay(i, 100)}>
               <span className="ha-step__top">
                 <b aria-hidden="true">{s.n}</b>
-                <Icon name={s.icon} tone={i === 3 ? "light" : "brand"} />
               </span>
               <div>
                 <h3>{s.title}</h3>
@@ -85,7 +82,6 @@ export default function ServicesPage() {
           {PLANS.map((p, i) => (
             <div className="ha-plan" key={p.title} data-tilt="" data-fade="" style={delay(i)}>
               <span className="ha-plan__top">
-                <Icon name={p.icon} tone={i === 1 ? "brand" : "ink"} />
                 <b>{p.length}</b>
               </span>
               <div>
