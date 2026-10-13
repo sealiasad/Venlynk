@@ -4,8 +4,8 @@ export const DECK = {
   year: "2026",
   title: "Venlynk Company Profile",
   tagline: "The Link To Your Next Venture.",
-  url: "venlynk.digital",
-  email: "hello@venlynk.digital",
+  url: "venlynk.com",
+  email: "hello@venlynk.com",
   location: "Building for clients worldwide",
 } as const;
 

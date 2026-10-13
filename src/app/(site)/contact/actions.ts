@@ -87,7 +87,7 @@ export async function sendInquiry(_prev: InquiryState, fd: FormData): Promise<In
         fetch(webhook, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ ...values, source: "venlynk.digital", receivedAt: new Date().toISOString() }),
+          body: JSON.stringify({ ...values, source: "venlynk.com", receivedAt: new Date().toISOString() }),
         }),
       );
     }

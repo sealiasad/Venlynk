@@ -4,8 +4,8 @@ export const SITE = {
   title: "Venlynk | Product design and engineering studio",
   description:
     "Venlynk designs and builds websites, apps, online stores and AI tools for founders and growing teams, then keeps improving them after launch.",
-  email: "hello@venlynk.digital",
-  url: "https://venlynk.digital",
+  email: "hello@venlynk.com",
+  url: "https://venlynk.com",
   /**
    * Booking link for "Book a call" (Cal.com / Calendly).
    * Leave empty to hide the button everywhere.

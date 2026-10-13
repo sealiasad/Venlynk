@@ -32,7 +32,7 @@ export default function OgImage() {
           <span>your next</span>
           <span style={{ color: "#A5A6FF" }}>venture.</span>
         </div>
-        <div style={{ fontSize: 26, color: "rgba(252,252,252,0.6)" }}>venlynk.digital</div>
+        <div style={{ fontSize: 26, color: "rgba(252,252,252,0.6)" }}>venlynk.com</div>
       </div>
     ),
     size,
