@@ -6,6 +6,7 @@ import { ConsultPill } from "@/components/home/a/consult-pill";
 import { HeroMark } from "@/components/home/a/hero-mark";
 import { accent, delay, Head, ScrubText } from "@/components/site/blocks";
 import { HomeFx } from "@/components/home/a/home-fx";
+import { WorkRail } from "@/components/home/a/work-rail";
 import {
   BRANDS,
   CLOSING,
@@ -75,6 +76,8 @@ export default function HomePage() {
           Scroll
         </p>
       </section>
+
+      <WorkRail />
 
       {/* Marquee */}
       <div className="ha-marquee">

@@ -13,11 +13,21 @@ import "@/styles/pages.css";
 import "@/styles/home-a.css";
 import "@/styles/pages-a.css";
 import "@/styles/refine-a.css";
+import "@/styles/kinetic.css";
 
 const grotesk = localFont({
   src: "../fonts/space-grotesk-latin-wght-normal.woff2",
   variable: "--font-grotesk",
   weight: "300 700",
+  display: "swap",
+});
+
+const mono = localFont({
+  src: [
+    { path: "../fonts/jetbrains-mono-latin-400-normal.woff2", weight: "400" },
+    { path: "../fonts/jetbrains-mono-latin-500-normal.woff2", weight: "500" },
+  ],
+  variable: "--font-mono",
   display: "swap",
 });
 
@@ -46,7 +56,7 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: "#08080b",
+  themeColor: "#050508",
 };
 
 const motionBoot = `(function(){var d=document.documentElement;if(!window.matchMedia||!matchMedia('(prefers-reduced-motion: reduce)').matches){d.classList.add('js-motion');setTimeout(function(){if(d.dataset.motion!=='ready'){d.classList.remove('js-motion')}},4000)}})();`;
@@ -63,7 +73,7 @@ const orgJsonLd = {
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en" className={`${grotesk.variable} ${instrument.variable}`} suppressHydrationWarning>
+    <html lang="en" className={`${grotesk.variable} ${instrument.variable} ${mono.variable}`} suppressHydrationWarning>
       <head>
         <script dangerouslySetInnerHTML={{ __html: motionBoot }} />
         <script
