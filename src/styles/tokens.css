@@ -1,0 +1,40 @@
+:root {
+  /* Brand */
+  --blue: #4546f8;
+  --blue-deep: #2f31b8;
+  --blue-soft: #a5a6ff;
+  --blue-rgb: 69, 70, 248;
+  --ink: #020202;
+  --paper: #fcfcfc;
+  --stone: #efefec;
+  --graphite: #626262;
+  --mute-dark: rgba(252, 252, 252, 0.62);
+  --line: rgba(2, 2, 2, 0.12);
+  --line-dark: rgba(252, 252, 252, 0.14);
+
+  /* Type */
+  --font-sans: var(--font-grotesk), "Helvetica Neue", Arial, sans-serif;
+  --font-serif: var(--font-instrument), Georgia, serif;
+  --t-mega: clamp(3.4rem, 10.4vw, 11rem);
+  --t-display: clamp(2.9rem, 7.4vw, 7.6rem);
+  --t-h1: clamp(2.5rem, 5.6vw, 5.4rem);
+  --t-h2: clamp(2rem, 3.9vw, 3.6rem);
+  --t-h3: clamp(1.4rem, 2.1vw, 1.9rem);
+  --t-lead: clamp(1.15rem, 1.45vw, 1.4rem);
+  --t-body: 1.0625rem;
+  --t-small: 0.9375rem;
+  --t-micro: 0.8125rem;
+
+  /* Layout */
+  --max: 76rem;
+  --gutter: clamp(1.25rem, 5vw, 4.5rem);
+  --section: clamp(5.5rem, 11vw, 10rem);
+  --header-h: 4.75rem;
+  --radius-media: clamp(0.9rem, 1.6vw, 1.5rem);
+
+  /* Motion */
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-io: cubic-bezier(0.65, 0, 0.35, 1);
+  --fast: 0.3s;
+  --mid: 0.6s;
+}
