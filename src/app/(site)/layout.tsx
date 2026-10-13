@@ -1,4 +1,3 @@
-import { Ambient } from "@/components/site/ambient";
 import { Footer } from "@/components/site/footer";
 import { Header } from "@/components/site/header";
 import { PageWipe } from "@/components/site/page-wipe";
@@ -11,7 +10,6 @@ export default function SiteLayout({ children }: { children: React.ReactNode }) 
         Skip to content
       </a>
       <span id="top" />
-      <Ambient />
       <Header />
       <main id="main" className="ha">{children}</main>
       <Footer />
