@@ -21,9 +21,7 @@ export const MARQUEE = [
   "Careem",
   "VistaJet",
   "Dawaai",
-  "Global Rescue",
   "ServiceMarket",
-  "Helpjuice",
   "Jazz",
   "Coke Studio",
 ];
@@ -95,18 +93,16 @@ export const WORK_ROWS: {
 
 export const RESULTS = [
   { value: "61%", label: "more users adopted the app", client: "Frontline Ticketing", tone: "blue" },
-  { value: "54%", label: "more users adopted the new flow", client: "Hello My Ticket", tone: "ink" },
-  { value: "30%", label: "more order bookings", client: "Hello My Ticket", tone: "lav" },
   { value: "9/10", label: "user rating for the new app", client: "Frontline Ticketing", tone: "ink" },
-  { value: "400+", label: "pages moved to a new CMS", client: "Global Rescue · founder's previous role", tone: "blue" },
+  { value: "Up to 90%", label: "faster pages after the rebuild", client: "Dawaai.pk · founder's previous role", tone: "lav" },
   { value: "1 wk", label: "from kickoff to launch", client: "The Jumbo Jump", tone: "ink" },
 ] as const;
 
 export const INDUSTRIES = [
   { slug: "health", icon: "pulse", title: "Health and pharmacy", clients: "Dawaai.pk, Dawaai Doctor" },
-  { slug: "travel-mobility", icon: "plane", title: "Travel, tickets and mobility", clients: "Frontline Ticketing, Hello My Ticket, Global Rescue, ICE" },
+  { slug: "travel-mobility", icon: "plane", title: "Travel, tickets and mobility", clients: "Frontline Ticketing, ICE" },
   { slug: "real-estate", icon: "home", title: "Real estate and construction", clients: "DXB Off Plan, MNM Estates, BuildBid" },
-  { slug: "saas", icon: "cloud", title: "SaaS, B2B and fintech", clients: "Helpjuice, QriosityNet, TechOutsource, Stock Stream" },
+  { slug: "saas", icon: "cloud", title: "SaaS, B2B and fintech", clients: "QriosityNet, TechOutsource, Stock Stream" },
   { slug: "commerce", icon: "bag", title: "Commerce and consumer", clients: "ServiceMarket, ByStored, The Jumbo Jump, Replay" },
   { slug: "education-nonprofit", icon: "book", title: "Education and non profit", clients: "Insaf Academy, CARE Foundation" },
   { slug: "media-faith", icon: "play", title: "Media and faith", clients: "Bible Study Fellowship, Round2 Ventures, Tilawat" },
@@ -139,9 +135,7 @@ export const BRANDS: { name: string; file: string; dark?: boolean }[] = [
   { name: "UBL UK", file: "ubl" },
   { name: "Jubilee Life Insurance", file: "jubilee" },
   { name: "Dawaai", file: "dawaai", dark: true },
-  { name: "Global Rescue", file: "globalrescue", dark: true },
   { name: "ServiceMarket", file: "servicemarket" },
-  { name: "Helpjuice", file: "helpjuice" },
   { name: "Frontline Ticketing", file: "frontline" },
   { name: "QriosityNet", file: "qriosity" },
   { name: "Soneri Bank", file: "soneri" },
@@ -226,7 +220,6 @@ export const CAREER_BRANDS: { name: string; file?: string; dark?: boolean }[] = 
   { name: "Binzagr Coro" },
   { name: "Face2Face", file: "face2face" },
   { name: "Dawaai", file: "dawaai", dark: true },
-  { name: "Global Rescue", file: "globalrescue", dark: true },
   { name: "Frontline Ticketing", file: "frontline" },
   { name: "Bible Study Fellowship", file: "bsf" },
 ];
@@ -238,18 +231,6 @@ export const CAREER = [
   { when: "Leading UX", where: "Dawaai.pk", what: "UX and front end lead for Pakistan's online pharmacy." },
   { when: "Senior front end", where: "Global Rescue", what: "Moved 400+ pages to a new CMS and rebuilt the front end." },
   { when: "Today", where: "Venlynk", what: "Leads engineering teams and brings AI into how software gets built." },
-];
-
-/** Placeholder team: replace names, roles and add photos before launch. */
-export const TEAM = [
-  { name: "Syed Asad Ali", role: "Founder and CEO", initials: "SA", placeholder: false },
-  { name: "Full name", role: "Head of Design", initials: "FN", placeholder: true },
-  { name: "Full name", role: "Engineering Lead", initials: "FN", placeholder: true },
-  { name: "Full name", role: "Mobile Lead", initials: "FN", placeholder: true },
-  { name: "Full name", role: "Product Manager", initials: "FN", placeholder: true },
-  { name: "Full name", role: "AI Engineer", initials: "FN", placeholder: true },
-  { name: "Full name", role: "QA Lead", initials: "FN", placeholder: true },
-  { name: "Full name", role: "Growth and SEO Lead", initials: "FN", placeholder: true },
 ];
 
 export const CONTACT = {

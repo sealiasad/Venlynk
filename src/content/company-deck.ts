@@ -121,15 +121,6 @@ export const DECK_PORTFOLIO: readonly PortfolioItem[] = [
   },
   {
     category: "websites",
-    name: "Global Rescue",
-    url: "globalrescue.com",
-    summary:
-      "Enterprise CMS migration — 400+ pages moved to WordPress with performance and security in mind.",
-    image: "/images/deck/portfolio-p10.jpg",
-    tags: ["Website", "WordPress", "Migration"],
-  },
-  {
-    category: "websites",
     name: "The Jumbo Jump",
     url: "thejumbojump.com",
     summary:
@@ -148,15 +139,6 @@ export const DECK_PORTFOLIO: readonly PortfolioItem[] = [
   },
   {
     category: "webapps",
-    name: "Helpjuice",
-    url: "helpjuice.com",
-    summary:
-      "Knowledge-base product UX — search, scale, and documentation workflows for growing teams.",
-    image: "/images/deck/portfolio-p08.jpg",
-    tags: ["Web App", "SaaS", "UX"],
-  },
-  {
-    category: "webapps",
     name: "QriosityNet",
     url: "qriositynet.com",
     summary:
@@ -172,20 +154,6 @@ export const DECK_PORTFOLIO: readonly PortfolioItem[] = [
       "Healthcare commerce rebuild — Next.js migration with major gains in performance and conversion.",
     image: "/images/deck/portfolio-p18.jpg",
     tags: ["Web App", "E-commerce", "Next.js"],
-  },
-  {
-    category: "webapps",
-    name: "Hello My Ticket",
-    url: "hellomyticket.net",
-    summary:
-      "Flight itinerary search and booking — redesign focused on adoption and order completion.",
-    image: "/images/deck/portfolio-p24.jpg",
-    tags: ["Web App", "Travel", "UX"],
-    metrics: [
-      { value: "7/10", label: "New experience rating" },
-      { value: "54%", label: "User adoption lift" },
-      { value: "30%", label: "Order booking lift" },
-    ],
   },
   {
     category: "mobile",
@@ -246,8 +214,6 @@ export const DECK_AUDIENCES = [
 
 export const DECK_TRUST = [
   "ByStored",
-  "Helpjuice",
-  "Global Rescue",
   "Dawaai",
   "DXB Off Plan",
   "Frontline",

@@ -23,7 +23,7 @@ const nextConfig: NextConfig = {
       { source: "/approach", destination: "/about", permanent: true },
       { source: "/services/ecommerce", destination: "/services/online-stores", permanent: true },
       { source: "/services/business-systems", destination: "/services/ai", permanent: true },
-      { source: "/work/:slug(platform|commerce|product|systems|mobile|mobility-apps)", destination: "/work", permanent: true },
+      { source: "/work/:slug(platform|commerce|product|systems|mobile|mobility-apps|hello-my-ticket|global-rescue|helpjuice|grid-global-rescue)", destination: "/work", permanent: false },
       {
         source: "/insights/:slug(clarity-before-craft|systems-that-scale|conversion-with-character)",
         destination: "/insights",

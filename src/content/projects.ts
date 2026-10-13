@@ -1,7 +1,7 @@
 import type { Project } from "@/content/types";
 
 /**
- * All 25 projects from the Venlynk company profile deck, in deck order
+ * Projects from the Venlynk company profile deck, in deck order
  * (web first, then mobile). Every project carries an engagement label so
  * the founder's earlier roles and shared work are never presented as
  * Venlynk's own. Images: /images/work/{slug}/case.webp
@@ -50,26 +50,6 @@ export const PROJECTS: Project[] = [
     featured: true,
   },
   {
-    slug: "hello-my-ticket",
-    client: "Hello My Ticket",
-    sector: "Travel, flight booking",
-    label: "Delivered by Venlynk",
-    summary:
-      "A web app for searching and booking flights. We redesigned search and checkout so more people get to the end of their booking.",
-    did: ["Flight search", "Booking flow", "Reservations", "Usability testing"],
-    platform: "Web app",
-    kind: "web",
-    industry: "travel-mobility",
-    practice: "products",
-    services: ["product-design", "web"],
-    results: [
-      { value: "54%", label: "more users adopted the new booking flow" },
-      { value: "30%", label: "more order bookings after launch" },
-      { value: "7/10", label: "user rating for the redesign" },
-    ],
-    featured: true,
-  },
-  {
     slug: "dawaai",
     client: "Dawaai.pk",
     sector: "Health and pharmacy, Pakistan",
@@ -88,27 +68,6 @@ export const PROJECTS: Project[] = [
     results: [{ value: "Up to 90%", label: "faster pages after the rebuild" }],
   },
   {
-    slug: "global-rescue",
-    client: "Global Rescue",
-    sector: "Travel safety, United States",
-    label: "Founder's previous role",
-    summary:
-      "Global Rescue protects travellers around the world. Ali moved more than 400 pages off an old Java CMS onto WordPress, then rebuilt the front end in Next.js.",
-    did: ["CMS migration", "Custom WordPress elements", "Next.js front end", "A/B testing"],
-    platform: "WordPress and Next.js",
-    kind: "web",
-    industry: "travel-mobility",
-    practice: "products",
-    services: ["web", "growth"],
-    url: "https://globalrescue.com",
-    image: img("global-rescue"),
-    imageAlt: "Global Rescue website on a laptop next to the mobile site",
-    results: [
-      { value: "400+", label: "pages moved to a new CMS" },
-      { value: "60%", label: "more engagement on the new front end" },
-    ],
-  },
-  {
     slug: "dxb-off-plan",
     client: "DXB Off Plan",
     sector: "Real estate, Dubai",
@@ -124,23 +83,6 @@ export const PROJECTS: Project[] = [
     url: "https://dxboffplan.com",
     image: img("dxb-off-plan"),
     imageAlt: "DXB Off Plan website on a laptop",
-  },
-  {
-    slug: "helpjuice",
-    client: "Helpjuice",
-    sector: "SaaS, knowledge base",
-    label: "Delivered by Venlynk",
-    summary:
-      "Helpjuice gives teams their own help centre. We worked on the product interface, with most of the effort going into search and into keeping big accounts easy to manage.",
-    did: ["Product interface", "Search experience", "A/B tests", "Tool integrations"],
-    platform: "Web app",
-    kind: "web",
-    industry: "saas",
-    practice: "products",
-    services: ["product-design", "web"],
-    url: "https://helpjuice.com",
-    image: img("helpjuice"),
-    imageAlt: "Helpjuice website on a laptop next to the mobile site",
   },
   {
     slug: "bystored",
@@ -371,21 +313,6 @@ export const PROJECTS: Project[] = [
     image: img("dawaai-doctor"),
     imageAlt: "Dawaai Doctor app: consultation queue and a video call",
     results: [{ value: "24/7", label: "online consultations" }],
-  },
-  {
-    slug: "grid-global-rescue",
-    client: "GRID by Global Rescue",
-    sector: "Travel safety app",
-    label: "Founder's previous role",
-    summary: "Travel alerts for wherever you are, and the operations centre one tap away when something goes wrong.",
-    did: ["Travel alerts", "One tap emergency", "Location tracking", "Trip planning"],
-    platform: "iOS and Android",
-    kind: "mobile",
-    industry: "travel-mobility",
-    practice: "products",
-    services: ["mobile"],
-    image: img("grid-global-rescue"),
-    imageAlt: "Global Rescue GRID app store graphics: alerts and one tap emergency",
   },
   {
     slug: "tilawat",

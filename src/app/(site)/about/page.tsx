@@ -3,7 +3,7 @@ import Image from "next/image";
 
 import { BrandMark } from "@/components/brand/brand-mark";
 import { ClosingCta, delay, Head, PageHead } from "@/components/site/blocks";
-import { ABOUT, CAREER, CAREER_BRANDS, FOUNDER, INTRO, NUMBERS, TEAM, VALUES } from "@/content/home";
+import { ABOUT, CAREER, CAREER_BRANDS, FOUNDER, INTRO, NUMBERS, VALUES } from "@/content/home";
 
 export const metadata: Metadata = {
   title: "About",
@@ -13,7 +13,6 @@ export const metadata: Metadata = {
 };
 
 export default function AboutPage() {
-  const teamPlaceholder = TEAM.some((t) => t.placeholder);
   return (
     <>
       <PageHead eyebrow="About Venlynk" title={ABOUT.title} lead={ABOUT.lead} />
@@ -116,28 +115,6 @@ export default function AboutPage() {
           ))}
         </dl>
         <p className="pa-note">Counted across the careers of everyone on the Venlynk team.</p>
-      </section>
-
-      <section className="ha-block wrap" id="team">
-        <Head
-          title="The people behind the work"
-          text={
-            teamPlaceholder
-              ? "[Placeholder team. Replace names, roles and add photos before launch.]"
-              : "Designers, engineers and growth specialists who stay with your project from brief to release."
-          }
-        />
-        <ul className="pa-team">
-          {TEAM.map((t, i) => (
-            <li key={t.role} data-fade="" style={delay(i % 4)}>
-              <span className="pa-team__face" aria-hidden="true">
-                {t.initials}
-              </span>
-              <b>{t.name}</b>
-              <span>{t.role}</span>
-            </li>
-          ))}
-        </ul>
       </section>
 
       <section className="ha-block wrap">

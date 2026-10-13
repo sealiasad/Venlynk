@@ -250,8 +250,7 @@ export function CompanyDeckView() {
         websites[0],
         websites[1],
         webapps[0],
-        webapps[2],
-        webapps[3],
+        webapps[1],
         mobile[0],
         mobile[1],
       ].filter(Boolean) as PortfolioItem[],
@@ -916,8 +915,7 @@ export function CompanyDeckView() {
             previews={webapps}
           />
           <CaseSlide item={webapps[0]} index={3} total={featuredCases.length} />
-          <CaseSlide item={webapps[2]} index={4} total={featuredCases.length} tone="ink" />
-          <CaseSlide item={webapps[3]} index={5} total={featuredCases.length} />
+          <CaseSlide item={webapps[1]} index={4} total={featuredCases.length} tone="ink" />
 
           <SectionIntro
             category="Portfolio · Mobile"

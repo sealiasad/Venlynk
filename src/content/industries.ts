@@ -21,7 +21,7 @@ export const INDUSTRIES: Industry[] = [
     slug: "travel-mobility",
     icon: "plane",
     title: "Travel, tickets and mobility",
-    short: "Flight booking, event ticketing, travel safety and ride apps.",
+    short: "Event ticketing, ride booking and delivery apps.",
     intro:
       "Search, choose and pay, often on a phone and in a few minutes. We have redesigned booking flows where every lost step was a lost sale.",
     problems: [
