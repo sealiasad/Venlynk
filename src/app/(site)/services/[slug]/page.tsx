@@ -3,6 +3,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 
+import { Icon } from "@/components/ui/icon";
 import { ClosingCta, delay, Head, ProjectCard, ToolTiles } from "@/components/site/blocks";
 import { getProjectsBy } from "@/content/projects";
 import { getPractice, getService, SERVICES, servicesIn } from "@/content/services";
@@ -81,7 +82,10 @@ export default async function ServicePage({ params }: Props) {
         <div className="pa-get">
           {s.deliverables.map((d, i) => (
             <div className="pa-get__item" key={d.title} data-fade="" style={delay(i)}>
-              <span aria-hidden="true">{String(i + 1).padStart(2, "0")}</span>
+              <span className="pa-get__top">
+                <Icon name={d.icon ?? s.icon} />
+                <span aria-hidden="true">{String(i + 1).padStart(2, "0")}</span>
+              </span>
               <h3>{d.title}</h3>
               <p>{d.body}</p>
             </div>

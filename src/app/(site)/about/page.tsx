@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Image from "next/image";
 
 import { BrandMark } from "@/components/brand/brand-mark";
+import { Icon } from "@/components/ui/icon";
 import { ClosingCta, delay, Head, PageHead } from "@/components/site/blocks";
 import { ABOUT, CAREER, CAREER_BRANDS, FOUNDER, INTRO, NUMBERS, TEAM, VALUES } from "@/content/home";
 
@@ -145,8 +146,11 @@ export default function AboutPage() {
         <div className="ha-vals">
           {VALUES.map((v, i) => (
             <div className="ha-val" key={v.title} data-fade="" style={delay(i)}>
-              <span aria-hidden="true">{String(i + 1).padStart(2, "0")}</span>
+              <Icon name={v.icon} />
               <div>
+                <span className="ha-val__n" aria-hidden="true">
+                  {String(i + 1).padStart(2, "0")}
+                </span>
                 <h3>{v.title}</h3>
                 <p>{v.text}</p>
               </div>

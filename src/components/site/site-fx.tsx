@@ -15,8 +15,25 @@ export function SiteFx() {
   useEffect(() => {
     const fine = window.matchMedia("(hover: hover) and (pointer: fine)").matches;
     const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    if (!fine || reduced) return;
     const offs: (() => void)[] = [];
+
+    // Sideways scrollers: move the progress bar in their swipe hint and drop the hint once used.
+    document.querySelectorAll<HTMLElement>("[data-swipe]").forEach((scroller) => {
+      const hint = scroller.parentElement?.querySelector<HTMLElement>(".ha-swipe");
+      const bar = hint?.querySelector<HTMLElement>(".ha-swipe__track span");
+      if (!hint || !bar) return;
+      const update = () => {
+        const max = scroller.scrollWidth - scroller.clientWidth;
+        const p = max > 0 ? scroller.scrollLeft / max : 1;
+        bar.style.transform = `scaleX(${Math.max(0.08, p)})`;
+        hint.classList.toggle("is-used", scroller.scrollLeft > 24);
+      };
+      scroller.addEventListener("scroll", update, { passive: true });
+      offs.push(() => scroller.removeEventListener("scroll", update));
+      update();
+    });
+
+    if (!fine || reduced) return () => offs.forEach((off) => off());
     const on = (el: HTMLElement, type: "pointermove" | "pointerleave", fn: (e: PointerEvent) => void) => {
       el.addEventListener(type, fn as EventListener, { passive: true });
       offs.push(() => el.removeEventListener(type, fn as EventListener));

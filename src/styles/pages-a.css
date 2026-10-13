@@ -4,7 +4,8 @@
    Page specific classes are prefixed `pa-`.
    ========================================================= */
 
-/* The whole site sits on the dark theme. */
+/* The whole site sits on the dark theme. Tokens live on :root so the menu and footer can use them. */
+:root,
 .ha {
   --ha-ink: #08080b;
   --ha-ink-2: #14151c;

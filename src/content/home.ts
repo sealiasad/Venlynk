@@ -39,14 +39,15 @@ export const INTRO = {
 };
 
 export const PROBLEMS = [
-  { label: "Slow, unclear websites", text: "We build fast sites that rank well and explain what you do in a few seconds." },
-  { label: "Apps people abandon", text: "We fix booking and checkout so people get all the way to the end." },
-  { label: "Manual work, scattered data", text: "We automate the repetitive work and connect the tools your team already uses.", highlight: true },
+  { icon: "speed", label: "Slow, unclear websites", text: "We build fast sites that rank well and explain what you do in a few seconds." },
+  { icon: "tap", label: "Apps people abandon", text: "We fix booking and checkout so people get all the way to the end." },
+  { icon: "flow", label: "Manual work, scattered data", text: "We automate the repetitive work and connect the tools your team already uses.", highlight: true },
 ];
 
 export const PRACTICES = [
   {
     n: "01",
+    icon: "layers",
     title: "Digital products",
     sub: "Design and build the product.",
     tone: "lav",
@@ -54,6 +55,7 @@ export const PRACTICES = [
   },
   {
     n: "02",
+    icon: "bag",
     title: "Commerce and platforms",
     sub: "Sell online and run operations.",
     tone: "paper",
@@ -61,6 +63,7 @@ export const PRACTICES = [
   },
   {
     n: "03",
+    icon: "spark",
     title: "AI, automation and growth",
     sub: "Work smarter and keep improving.",
     tone: "blue",
@@ -100,13 +103,13 @@ export const RESULTS = [
 ] as const;
 
 export const INDUSTRIES = [
-  { title: "Health and pharmacy", clients: "Dawaai.pk, Dawaai Doctor" },
-  { title: "Travel, tickets and mobility", clients: "Frontline Ticketing, Hello My Ticket, Global Rescue, ICE" },
-  { title: "Real estate and construction", clients: "DXB Off Plan, MNM Estates, BuildBid" },
-  { title: "SaaS, B2B and fintech", clients: "Helpjuice, QriosityNet, TechOutsource, Stock Stream" },
-  { title: "Commerce and consumer", clients: "ServiceMarket, ByStored, The Jumbo Jump, Replay" },
-  { title: "Education and non profit", clients: "Insaf Academy, CARE Foundation" },
-  { title: "Media and faith", clients: "Bible Study Fellowship, Round2 Ventures, Tilawat" },
+  { slug: "health", icon: "pulse", title: "Health and pharmacy", clients: "Dawaai.pk, Dawaai Doctor" },
+  { slug: "travel-mobility", icon: "plane", title: "Travel, tickets and mobility", clients: "Frontline Ticketing, Hello My Ticket, Global Rescue, ICE" },
+  { slug: "real-estate", icon: "home", title: "Real estate and construction", clients: "DXB Off Plan, MNM Estates, BuildBid" },
+  { slug: "saas", icon: "cloud", title: "SaaS, B2B and fintech", clients: "Helpjuice, QriosityNet, TechOutsource, Stock Stream" },
+  { slug: "commerce", icon: "bag", title: "Commerce and consumer", clients: "ServiceMarket, ByStored, The Jumbo Jump, Replay" },
+  { slug: "education-nonprofit", icon: "book", title: "Education and non profit", clients: "Insaf Academy, CARE Foundation" },
+  { slug: "media-faith", icon: "play", title: "Media and faith", clients: "Bible Study Fellowship, Round2 Ventures, Tilawat" },
 ];
 
 export const FOUNDER = {
@@ -150,17 +153,17 @@ export const BRANDS: { name: string; file: string; dark?: boolean }[] = [
 ];
 
 export const STEPS = [
-  { n: "01", title: "Discover", text: "We learn the business, the audience and what needs to change." },
-  { n: "02", title: "Define", text: "We agree on scope, priorities and structure before any visuals." },
-  { n: "03", title: "Design", text: "We design screens people can read, trust and use." },
-  { n: "04", title: "Build", text: "We write production code and demo progress every week." },
-  { n: "05", title: "Grow", text: "We measure results after launch and keep improving." },
+  { n: "01", icon: "search", title: "Discover", text: "We learn the business, the audience and what needs to change." },
+  { n: "02", icon: "list", title: "Define", text: "We agree on scope, priorities and structure before any visuals." },
+  { n: "03", icon: "pen", title: "Design", text: "We design screens people can read, trust and use." },
+  { n: "04", icon: "code", title: "Build", text: "We write production code and demo progress every week." },
+  { n: "05", icon: "chart", title: "Grow", text: "We measure results after launch and keep improving." },
 ];
 
 export const PLANS = [
-  { length: "2 weeks", title: "Discovery sprint", text: "We map scope and user flows, build a clickable prototype and give you a fixed quote." },
-  { length: "6 to 16 weeks", title: "Product build", text: "We design and build the product from the first screen to launch, with a demo every week." },
-  { length: "Monthly", title: "Growth partner", text: "A team on call every month for releases, SEO, speed and support." },
+  { icon: "compass", length: "2 weeks", title: "Discovery sprint", text: "We map scope and user flows, build a clickable prototype and give you a fixed quote." },
+  { icon: "code", length: "6 to 16 weeks", title: "Product build", text: "We design and build the product from the first screen to launch, with a demo every week." },
+  { icon: "rocket", length: "Monthly", title: "Growth partner", text: "A team on call every month for releases, SEO, speed and support." },
 ];
 
 /** Placeholder quotes: never ship these. Replace with approved client words. */
@@ -176,10 +179,10 @@ export const QUOTES = [
 ];
 
 export const VALUES = [
-  { title: "We start with the problem", text: "We make sure we understand what is wrong before we design anything." },
-  { title: "We measure what changed", text: "Good work shows up in the numbers after launch, so that is where we look." },
-  { title: "One team from brief to release", text: "Designers and developers work side by side, and the same people stay on your project." },
-  { title: "We tell you early", text: "Clear scope, honest timelines and a heads up as soon as something slips." },
+  { icon: "search", title: "We start with the problem", text: "We make sure we understand what is wrong before we design anything." },
+  { icon: "chart", title: "We measure what changed", text: "Good work shows up in the numbers after launch, so that is where we look." },
+  { icon: "users", title: "One team from brief to release", text: "Designers and developers work side by side, and the same people stay on your project." },
+  { icon: "bell", title: "We tell you early", text: "Clear scope, honest timelines and a heads up as soon as something slips." },
 ];
 
 export const HOME_FAQ = [

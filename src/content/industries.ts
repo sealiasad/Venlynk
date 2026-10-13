@@ -4,6 +4,7 @@ import type { Industry, IndustrySlug } from "@/content/types";
 export const INDUSTRIES: Industry[] = [
   {
     slug: "health",
+    icon: "pulse",
     title: "Health and pharmacy",
     short: "Online pharmacies, lab bookings and telemedicine apps.",
     intro:
@@ -18,6 +19,7 @@ export const INDUSTRIES: Industry[] = [
   },
   {
     slug: "travel-mobility",
+    icon: "plane",
     title: "Travel, tickets and mobility",
     short: "Flight booking, event ticketing, travel safety and ride apps.",
     intro:
@@ -32,6 +34,7 @@ export const INDUSTRIES: Industry[] = [
   },
   {
     slug: "real-estate",
+    icon: "home",
     title: "Real estate and construction",
     short: "Property portals, investor sites and construction marketplaces.",
     intro:
@@ -46,6 +49,7 @@ export const INDUSTRIES: Industry[] = [
   },
   {
     slug: "saas",
+    icon: "cloud",
     title: "SaaS, B2B and fintech",
     short: "Product interfaces, marketing sites and finance apps.",
     intro:
@@ -60,6 +64,7 @@ export const INDUSTRIES: Industry[] = [
   },
   {
     slug: "commerce",
+    icon: "bag",
     title: "Commerce and consumer",
     short: "Online stores, bookings and home services.",
     intro:
@@ -74,6 +79,7 @@ export const INDUSTRIES: Industry[] = [
   },
   {
     slug: "education-nonprofit",
+    icon: "book",
     title: "Education and non profit",
     short: "Learning platforms and websites for charities.",
     intro:
@@ -88,6 +94,7 @@ export const INDUSTRIES: Industry[] = [
   },
   {
     slug: "media-faith",
+    icon: "play",
     title: "Media and faith",
     short: "Content sites, audio apps and multilingual platforms.",
     intro:

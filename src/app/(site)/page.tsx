@@ -5,6 +5,7 @@ import { BrandMark } from "@/components/brand/brand-mark";
 import { ConsultPill } from "@/components/home/a/consult-pill";
 import { HeroMark } from "@/components/home/a/hero-mark";
 import { accent, delay, Head, ScrubText } from "@/components/site/blocks";
+import { Icon } from "@/components/ui/icon";
 import { HomeFx } from "@/components/home/a/home-fx";
 import {
   BRANDS,
@@ -108,7 +109,10 @@ export default function HomePage() {
         <div className="ha-grid3">
           {PROBLEMS.map((p, i) => (
             <div className={`ha-prob${p.highlight ? " ha-prob--hl" : ""}`} key={p.label} data-fade="" style={delay(i)}>
-              <small>{p.label}</small>
+              <div className="ha-prob__top">
+                <Icon name={p.icon} tone={p.highlight ? "light" : "brand"} />
+                <small>{p.label}</small>
+              </div>
               <h3>{p.text}</h3>
             </div>
           ))}
@@ -133,7 +137,11 @@ export default function HomePage() {
               style={delay(i)}
             >
               <span className="ha-card__shine" aria-hidden="true" />
-              <span className="ha-card__n">{p.n}</span>
+              <span className="ha-card__top">
+                <Icon name={p.icon} tone={p.tone === "blue" ? "light" : "brand"} />
+                <span className="ha-card__n">{p.n}</span>
+                <span className="ha-go" aria-hidden="true">↗</span>
+              </span>
               <div>
                 <h3>{p.title}</h3>
                 <p>{p.sub}</p>
@@ -162,6 +170,7 @@ export default function HomePage() {
               <span className="ha-row__t">{w.name}</span>
               <span className="ha-row__d">{w.detail}</span>
               <span className="ha-row__l">{w.label}</span>
+              <span className="ha-row__go" aria-hidden="true">→</span>
               <span className="ha-row__thumb" aria-hidden="true">
                 <Image src={w.image} alt="" fill sizes="(max-width: 820px) 85vw, 1px" loading="lazy" />
               </span>
@@ -180,10 +189,17 @@ export default function HomePage() {
         <div className="wrap">
           <Head title="Results our clients measured" text="Reported by clients after launch." />
         </div>
-        <div className="ha-rail-wrap">
+        <div className="wrap ha-swipe" aria-hidden="true">
+          <span>Swipe to see all {RESULTS.length}</span>
+          <span className="ha-swipe__track">
+            <span />
+          </span>
+          <span className="ha-swipe__arrow">→</span>
+        </div>
+        <div className="ha-rail-wrap" data-swipe="">
           <div className="ha-rail">
             {RESULTS.map((r, i) => (
-              <div className={`ha-res ha-res--${r.tone}`} key={`${r.value}-${i}`} data-fade="" style={delay(i)}>
+              <div className={`ha-res ha-res--${r.tone}`} key={`${r.value}-${i}`}>
                 <small>{r.client}</small>
                 <div>
                   <b>{r.value}</b>
@@ -209,10 +225,14 @@ export default function HomePage() {
         />
         <div className="ha-inds">
           {INDUSTRIES.map((ind, i) => (
-            <div className="ha-ind" key={ind.title} data-fade="" style={delay(i, 50)}>
-              <b>{ind.title}</b>
-              <span>{ind.clients}</span>
-            </div>
+            <Link className="ha-ind" href={`/industries/${ind.slug}`} key={ind.title} data-fade="" style={delay(i, 50)}>
+              <Icon name={ind.icon} />
+              <span className="ha-ind__body">
+                <b>{ind.title}</b>
+                <span>{ind.clients}</span>
+              </span>
+              <span className="ha-ind__go" aria-hidden="true">→</span>
+            </Link>
           ))}
         </div>
       </section>
@@ -289,7 +309,10 @@ export default function HomePage() {
         <ol className="ha-steps">
           {STEPS.map((s, i) => (
             <li className="ha-step" key={s.n} data-fade="" style={delay(i, 100)}>
-              <b aria-hidden="true">{s.n}</b>
+              <span className="ha-step__top">
+                <b aria-hidden="true">{s.n}</b>
+                <Icon name={s.icon} tone={i === 3 ? "light" : "brand"} />
+              </span>
               <div>
                 <h3>{s.title}</h3>
                 <p>{s.text}</p>
@@ -305,7 +328,10 @@ export default function HomePage() {
         <div className="ha-grid3">
           {PLANS.map((p, i) => (
             <div className="ha-plan" key={p.title} data-tilt="" data-fade="" style={delay(i)}>
-              <b>{p.length}</b>
+              <span className="ha-plan__top">
+                <Icon name={p.icon} tone={i === 1 ? "brand" : "ink"} />
+                <b>{p.length}</b>
+              </span>
               <div>
                 <h3>{p.title}</h3>
                 <p>{p.text}</p>
@@ -347,8 +373,11 @@ export default function HomePage() {
         <div className="ha-vals">
           {VALUES.map((v, i) => (
             <div className="ha-val" key={v.title} data-fade="" style={delay(i)}>
-              <span aria-hidden="true">{String(i + 1).padStart(2, "0")}</span>
+              <Icon name={v.icon} />
               <div>
+                <span className="ha-val__n" aria-hidden="true">
+                  {String(i + 1).padStart(2, "0")}
+                </span>
                 <h3>{v.title}</h3>
                 <p>{v.text}</p>
               </div>

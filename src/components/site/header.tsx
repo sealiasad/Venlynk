@@ -5,6 +5,7 @@ import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 
 import { BrandMark } from "@/components/brand/brand-mark";
+import { CONTACT } from "@/content/home";
 import { NAV, SITE } from "@/content/site";
 
 export function Header() {
@@ -89,21 +90,30 @@ export function Header() {
       </header>
 
       <div id="site-menu" className={`menu${open ? " is-open" : ""}`} inert={!open} aria-hidden={!open}>
+        <div className="menu__bg" aria-hidden="true" />
         <nav className="menu__inner wrap" aria-label="Mobile">
-          <ul>
-            {NAV.map((item, i) => (
-              <li key={item.href} style={{ transitionDelay: `${80 + i * 50}ms` }}>
+          <p className="menu__label">Menu</p>
+          <ul className="menu__list">
+            {[...NAV, { label: "Contact", href: "/contact" }].map((item, i) => (
+              <li key={item.href} style={{ transitionDelay: `${80 + i * 45}ms` }}>
                 <Link href={item.href} aria-current={current(item.href) ? "page" : undefined}>
-                  {item.label}
+                  <span className="menu__n" aria-hidden="true">
+                    {String(i + 1).padStart(2, "0")}
+                  </span>
+                  <span className="menu__t">{item.label}</span>
+                  <span className="menu__go" aria-hidden="true">→</span>
                 </Link>
               </li>
             ))}
-            <li style={{ transitionDelay: `${80 + NAV.length * 50}ms` }}>
-              <Link href="/contact">Contact</Link>
-            </li>
           </ul>
-          <div className="menu__foot">
-            <a href={`mailto:${SITE.email}`}>{SITE.email}</a>
+          <div className="menu__foot" style={{ transitionDelay: "380ms" }}>
+            <Link className="ha-btn ha-btn--light menu__cta" href="/contact">
+              Start a project <span aria-hidden="true">→</span>
+            </Link>
+            <div className="menu__contact">
+              <a href={`mailto:${SITE.email}`}>{SITE.email}</a>
+              <a href={CONTACT.phoneHref}>{CONTACT.phone}</a>
+            </div>
           </div>
         </nav>
       </div>

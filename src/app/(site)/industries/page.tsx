@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 
+import { Icon } from "@/components/ui/icon";
 import { ClosingCta, delay, PageHead } from "@/components/site/blocks";
 import { INDUSTRIES } from "@/content/industries";
 import { PROJECTS } from "@/content/projects";
@@ -28,7 +29,10 @@ export default function IndustriesPage() {
               <li key={ind.slug} data-fade="" style={delay(i % 3)}>
                 <Link href={`/industries/${ind.slug}`} className="pa-ind" data-tilt="">
                   <span className="ha-card__shine" aria-hidden="true" />
-                  <span className="pa-ind__n">{String(i + 1).padStart(2, "0")}</span>
+                  <span className="pa-ind__top">
+                    <Icon name={ind.icon} />
+                    <span className="pa-ind__n">{String(i + 1).padStart(2, "0")}</span>
+                  </span>
                   <span className="pa-ind__body">
                     <span className="pa-ind__t">{ind.title}</span>
                     <span className="pa-ind__s">{ind.short}</span>

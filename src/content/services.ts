@@ -2,9 +2,9 @@ import type { Practice, PracticeSlug, Service, ServiceSlug } from "@/content/typ
 
 /** Three practices, eleven services. Copy follows the company profile deck. */
 export const PRACTICES: Practice[] = [
-  { slug: "products", n: "01", title: "Digital products", sub: "Design and build the product.", tone: "lav" },
-  { slug: "commerce", n: "02", title: "Commerce and platforms", sub: "Sell online and run operations.", tone: "paper" },
-  { slug: "growth", n: "03", title: "AI, automation and growth", sub: "Work smarter and keep improving.", tone: "blue" },
+  { slug: "products", icon: "layers", n: "01", title: "Digital products", sub: "Design and build the product.", tone: "lav" },
+  { slug: "commerce", icon: "bag", n: "02", title: "Commerce and platforms", sub: "Sell online and run operations.", tone: "paper" },
+  { slug: "growth", icon: "spark", n: "03", title: "AI, automation and growth", sub: "Work smarter and keep improving.", tone: "blue" },
 ];
 
 const photo = (k: string) => `/images/services/${k}.webp`;
@@ -22,11 +22,12 @@ export const SERVICES: Service[] = [
     image: photo("ux"),
     imageAlt: "A hand sketching wireframes on a tablet",
     tools: ["Figma", "FigJam", "Maze", "Hotjar"],
+    icon: "pen",
     deliverables: [
-      { title: "User research", body: "Interviews, analytics and a walk through what exists today, so we fix the real problem." },
-      { title: "Journeys and flows", body: "The few paths that matter most, mapped step by step before any visuals." },
-      { title: "Clickable prototype", body: "A prototype you can test with real people and share with your team." },
-      { title: "Design system", body: "Reusable components and rules so the product stays consistent as it grows." },
+      { icon: "users", title: "User research", body: "Interviews, analytics and a walk through what exists today, so we fix the real problem." },
+      { icon: "flow", title: "Journeys and flows", body: "The few paths that matter most, mapped step by step before any visuals." },
+      { icon: "tap", title: "Clickable prototype", body: "A prototype you can test with real people and share with your team." },
+      { icon: "layers", title: "Design system", body: "Reusable components and rules so the product stays consistent as it grows." },
     ],
     steps: [
       { title: "Find where people get stuck", body: "We look at your data and talk to users to see where they hesitate or give up." },
@@ -52,11 +53,12 @@ export const SERVICES: Service[] = [
     image: photo("web"),
     imageAlt: "Code on a laptop screen",
     tools: ["Next.js", "React", "TypeScript", "WordPress", "Laravel", "Supabase"],
+    icon: "code",
     deliverables: [
-      { title: "Marketing websites", body: "Fast pages that explain what you do and turn visits into enquiries." },
-      { title: "Web apps", body: "Portals, dashboards and booking flows built on a solid, tested codebase." },
-      { title: "Content you control", body: "A CMS your team can use for pages, posts and updates without a developer." },
-      { title: "Migrations", body: "Moving from an old platform without losing pages, search traffic or data." },
+      { icon: "globe", title: "Marketing websites", body: "Fast pages that explain what you do and turn visits into enquiries." },
+      { icon: "code", title: "Web apps", body: "Portals, dashboards and booking flows built on a solid, tested codebase." },
+      { icon: "pen", title: "Content you control", body: "A CMS your team can use for pages, posts and updates without a developer." },
+      { icon: "box", title: "Migrations", body: "Moving from an old platform without losing pages, search traffic or data." },
     ],
     steps: [
       { title: "Plan the structure", body: "Sitemap, content and the key user flows agreed before design starts." },
@@ -82,11 +84,12 @@ export const SERVICES: Service[] = [
     image: photo("mobile"),
     imageAlt: "Hands using an app on a phone",
     tools: ["Flutter", "React Native", "Firebase", "Expo"],
+    icon: "phone",
     deliverables: [
-      { title: "App design", body: "Screens and flows designed for thumbs, small screens and patchy connections." },
-      { title: "One codebase", body: "A single Flutter or React Native app for iOS and Android." },
-      { title: "Back end and APIs", body: "Accounts, payments, notifications and the data behind the app." },
-      { title: "Store releases", body: "App Store and Google Play submissions, reviews and updates handled for you." },
+      { icon: "pen", title: "App design", body: "Screens and flows designed for thumbs, small screens and patchy connections." },
+      { icon: "phone", title: "One codebase", body: "A single Flutter or React Native app for iOS and Android." },
+      { icon: "link", title: "Back end and APIs", body: "Accounts, payments, notifications and the data behind the app." },
+      { icon: "rocket", title: "Store releases", body: "App Store and Google Play submissions, reviews and updates handled for you." },
     ],
     steps: [
       { title: "Shape the first version", body: "We agree the smallest version worth launching and design it." },
@@ -112,11 +115,12 @@ export const SERVICES: Service[] = [
     image: photo("commerce"),
     imageAlt: "Paying online with a card on a laptop",
     tools: ["Shopify", "WooCommerce", "Stripe", "Klaviyo"],
+    icon: "bag",
     deliverables: [
-      { title: "Store design and build", body: "A store that looks like your brand and is easy to browse on a phone." },
-      { title: "Product pages", body: "Clear photos, sizes, prices and answers to the questions that stop a sale." },
-      { title: "Checkout and payments", body: "Fewer steps to pay, with the payment methods your customers use." },
-      { title: "Operations", body: "Stock, delivery and email connected so orders flow without manual work." },
+      { icon: "bag", title: "Store design and build", body: "A store that looks like your brand and is easy to browse on a phone." },
+      { icon: "box", title: "Product pages", body: "Clear photos, sizes, prices and answers to the questions that stop a sale." },
+      { icon: "card", title: "Checkout and payments", body: "Fewer steps to pay, with the payment methods your customers use." },
+      { icon: "gear", title: "Operations", body: "Stock, delivery and email connected so orders flow without manual work." },
     ],
     steps: [
       { title: "Look at where shoppers drop off", body: "We check your data to find the pages and steps that lose sales." },
@@ -142,11 +146,12 @@ export const SERVICES: Service[] = [
     image: photo("etsy"),
     imageAlt: "Handmade ceramic vases",
     tools: ["Etsy", "Canva", "Google Sheets"],
+    icon: "star",
     deliverables: [
-      { title: "Product research", body: "What buyers search for, what sells in your niche and how to price it." },
-      { title: "Shop setup", body: "Branding, policies, shipping and payments set up properly from day one." },
-      { title: "Listings built to be found", body: "Titles, tags, photos and descriptions written around real searches." },
-      { title: "Launch support", body: "Help through the first weeks while the shop finds its feet." },
+      { icon: "search", title: "Product research", body: "What buyers search for, what sells in your niche and how to price it." },
+      { icon: "bag", title: "Shop setup", body: "Branding, policies, shipping and payments set up properly from day one." },
+      { icon: "star", title: "Listings built to be found", body: "Titles, tags, photos and descriptions written around real searches." },
+      { icon: "rocket", title: "Launch support", body: "Help through the first weeks while the shop finds its feet." },
     ],
     steps: [
       { title: "Research the market", body: "We look at competitors and search terms before you list anything." },
@@ -172,11 +177,12 @@ export const SERVICES: Service[] = [
     image: photo("odoo"),
     imageAlt: "A hand at a point of sale terminal",
     tools: ["Odoo", "PostgreSQL", "Python"],
+    icon: "gear",
     deliverables: [
-      { title: "Process mapping", body: "How work moves through your business today, and what Odoo should change." },
-      { title: "Module setup", body: "Sales, inventory, accounting, point of sale and more, configured to fit." },
-      { title: "Data migration", body: "Customers, products and history moved across from your old tools." },
-      { title: "Training", body: "Your team learns the system on their own data before go live." },
+      { icon: "flow", title: "Process mapping", body: "How work moves through your business today, and what Odoo should change." },
+      { icon: "gear", title: "Module setup", body: "Sales, inventory, accounting, point of sale and more, configured to fit." },
+      { icon: "box", title: "Data migration", body: "Customers, products and history moved across from your old tools." },
+      { icon: "users", title: "Training", body: "Your team learns the system on their own data before go live." },
     ],
     steps: [
       { title: "Map how you work", body: "We sit with each team and agree what the system needs to do." },
@@ -202,11 +208,12 @@ export const SERVICES: Service[] = [
     image: photo("ai"),
     imageAlt: "A laptop glowing in the dark",
     tools: ["OpenAI", "Claude", "n8n", "Python", "Supabase"],
+    icon: "bot",
     deliverables: [
-      { title: "AI assistants", body: "Answer questions from your own documents, tickets or product data." },
-      { title: "AI agents", body: "Draft replies, fill forms and update records, with a person approving the steps that matter." },
-      { title: "Workflow automation", body: "Move data between your apps so nobody copies and pastes it by hand." },
-      { title: "Integrations", body: "Connect AI to your CRM, help desk, store or internal tools." },
+      { icon: "bot", title: "AI assistants", body: "Answer questions from your own documents, tickets or product data." },
+      { icon: "spark", title: "AI agents", body: "Draft replies, fill forms and update records, with a person approving the steps that matter." },
+      { icon: "flow", title: "Workflow automation", body: "Move data between your apps so nobody copies and pastes it by hand." },
+      { icon: "link", title: "Integrations", body: "Connect AI to your CRM, help desk, store or internal tools." },
     ],
     steps: [
       { title: "Find the task", body: "We sit with your team and pick the repeat work worth automating first." },
@@ -232,11 +239,12 @@ export const SERVICES: Service[] = [
     image: photo("seo"),
     imageAlt: "A laptop showing search performance data",
     tools: ["Google Search Console", "Google Analytics", "Ahrefs", "Semrush"],
+    icon: "search",
     deliverables: [
-      { title: "Technical audit", body: "Speed, indexing, structure and errors that hold your pages back." },
-      { title: "Keyword research", body: "The searches your customers actually make, grouped into pages worth building." },
-      { title: "Content", body: "Pages and articles written to answer those searches clearly." },
-      { title: "Monthly reporting", body: "Plain reports on traffic, rankings and enquiries, and what we do next." },
+      { icon: "gear", title: "Technical audit", body: "Speed, indexing, structure and errors that hold your pages back." },
+      { icon: "search", title: "Keyword research", body: "The searches your customers actually make, grouped into pages worth building." },
+      { icon: "pen", title: "Content", body: "Pages and articles written to answer those searches clearly." },
+      { icon: "chart", title: "Monthly reporting", body: "Plain reports on traffic, rankings and enquiries, and what we do next." },
     ],
     steps: [
       { title: "Fix the foundations", body: "We clear the technical issues first so good content can rank." },
@@ -262,11 +270,12 @@ export const SERVICES: Service[] = [
     image: photo("aeo"),
     imageAlt: "A phone showing an AI assistant on a laptop",
     tools: ["ChatGPT", "Perplexity", "Gemini", "Schema.org"],
+    icon: "spark",
     deliverables: [
-      { title: "AI visibility check", body: "What ChatGPT, Gemini and Perplexity say about you and your competitors today." },
-      { title: "Answer ready content", body: "Clear pages that answer the questions customers ask these tools." },
-      { title: "Structured data", body: "Schema that tells machines exactly who you are and what you offer." },
-      { title: "Trusted mentions", body: "Listings and references on the sites AI tools rely on." },
+      { icon: "bot", title: "AI visibility check", body: "What ChatGPT, Gemini and Perplexity say about you and your competitors today." },
+      { icon: "list", title: "Answer ready content", body: "Clear pages that answer the questions customers ask these tools." },
+      { icon: "code", title: "Structured data", body: "Schema that tells machines exactly who you are and what you offer." },
+      { icon: "shield", title: "Trusted mentions", body: "Listings and references on the sites AI tools rely on." },
     ],
     steps: [
       { title: "See what AI says now", body: "We test the questions your customers ask and record the answers." },
@@ -292,11 +301,12 @@ export const SERVICES: Service[] = [
     image: photo("aso"),
     imageAlt: "A phone on a wooden desk",
     tools: ["App Store", "Google Play", "Firebase"],
+    icon: "phone",
     deliverables: [
-      { title: "Keyword research", body: "The words people use to look for apps like yours." },
-      { title: "Listing copy", body: "Titles, subtitles and descriptions written to be found and to convert." },
-      { title: "Screenshots", body: "Store graphics that show the value of the app in a few seconds." },
-      { title: "Ratings and reviews", body: "A plan to ask happy users for reviews and to answer the unhappy ones." },
+      { icon: "search", title: "Keyword research", body: "The words people use to look for apps like yours." },
+      { icon: "pen", title: "Listing copy", body: "Titles, subtitles and descriptions written to be found and to convert." },
+      { icon: "phone", title: "Screenshots", body: "Store graphics that show the value of the app in a few seconds." },
+      { icon: "star", title: "Ratings and reviews", body: "A plan to ask happy users for reviews and to answer the unhappy ones." },
     ],
     steps: [
       { title: "Audit the listing", body: "We compare your listing with the apps people pick instead." },
@@ -322,11 +332,12 @@ export const SERVICES: Service[] = [
     image: photo("growth"),
     imageAlt: "A laptop showing an analytics dashboard",
     tools: ["Google Analytics", "Hotjar", "Vercel", "Sentry"],
+    icon: "chart",
     deliverables: [
-      { title: "Analytics", body: "Tracking set up so you know what people do and where they leave." },
-      { title: "Speed work", body: "Faster pages and apps, measured with Core Web Vitals." },
-      { title: "A/B tests", body: "Changes tested against the current version before they go live for everyone." },
-      { title: "Monthly releases", body: "Fixes and improvements shipped on a steady rhythm." },
+      { icon: "chart", title: "Analytics", body: "Tracking set up so you know what people do and where they leave." },
+      { icon: "speed", title: "Speed work", body: "Faster pages and apps, measured with Core Web Vitals." },
+      { icon: "flow", title: "A/B tests", body: "Changes tested against the current version before they go live for everyone." },
+      { icon: "rocket", title: "Monthly releases", body: "Fixes and improvements shipped on a steady rhythm." },
     ],
     steps: [
       { title: "Agree the goals", body: "We pick the numbers that matter for your business this quarter." },

@@ -69,8 +69,9 @@ export type Service = {
   intro: string;
   image: string;
   imageAlt: string;
+  icon: string;
   tools: string[];
-  deliverables: { title: string; body: string }[];
+  deliverables: { title: string; body: string; icon?: string }[];
   steps: { title: string; body: string }[];
   faq: { q: string; a: string }[];
   closing: string;
@@ -78,6 +79,7 @@ export type Service = {
 
 export type Practice = {
   slug: PracticeSlug;
+  icon: string;
   n: string;
   title: string;
   sub: string;
@@ -86,6 +88,7 @@ export type Practice = {
 
 export type Industry = {
   slug: IndustrySlug;
+  icon: string;
   title: string;
   short: string;
   intro: string;
