@@ -28,7 +28,8 @@ export const SOCIALS = [
   { label: "LinkedIn", href: "" },
   { label: "Behance", href: "" },
   { label: "Dribbble", href: "" },
-  { label: "Instagram", href: "" },
+  { label: "Instagram", href: "https://www.instagram.com/venlynk/" },
+  { label: "Facebook", href: "" },
   { label: "Clutch", href: "" },
 ] as const;
 
