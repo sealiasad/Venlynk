@@ -5,7 +5,8 @@ import { PageHead } from "@/components/site/blocks";
 import { CopyEmail } from "@/components/site/copy-email";
 import { CONTACT } from "@/content/home";
 import { PAGE_SEO } from "@/content/seo";
-import { SITE } from "@/content/site";
+import { SITE, SOCIALS } from "@/content/site";
+import { SOCIAL_ICONS } from "@/content/social-icons";
 import { pageMeta } from "@/lib/seo";
 
 export const metadata: Metadata = pageMeta({ ...PAGE_SEO.contact, path: "/contact" });
@@ -49,6 +50,29 @@ export default function ContactPage() {
                 <dt>Call or WhatsApp</dt>
                 <dd>
                   <a href={CONTACT.phoneHref}>{CONTACT.phone}</a>
+                </dd>
+              </div>
+              <div>
+                <dt>Follow Venlynk</dt>
+                <dd>
+                  <ul className="pa-social" aria-label="Venlynk on social media">
+                    {SOCIALS.filter((s) => s.href && s.icon).map((s) => (
+                      <li key={s.label}>
+                        <a
+                          className="ftr__icon"
+                          href={s.href}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          aria-label={`Venlynk on ${s.label}`}
+                          title={s.label}
+                        >
+                          <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                            <path d={SOCIAL_ICONS[s.icon]} />
+                          </svg>
+                        </a>
+                      </li>
+                    ))}
+                  </ul>
                 </dd>
               </div>
               <div>

@@ -1161,3 +1161,16 @@
     flex: none;
   }
 }
+
+/* Contact page: social icon row (reuses the footer's .ftr__icon circles) */
+.pa-social {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+.pa-reach .pa-social a {
+  border-bottom: 1px solid var(--line-dark);
+}

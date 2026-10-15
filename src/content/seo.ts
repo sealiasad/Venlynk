@@ -27,7 +27,7 @@ export const PAGE_SEO = {
   about: {
     title: "About the studio and its founder",
     description:
-      "Venlynk is a product design and engineering studio led by Syed Asad Ali. Strategy, design and engineering in one team, from brief to release.",
+      "Venlynk is a product design and engineering studio led by Ali Asad. Strategy, design and engineering in one team, from brief to release.",
   },
   insights: {
     title: "Insights on product, engineering and AI",

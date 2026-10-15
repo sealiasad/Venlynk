@@ -110,7 +110,7 @@ export const INDUSTRIES = [
 
 export const FOUNDER = {
   role: "Founder and CEO",
-  name: "Syed Asad Ali",
+  name: "Ali Asad",
   bio: "Ali has spent more than 14 years building for the web. He started on brand websites at Creative Chaos, moved into product engineering at VentureDive, then led UX and front end at Dawaai.pk and Global Rescue. Today he leads engineering teams and brings AI and agentic workflows into how software gets planned, built and shipped.",
   skills: ["Engineering leadership", "AI and agentic systems", "React and Next.js", "Flutter and React Native", "UX research"],
   linkedin: "https://www.linkedin.com/in/iali-asad",
