@@ -34,28 +34,38 @@ export function HomeFx() {
     const path = svg?.querySelector<SVGPathElement>("path");
     let nodes: { c: SVGCircleElement; y: number }[] = [];
     let length = 0;
+    let rootH = 1;
+    let frame = 0;
 
     const update = () => {
+      frame = 0;
       if (!path) return;
       const top = root.getBoundingClientRect().top;
       const front = -top + window.innerHeight * 0.7;
-      const p = reduced ? 1 : Math.min(1, Math.max(0, front / root.offsetHeight));
+      const p = reduced ? 1 : Math.min(1, Math.max(0, front / rootH));
       path.style.strokeDashoffset = String(length * (1 - p));
       nodes.forEach((n) => n.c.classList.toggle("is-on", front > n.y));
     };
+    // At most one update per frame, however many scroll events arrive.
+    const onScroll = () => {
+      if (!frame) frame = requestAnimationFrame(update);
+    };
+    offs.push(() => cancelAnimationFrame(frame));
 
     const build = () => {
       if (!svg || !path) return;
       const box = root.getBoundingClientRect();
+      // All measurements first, then all writes, so the page is laid out once.
       const W = root.clientWidth;
       const H = root.offsetHeight;
-      svg.setAttribute("viewBox", `0 0 ${W} ${H}`);
       const pad = Math.max(10, W * 0.025);
       const hero = root.querySelector<HTMLElement>(".ha-hero");
       const stops: [number, number][] = [[W * 0.62, (hero?.offsetHeight ?? 600) * 0.55]];
       root.querySelectorAll<HTMLElement>("[data-node]").forEach((s, i) => {
         stops.push([i % 2 ? W - pad : pad, s.getBoundingClientRect().top - box.top + 70]);
       });
+      rootH = H || 1;
+      svg.setAttribute("viewBox", `0 0 ${W} ${H}`);
       let d = `M ${stops[0][0]} ${stops[0][1]}`;
       for (let i = 1; i < stops.length; i++) {
         const [x0, y0] = stops[i - 1];
@@ -78,52 +88,72 @@ export function HomeFx() {
       update();
     };
 
-    on(window, "scroll", update);
-    on(window, "resize", build);
-    ScrollTrigger.addEventListener("refresh", build);
-    offs.push(() => ScrollTrigger.removeEventListener("refresh", build));
-    const ro = new ResizeObserver(() => build());
+    // Rebuild on resize, coalesced to one build per frame. The ResizeObserver also fires once
+    // right after observe(), which draws the line the first time, so no separate initial build.
+    let buildFrame = 0;
+    const scheduleBuild = () => {
+      if (!buildFrame)
+        buildFrame = requestAnimationFrame(() => {
+          buildFrame = 0;
+          build();
+        });
+    };
+    offs.push(() => cancelAnimationFrame(buildFrame));
+    on(window, "scroll", onScroll);
+    ScrollTrigger.addEventListener("refresh", scheduleBuild);
+    offs.push(() => ScrollTrigger.removeEventListener("refresh", scheduleBuild));
+    const ro = new ResizeObserver(scheduleBuild);
     ro.observe(root);
     offs.push(() => ro.disconnect());
-    build();
 
     /* ----- results rail ----- */
-    const ctx = gsap.context(() => {
-      const section = root.querySelector<HTMLElement>("[data-rail]");
-      const rail = section?.querySelector<HTMLElement>(".ha-rail");
-      const bar = section?.querySelector<HTMLElement>(".ha-rail-progress span");
-      if (!section || !rail || reduced) return;
+    // Scroll-linked effects measure the page, so they are built once the browser is idle.
+    let ctx: gsap.Context | null = null;
+    const buildScroll = () => {
+      ctx = gsap.context(() => {
+        const section = root.querySelector<HTMLElement>("[data-rail]");
+        const rail = section?.querySelector<HTMLElement>(".ha-rail");
+        const bar = section?.querySelector<HTMLElement>(".ha-rail-progress span");
+        if (!section || !rail || reduced) return;
 
-      // Hero copy drifts up and dims as the page scrolls away from it.
-      gsap.to(root.querySelector(".ha-hero__inner"), {
-        yPercent: -14,
-        opacity: 0.2,
-        ease: "none",
-        scrollTrigger: { trigger: root.querySelector(".ha-hero"), start: "top top", end: "bottom top", scrub: true },
-      });
-      const mm = gsap.matchMedia();
-      mm.add("(min-width: 900px) and (hover: hover)", () => {
-        section.classList.add("is-pinned");
-        const dist = () => Math.max(0, rail.scrollWidth - window.innerWidth);
-        gsap.to(rail, {
-          x: () => -dist(),
+        // Hero copy drifts up and dims as the page scrolls away from it.
+        gsap.to(root.querySelector(".ha-hero__inner"), {
+          yPercent: -14,
+          opacity: 0.2,
           ease: "none",
-          scrollTrigger: {
-            trigger: section,
-            start: "top top",
-            end: () => `+=${dist()}`,
-            pin: true,
-            scrub: 0.8,
-            invalidateOnRefresh: true,
-            onUpdate: (self) => {
-              if (bar) bar.style.transform = `scaleX(${self.progress})`;
-            },
-          },
+          scrollTrigger: { trigger: root.querySelector(".ha-hero"), start: "top top", end: "bottom top", scrub: true },
         });
-        return () => section.classList.remove("is-pinned");
-      });
-    }, root);
-    offs.push(() => ctx.revert());
+        const mm = gsap.matchMedia();
+        mm.add("(min-width: 900px) and (hover: hover)", () => {
+          section.classList.add("is-pinned");
+          const dist = () => Math.max(0, rail.scrollWidth - window.innerWidth);
+          gsap.to(rail, {
+            x: () => -dist(),
+            ease: "none",
+            scrollTrigger: {
+              trigger: section,
+              start: "top top",
+              end: () => `+=${dist()}`,
+              pin: true,
+              scrub: 0.8,
+              invalidateOnRefresh: true,
+              onUpdate: (self) => {
+                if (bar) bar.style.transform = `scaleX(${self.progress})`;
+              },
+            },
+          });
+          return () => section.classList.remove("is-pinned");
+        });
+      }, root);
+    };
+    if ("requestIdleCallback" in window) {
+      const id = window.requestIdleCallback(buildScroll, { timeout: 1500 });
+      offs.push(() => window.cancelIdleCallback(id));
+    } else {
+      const id = setTimeout(buildScroll, 200);
+      offs.push(() => clearTimeout(id));
+    }
+    offs.push(() => ctx?.revert());
 
     if (fine && !reduced) {
       /* ----- work preview following the pointer ----- */

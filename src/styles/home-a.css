@@ -1173,7 +1173,7 @@ html:has(.ha) body {
 .ha [data-fade] {
   transition: opacity 1s var(--ease-out), transform 1s var(--ease-out);
 }
-.js-motion .ha [data-fade]:not(.is-in) {
+.js-motion .ha [data-fade].rv:not(.is-in) {
   transform: translateY(3rem);
 }
 

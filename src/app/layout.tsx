@@ -52,6 +52,12 @@ export const viewport: Viewport = {
 
 const motionBoot = `(function(){var d=document.documentElement;if(!window.matchMedia||!matchMedia('(prefers-reduced-motion: reduce)').matches){d.classList.add('js-motion');setTimeout(function(){if(d.dataset.motion!=='ready'){d.classList.remove('js-motion')}},4000)}})();`;
 
+// Runs as soon as the page HTML has arrived, before the JavaScript bundles. Reveals that are
+// below the fold get .rv, which hides them until they scroll in (MotionProvider). Anything
+// already on screen is never hidden, so the first paint shows the real page instead of
+// waiting for hydration. Off-screen elements can't be seen, so hiding them causes no flash.
+const revealBoot = `(function(){var d=document.documentElement;if(!d.classList.contains('js-motion'))return;var h=innerHeight;document.querySelectorAll('[data-words],[data-fade],[data-clip]').forEach(function(e){var r=e.getBoundingClientRect();if(r.top<h&&r.bottom>0)e.classList.add('is-in');else e.classList.add('rv')})})();`;
+
 const orgJsonLd = {
   "@context": "https://schema.org",
   "@type": "Organization",
@@ -92,6 +98,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
       </head>
       <body>
         {children}
+        <script dangerouslySetInnerHTML={{ __html: revealBoot }} />
         <MotionProvider />
       </body>
     </html>

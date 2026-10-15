@@ -4,7 +4,7 @@ import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import Lenis from "lenis";
 import { usePathname } from "next/navigation";
-import { useEffect, useRef } from "react";
+import { useEffect, useLayoutEffect, useRef } from "react";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -23,16 +23,21 @@ gsap.registerPlugin(ScrollTrigger);
 export function MotionProvider() {
   const pathname = usePathname();
   const lenisRef = useRef<Lenis | null>(null);
+  const firstPage = useRef(true);
 
-  // Smooth scroll + cursor, once.
+  // Smooth scroll + cursor, once. Desktop pointers only: on touch screens the
+  // browser's own scrolling is smoother and there is no cursor to follow, so
+  // skipping both saves a frame loop and a listener on every phone.
   useEffect(() => {
     const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const fine = window.matchMedia("(hover: hover) and (pointer: fine)").matches;
     const root = document.documentElement;
     root.dataset.motion = "ready";
     if (reduced) {
       root.classList.remove("js-motion");
       return;
     }
+    if (!fine) return;
 
     const lenis = new Lenis({ lerp: 0.11, anchors: { offset: -80 } });
     lenisRef.current = lenis;
@@ -56,8 +61,14 @@ export function MotionProvider() {
     cursor.className = "cursor";
     cursor.setAttribute("aria-hidden", "true");
     document.body.appendChild(cursor);
-    const xTo = gsap.quickTo(cursor, "x", { duration: 0.45, ease: "power3.out" });
-    const yTo = gsap.quickTo(cursor, "y", { duration: 0.45, ease: "power3.out" });
+    const xTo = gsap.quickTo(cursor, "x", {
+      duration: 0.45,
+      ease: "power3.out",
+    });
+    const yTo = gsap.quickTo(cursor, "y", {
+      duration: 0.45,
+      ease: "power3.out",
+    });
     const onMove = (e: PointerEvent) => {
       xTo(e.clientX);
       yTo(e.clientY);
@@ -87,11 +98,27 @@ export function MotionProvider() {
     };
   }, []);
 
+  // On page changes, hide the new page's reveals before the browser paints it (a layout effect).
+  // On the first page the inline revealBoot script has already hidden only what is below the
+  // fold, so on-screen content is never hidden and paints straight away.
+  useLayoutEffect(() => {
+    if (firstPage.current) {
+      firstPage.current = false;
+      return;
+    }
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    document.querySelectorAll<HTMLElement>("[data-words], [data-fade], [data-clip]").forEach((el) => {
+      if (!el.classList.contains("is-in")) el.classList.add("rv");
+    });
+  }, [pathname]);
+
   // Per-page reveals.
   useEffect(() => {
     const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     // New page: start at the top, or at the #section the link pointed to.
-    const hash = window.location.hash ? document.getElementById(decodeURIComponent(window.location.hash.slice(1))) : null;
+    const hash = window.location.hash
+      ? document.getElementById(decodeURIComponent(window.location.hash.slice(1)))
+      : null;
     if (hash) {
       requestAnimationFrame(() =>
         lenisRef.current ? lenisRef.current.scrollTo(hash, { immediate: true, offset: -80 }) : hash.scrollIntoView(),
@@ -100,9 +127,7 @@ export function MotionProvider() {
       lenisRef.current?.scrollTo(0, { immediate: true });
     }
 
-    const revealables = document.querySelectorAll<HTMLElement>(
-      "[data-words], [data-fade], [data-clip], [data-count]",
-    );
+    const revealables = document.querySelectorAll<HTMLElement>("[data-words], [data-fade], [data-clip], [data-count]");
 
     const runCount = (el: HTMLElement) => {
       const end = Number(el.dataset.count);
@@ -142,52 +167,80 @@ export function MotionProvider() {
       },
       { rootMargin: "0px 0px -8% 0px", threshold: 0.12 },
     );
-    revealables.forEach((el) => {
-      // Counters start from zero only once JS is ready, so the server HTML keeps the real figure.
-      if (el.dataset.count && el.getBoundingClientRect().top > window.innerHeight) el.textContent = "0";
-      io.observe(el);
-    });
+    // Counters start from zero only once JS is ready, so the server HTML keeps the real figure.
+    // Measure every counter first, then write, so the browser lays out the page once, not once per counter.
+    const vh = window.innerHeight;
+    const below = Array.from(revealables).filter((el) => el.dataset.count && el.getBoundingClientRect().top > vh);
+    below.forEach((el) => (el.textContent = "0"));
+    revealables.forEach((el) => io.observe(el));
 
-    const ctx = gsap.context(() => {
-      const mm = gsap.matchMedia();
-      mm.add("(min-width: 900px)", () => {
-        gsap.utils.toArray<HTMLElement>("[data-parallax]").forEach((el) => {
-          const amount = Number(el.dataset.parallax || 0.12) * 100;
+    // Scroll-linked effects measure the whole page, so build them once the browser is idle
+    // instead of competing with the first paint and the first tap.
+    let ctx: gsap.Context | null = null;
+    let refresh = 0;
+    const build = () => {
+      ctx = gsap.context(() => {
+        const mm = gsap.matchMedia();
+        mm.add("(min-width: 900px)", () => {
+          gsap.utils.toArray<HTMLElement>("[data-parallax]").forEach((el) => {
+            const amount = Number(el.dataset.parallax || 0.12) * 100;
+            gsap.fromTo(
+              el,
+              { yPercent: -amount / 2 },
+              {
+                yPercent: amount / 2,
+                ease: "none",
+                scrollTrigger: {
+                  trigger: el.parentElement ?? el,
+                  start: "top bottom",
+                  end: "bottom top",
+                  scrub: true,
+                },
+              },
+            );
+          });
+        });
+
+        gsap.utils.toArray<HTMLElement>("[data-scrub]").forEach((block) => {
+          const words = block.querySelectorAll(".sw");
           gsap.fromTo(
-            el,
-            { yPercent: -amount / 2 },
+            words,
+            { opacity: 0.5 },
             {
-              yPercent: amount / 2,
+              opacity: 1,
+              stagger: 0.08,
               ease: "none",
-              scrollTrigger: { trigger: el.parentElement ?? el, start: "top bottom", end: "bottom top", scrub: true },
+              scrollTrigger: {
+                trigger: block,
+                start: "top 78%",
+                end: "bottom 45%",
+                scrub: true,
+              },
             },
           );
         });
       });
-
-      gsap.utils.toArray<HTMLElement>("[data-scrub]").forEach((block) => {
-        const words = block.querySelectorAll(".sw");
-        gsap.fromTo(
-          words,
-          { opacity: 0.5 },
-          {
-            opacity: 1,
-            stagger: 0.08,
-            ease: "none",
-            scrollTrigger: { trigger: block, start: "top 78%", end: "bottom 45%", scrub: true },
-          },
-        );
-      });
-    });
-
-    const refresh = window.setTimeout(() => ScrollTrigger.refresh(), 300);
+      refresh = window.setTimeout(() => ScrollTrigger.refresh(), 300);
+    };
+    const idle = whenIdle(build);
 
     return () => {
+      idle();
       window.clearTimeout(refresh);
       io.disconnect();
-      ctx.revert();
+      ctx?.revert();
     };
   }, [pathname]);
 
   return null;
+}
+
+/** Runs fn when the main thread is free (or after 1.5 s at the latest). Returns a cancel function. */
+function whenIdle(fn: () => void) {
+  if ("requestIdleCallback" in window) {
+    const id = window.requestIdleCallback(fn, { timeout: 1500 });
+    return () => window.cancelIdleCallback(id);
+  }
+  const id = setTimeout(fn, 200);
+  return () => clearTimeout(id);
 }

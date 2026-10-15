@@ -2,6 +2,8 @@
 html {
   -webkit-text-size-adjust: 100%;
   scroll-behavior: auto;
+  /* Native anchor jumps (touch screens skip smooth scroll) clear the fixed header. */
+  scroll-padding-top: 80px;
 }
 html.lenis,
 html.lenis body {
@@ -394,20 +396,22 @@ button.tag[aria-pressed="true"] {
 [data-clip] img {
   transition: transform 1.6s var(--ease-out);
 }
-.js-motion [data-words]:not(.is-in) .w > span {
+.js-motion [data-words].rv:not(.is-in) .w > span {
   transform: translateY(105%);
 }
-.js-motion [data-fade]:not(.is-in) {
+/* .rv marks reveals that start hidden: only content below the fold on first load, and
+   everything on later page changes (see revealBoot in layout.tsx and MotionProvider). */
+.js-motion [data-fade].rv:not(.is-in) {
   opacity: 0;
   transform: translateY(1.5rem);
 }
-.js-motion [data-clip]:not(.is-in) {
+.js-motion [data-clip].rv:not(.is-in) {
   clip-path: inset(12% 6% 12% 6% round var(--radius-media));
 }
 [data-clip] {
   clip-path: inset(0 0 0 0 round var(--radius-media));
 }
-.js-motion [data-clip]:not(.is-in) img {
+.js-motion [data-clip].rv:not(.is-in) img {
   transform: scale(1.15);
 }
 
