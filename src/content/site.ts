@@ -25,12 +25,17 @@ export const NAV = [
 
 /** Add real profile URLs. Entries with an empty href are not rendered. */
 export const SOCIALS = [
-  { label: "LinkedIn", href: "" },
-  { label: "Behance", href: "" },
-  { label: "Dribbble", href: "" },
-  { label: "Instagram", href: "https://www.instagram.com/venlynk/" },
-  { label: "Facebook", href: "https://www.facebook.com/venlynk" },
-  { label: "Clutch", href: "" },
+  { label: "Instagram", icon: "instagram", href: "https://www.instagram.com/venlynk/" },
+  { label: "Facebook", icon: "facebook", href: "https://www.facebook.com/venlynk" },
+  { label: "X", icon: "x", href: "https://x.com/venlynk" },
+  { label: "Threads", icon: "threads", href: "https://www.threads.com/@venlynk" },
+  { label: "Reddit", icon: "reddit", href: "https://www.reddit.com/user/Venlynk/" },
+  { label: "Discord", icon: "discord", href: "https://discord.com/users/1560186195026247734" },
+  { label: "Twitch", icon: "twitch", href: "https://www.twitch.tv/venlynk" },
+  { label: "LinkedIn", icon: "", href: "" },
+  { label: "Behance", icon: "", href: "" },
+  { label: "Dribbble", icon: "", href: "" },
+  { label: "Clutch", icon: "", href: "" },
 ] as const;
 
 /** Team track record: the people behind Venlynk, across their careers. */

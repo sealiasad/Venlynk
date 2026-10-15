@@ -293,3 +293,66 @@ html.menu-open {
   color: var(--ink);
   border-color: var(--paper);
 }
+
+/* ---------- Footer social icons ---------- */
+.ftr__social {
+  margin-top: 2.5rem;
+}
+.ftr__social ul {
+  list-style: none;
+  padding: 0;
+  margin: 0.9rem 0 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.625rem;
+}
+.ftr__icon {
+  display: grid;
+  place-items: center;
+  width: 2.75rem;
+  height: 2.75rem;
+  border-radius: 999px;
+  border: 1px solid var(--line-dark);
+  background: rgba(255, 255, 255, 0.03);
+  color: var(--paper);
+  transition:
+    background-color 0.25s var(--ease-out),
+    border-color 0.25s var(--ease-out),
+    transform 0.25s var(--ease-out);
+}
+.ftr__icon svg {
+  width: 1.1rem;
+  height: 1.1rem;
+  fill: currentColor;
+}
+.ftr__icon:hover,
+.ftr__icon:focus-visible {
+  background: var(--blue);
+  border-color: var(--blue);
+  transform: translateY(-2px);
+}
+.ftr__icon:focus-visible {
+  outline: 2px solid var(--blue-soft);
+  outline-offset: 3px;
+}
+.ftr__icon--text {
+  width: auto;
+  padding: 0 1rem;
+  font-size: var(--t-micro);
+}
+@media (prefers-reduced-motion: reduce) {
+  .ftr__icon,
+  .ftr__icon:hover {
+    transition: none;
+    transform: none;
+  }
+}
+@media (max-width: 420px) {
+  .ftr__social ul {
+    gap: 0.5rem;
+  }
+  .ftr__icon {
+    width: 2.5rem;
+    height: 2.5rem;
+  }
+}

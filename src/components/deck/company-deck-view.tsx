@@ -6,6 +6,8 @@ import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 
 import { BrandMark } from "@/components/brand/brand-mark";
+import { SOCIALS } from "@/content/site";
+import { SOCIAL_ICONS } from "@/content/social-icons";
 import {
   DECK,
   DECK_AUDIENCES,
@@ -1049,6 +1051,23 @@ export function CompanyDeckView() {
                   {DECK.url}
                 </a>
               </div>
+              <ul className="deck-social deck-reveal" aria-label="Venlynk on social media">
+                {SOCIALS.filter((x) => x.href && x.icon).map((x) => (
+                  <li key={x.label}>
+                    <a
+                      href={x.href}
+                      target="_blank"
+                      rel="noreferrer"
+                      aria-label={`Venlynk on ${x.label}`}
+                      title={x.label}
+                    >
+                      <svg viewBox="0 0 24 24" aria-hidden="true">
+                        <path d={SOCIAL_ICONS[x.icon]} />
+                      </svg>
+                    </a>
+                  </li>
+                ))}
+              </ul>
               <div className="deck-channels deck-reveal">
                 {DECK_CHANNELS.map((c) => (
                   <span key={c}>{c}</span>

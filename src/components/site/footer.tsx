@@ -6,6 +6,7 @@ import { CopyEmail } from "@/components/site/copy-email";
 import { INDUSTRIES } from "@/content/industries";
 import { SERVICES } from "@/content/services";
 import { NAV, SITE, SOCIALS } from "@/content/site";
+import { SOCIAL_ICONS } from "@/content/social-icons";
 
 export function Footer() {
   const socials = SOCIALS.filter((s) => s.href);
@@ -27,6 +28,36 @@ export function Footer() {
                 Start a project
               </Link>
             </div>
+            {socials.length ? (
+              <div className="ftr__social">
+                <p className="label">Follow Venlynk</p>
+                <ul>
+                  {socials.map((s) => {
+                    const d = s.icon ? SOCIAL_ICONS[s.icon] : undefined;
+                    return (
+                      <li key={s.label}>
+                        <a
+                          href={s.href}
+                          target="_blank"
+                          rel="noreferrer"
+                          aria-label={`Venlynk on ${s.label}`}
+                          title={s.label}
+                          className={d ? "ftr__icon" : "ftr__icon ftr__icon--text"}
+                        >
+                          {d ? (
+                            <svg viewBox="0 0 24 24" aria-hidden="true">
+                              <path d={d} />
+                            </svg>
+                          ) : (
+                            s.label
+                          )}
+                        </a>
+                      </li>
+                    );
+                  })}
+                </ul>
+              </div>
+            ) : null}
           </div>
 
           <div className="ftr__cols">
@@ -63,20 +94,6 @@ export function Footer() {
                 ))}
               </ul>
             </div>
-            {socials.length ? (
-              <div>
-                <p className="label">Follow</p>
-                <ul>
-                  {socials.map((s) => (
-                    <li key={s.label}>
-                      <a href={s.href} target="_blank" rel="noreferrer">
-                        {s.label}
-                      </a>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            ) : null}
           </div>
         </div>
 
