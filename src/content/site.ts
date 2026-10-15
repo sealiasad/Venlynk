@@ -25,6 +25,7 @@ export const NAV = [
 
 /** Add real profile URLs. Entries with an empty href are not rendered. */
 export const SOCIALS = [
+  { label: "LinkedIn", icon: "linkedin", href: "https://www.linkedin.com/company/venlynk/" },
   { label: "Instagram", icon: "instagram", href: "https://www.instagram.com/venlynk/" },
   { label: "Facebook", icon: "facebook", href: "https://www.facebook.com/venlynk" },
   { label: "X", icon: "x", href: "https://x.com/venlynk" },
@@ -32,7 +33,6 @@ export const SOCIALS = [
   { label: "Reddit", icon: "reddit", href: "https://www.reddit.com/user/Venlynk/" },
   { label: "Discord", icon: "discord", href: "https://discord.com/users/1560186195026247734" },
   { label: "Twitch", icon: "twitch", href: "https://www.twitch.tv/venlynk" },
-  { label: "LinkedIn", icon: "", href: "" },
   { label: "Behance", icon: "", href: "" },
   { label: "Dribbble", icon: "", href: "" },
   { label: "Clutch", icon: "", href: "" },
