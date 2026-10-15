@@ -3,6 +3,7 @@
 import { useState } from "react";
 
 import { SITE } from "@/content/site";
+import { track } from "@/lib/analytics";
 
 export function CopyEmail({ className = "" }: { className?: string }) {
   const [copied, setCopied] = useState(false);
@@ -11,6 +12,7 @@ export function CopyEmail({ className = "" }: { className?: string }) {
     try {
       await navigator.clipboard.writeText(SITE.email);
       setCopied(true);
+      track("contact_click", { method: "email_copy" });
       window.setTimeout(() => setCopied(false), 1800);
     } catch {
       window.location.href = `mailto:${SITE.email}`;

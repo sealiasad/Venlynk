@@ -2,20 +2,28 @@ import type { NextConfig } from "next";
 
 const isDev = process.env.NODE_ENV === "development";
 
+/** Analytics hosts (GA4, Microsoft Clarity, LinkedIn Insight, Meta Pixel). Tags only load once configured. */
+const analytics = {
+  script: "https://www.googletagmanager.com https://www.clarity.ms https://*.clarity.ms https://snap.licdn.com https://connect.facebook.net",
+  connect:
+    "https://*.google-analytics.com https://*.analytics.google.com https://www.googletagmanager.com https://*.clarity.ms https://c.bing.com https://px.ads.linkedin.com https://*.linkedin.com https://www.facebook.com https://connect.facebook.net",
+  img: "https://*.google-analytics.com https://www.googletagmanager.com https://*.clarity.ms https://c.bing.com https://px.ads.linkedin.com https://*.linkedin.com https://www.facebook.com",
+};
+
 /**
  * Content Security Policy without nonces, so every page stays statically
- * rendered. Everything the site loads is first party (fonts are self-hosted by
- * next/font, no third-party scripts, frames or APIs in the browser).
+ * rendered. Fonts are self-hosted by next/font; the only third parties are the
+ * analytics hosts above, which load only when an ID is configured and allowed.
  * 'unsafe-inline' on scripts is needed for Next's inline bootstrap scripts;
  * moving to nonces would force dynamic rendering on every page.
  */
 const csp = [
   "default-src 'self'",
-  `script-src 'self' 'unsafe-inline'${isDev ? " 'unsafe-eval'" : ""}`,
+  `script-src 'self' 'unsafe-inline'${isDev ? " 'unsafe-eval'" : ""} ${analytics.script}`,
   "style-src 'self' 'unsafe-inline'",
-  "img-src 'self' data: blob:",
+  `img-src 'self' data: blob: ${analytics.img}`,
   "font-src 'self' data:",
-  "connect-src 'self'",
+  `connect-src 'self' ${analytics.connect}`,
   "media-src 'self'",
   "worker-src 'self' blob:",
   "object-src 'none'",

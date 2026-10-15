@@ -1,9 +1,10 @@
 "use client";
 
-import { useActionState } from "react";
+import { useActionState, useEffect } from "react";
 
 import { sendInquiry, type InquiryState } from "@/app/(site)/contact/actions";
 import { SITE } from "@/content/site";
+import { track } from "@/lib/analytics";
 
 const INTERESTS = ["Website", "Web app", "Mobile app", "Product and UX design", "Online store", "Etsy store", "Odoo", "AI and automation", "SEO and AEO", "Ongoing support"];
 const BUDGETS = ["Under $5k", "$5k to $15k", "$15k to $40k", "$40k+", "Not sure yet"];
@@ -12,6 +13,11 @@ export function ContactForm() {
   const [state, action, pending] = useActionState<InquiryState, FormData>(sendInquiry, { status: "idle" });
   const v = state.values ?? {};
   const err = state.fieldErrors ?? {};
+
+  // Count a lead once the message is actually delivered (never the visitor's details).
+  useEffect(() => {
+    if (state.status === "sent") track("generate_lead", { form: "contact", budget: state.values?.budget || undefined });
+  }, [state]);
 
   if (state.status === "sent") {
     return (

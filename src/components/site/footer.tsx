@@ -2,6 +2,7 @@ import { Prisms } from "@/components/brand/prisms";
 import Link from "next/link";
 
 import { BrandMark } from "@/components/brand/brand-mark";
+import { ConsentLink } from "@/components/site/consent-link";
 import { CopyEmail } from "@/components/site/copy-email";
 import { INDUSTRIES } from "@/content/industries";
 import { SERVICES } from "@/content/services";
@@ -106,9 +107,12 @@ export function Footer() {
           <span>
             © {year} {SITE.name}. {SITE.tagline}
           </span>
-          <a href="#top" className="link">
-            Back to top
-          </a>
+          <span className="ftr__base-links">
+            <ConsentLink />
+            <a href="#top" className="link">
+              Back to top
+            </a>
+          </span>
         </div>
       </div>
     </footer>

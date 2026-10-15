@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import localFont from "next/font/local";
 
+import { Analytics } from "@/components/site/analytics";
 import { MotionProvider } from "@/components/motion/motion-provider";
 import { CONTACT, FOUNDER } from "@/content/home";
 import { SITE, SOCIALS } from "@/content/site";
@@ -100,6 +101,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
         {children}
         <script dangerouslySetInnerHTML={{ __html: revealBoot }} />
         <MotionProvider />
+        <Analytics />
       </body>
     </html>
   );
