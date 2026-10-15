@@ -1,6 +1,7 @@
 "use server";
 
 import { headers } from "next/headers";
+import nodemailer from "nodemailer";
 
 import { clientKey, rateLimit } from "@/lib/rate-limit";
 
@@ -37,6 +38,8 @@ const DELIVERY_TIMEOUT_MS = 10_000;
 /**
  * Sends a project inquiry.
  * Delivery (configure at least one in the environment):
+ *  - SMTP_HOST + SMTP_USER + SMTP_PASS + CONTACT_TO_EMAIL (+ optional SMTP_PORT, default 465) → email over SMTP,
+ *    e.g. the hello@venlynk.com Hostinger mailbox. Used instead of Resend when set.
  *  - RESEND_API_KEY + CONTACT_TO_EMAIL (+ optional CONTACT_FROM_EMAIL) → email via Resend
  *  - CONTACT_WEBHOOK_URL → JSON POST (Zapier, Make, Slack workflow, Google Apps Script…)
  * The webhook URL comes only from the server environment, never from the request.
@@ -81,8 +84,12 @@ export async function sendInquiry(_prev: InquiryState, fd: FormData): Promise<In
   const to = process.env.CONTACT_TO_EMAIL;
   const from = process.env.CONTACT_FROM_EMAIL || "Venlynk website <onboarding@resend.dev>";
   const webhook = process.env.CONTACT_WEBHOOK_URL;
+  const smtpHost = process.env.SMTP_HOST;
+  const smtpUser = process.env.SMTP_USER;
+  const smtpPass = process.env.SMTP_PASS;
+  const useSmtp = !!(smtpHost && smtpUser && smtpPass && to);
 
-  if (!(resendKey && to) && !webhook) {
+  if (!useSmtp && !(resendKey && to) && !webhook) {
     return { status: "unconfigured", values };
   }
 
@@ -94,9 +101,42 @@ export async function sendInquiry(_prev: InquiryState, fd: FormData): Promise<In
     ["Budget", values.budget || "—"],
   ];
 
+  const subject = `New project inquiry: ${values.name}${values.company ? `, ${values.company}` : ""}`;
+  const html = `<h2>New project inquiry</h2><table>${lines
+    .map(([k, v]) => `<tr><td><strong>${k}</strong></td><td>${escapeHtml(v)}</td></tr>`)
+    .join("")}</table><p>${escapeHtml(values.message).replace(/\r?\n/g, "<br>")}</p>`;
+  const text = `${lines.map(([k, v]) => `${k}: ${v}`).join("\n")}\n\n${values.message}`;
+  const ensureOk = (r: Response) => {
+    if (!r.ok) throw new Error(`Delivery failed: ${r.status}`);
+  };
+
   try {
-    const jobs: Promise<Response>[] = [];
-    if (resendKey && to) {
+    const jobs: Promise<void>[] = [];
+    if (useSmtp) {
+      const port = Number(process.env.SMTP_PORT) || 465;
+      const transport = nodemailer.createTransport({
+        host: smtpHost,
+        port,
+        secure: port === 465,
+        auth: { user: smtpUser, pass: smtpPass },
+        connectionTimeout: DELIVERY_TIMEOUT_MS,
+        greetingTimeout: DELIVERY_TIMEOUT_MS,
+        socketTimeout: DELIVERY_TIMEOUT_MS,
+      });
+      jobs.push(
+        transport
+          .sendMail({
+            from: process.env.CONTACT_FROM_EMAIL || `Venlynk website <${smtpUser}>`,
+            to: to!.split(",").map((s) => s.trim()),
+            // Name and email are already stripped of line breaks and checked above.
+            replyTo: { name: values.name, address: values.email },
+            subject,
+            text,
+            html,
+          })
+          .then(() => undefined),
+      );
+    } else if (resendKey && to) {
       jobs.push(
         fetch("https://api.resend.com/emails", {
           method: "POST",
@@ -106,12 +146,10 @@ export async function sendInquiry(_prev: InquiryState, fd: FormData): Promise<In
             from,
             to: to.split(",").map((s) => s.trim()),
             reply_to: values.email,
-            subject: `New project inquiry: ${values.name}${values.company ? `, ${values.company}` : ""}`,
-            html: `<h2>New project inquiry</h2><table>${lines
-              .map(([k, v]) => `<tr><td><strong>${k}</strong></td><td>${escapeHtml(v)}</td></tr>`)
-              .join("")}</table><p>${escapeHtml(values.message).replace(/\r?\n/g, "<br>")}</p>`,
+            subject,
+            html,
           }),
-        }),
+        }).then(ensureOk),
       );
     }
     if (webhook) {
@@ -122,11 +160,10 @@ export async function sendInquiry(_prev: InquiryState, fd: FormData): Promise<In
           redirect: "error",
           signal: AbortSignal.timeout(DELIVERY_TIMEOUT_MS),
           body: JSON.stringify({ ...values, source: "venlynk.com", receivedAt: new Date().toISOString() }),
-        }),
+        }).then(ensureOk),
       );
     }
-    const results = await Promise.all(jobs);
-    if (results.some((r) => !r.ok)) throw new Error(`Delivery failed: ${results.map((r) => r.status).join(",")}`);
+    await Promise.all(jobs);
     return { status: "sent" };
   } catch (err) {
     // Log the reason only: never the request, the visitor's details or any key.
