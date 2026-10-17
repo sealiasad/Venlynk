@@ -21,6 +21,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     page("/about"),
     { ...page("/insights"), ...(latestArticle ? { lastModified: new Date(latestArticle) } : {}) },
     page("/contact"),
+    page("/privacy"),
     ...PROJECTS.map((p) => page(`/work/${p.slug}`)),
     ...SERVICES.map((s) => page(`/services/${s.slug}`)),
     ...INDUSTRIES.map((i) => page(`/industries/${i.slug}`)),

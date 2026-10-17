@@ -108,6 +108,9 @@ export function Footer() {
             © {year} {SITE.name}. {SITE.tagline}
           </span>
           <span className="ftr__base-links">
+            <Link href="/privacy" className="link">
+              Privacy
+            </Link>
             <ConsentLink />
             <a href="#top" className="link">
               Back to top
