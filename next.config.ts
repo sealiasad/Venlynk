@@ -6,8 +6,8 @@ const isDev = process.env.NODE_ENV === "development";
 const analytics = {
   script: "https://www.googletagmanager.com https://www.clarity.ms https://*.clarity.ms https://snap.licdn.com https://connect.facebook.net",
   connect:
-    "https://*.google-analytics.com https://*.analytics.google.com https://www.googletagmanager.com https://*.clarity.ms https://c.bing.com https://px.ads.linkedin.com https://*.linkedin.com https://www.facebook.com https://connect.facebook.net",
-  img: "https://*.google-analytics.com https://www.googletagmanager.com https://*.clarity.ms https://c.bing.com https://px.ads.linkedin.com https://*.linkedin.com https://www.facebook.com",
+    "https://*.google-analytics.com https://*.analytics.google.com https://www.googletagmanager.com https://*.clarity.ms https://c.bing.com https://px.ads.linkedin.com https://*.linkedin.com https://www.facebook.com https://connect.facebook.net https://www.google.com https://*.doubleclick.net",
+  img: "https://*.google-analytics.com https://www.googletagmanager.com https://*.clarity.ms https://c.bing.com https://px.ads.linkedin.com https://*.linkedin.com https://www.facebook.com https://www.google.com https://*.doubleclick.net",
 };
 
 /**
