@@ -2,6 +2,7 @@ import { Prisms } from "@/components/brand/prisms";
 import Link from "next/link";
 
 import { BrandMark } from "@/components/brand/brand-mark";
+import { ClutchBadge } from "@/components/site/clutch-badge";
 import { ConsentLink } from "@/components/site/consent-link";
 import { CopyEmail } from "@/components/site/copy-email";
 import { INDUSTRIES } from "@/content/industries";
@@ -60,6 +61,7 @@ export function Footer() {
                 </ul>
               </div>
             ) : null}
+            <ClutchBadge />
           </div>
 
           <div className="ftr__cols">

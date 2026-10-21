@@ -14,13 +14,13 @@ const analytics = {
 /**
  * Content Security Policy without nonces, so every page stays statically
  * rendered. Fonts are self-hosted by next/font; the only third parties are the
- * analytics hosts above, which load only when an ID is configured and allowed.
+ * analytics hosts above and the Clutch widget, which load only when an ID is configured and allowed.
  * 'unsafe-inline' on scripts is needed for Next's inline bootstrap scripts;
  * moving to nonces would force dynamic rendering on every page.
  */
 const csp = [
   "default-src 'self'",
-  `script-src 'self' 'unsafe-inline'${isDev ? " 'unsafe-eval'" : ""} ${analytics.script}`,
+  `script-src 'self' 'unsafe-inline'${isDev ? " 'unsafe-eval'" : ""} ${analytics.script} https://widget.clutch.co`,
   "style-src 'self' 'unsafe-inline'",
   `img-src 'self' data: blob: ${analytics.img}`,
   "font-src 'self' data:",
@@ -30,7 +30,8 @@ const csp = [
   "object-src 'none'",
   "base-uri 'self'",
   "form-action 'self'",
-  "frame-src 'none'",
+  // Clutch rating widget in the footer renders in an iframe.
+  "frame-src https://widget.clutch.co",
   "frame-ancestors 'none'",
   "manifest-src 'self'",
   ...(isDev ? [] : ["upgrade-insecure-requests"]),
