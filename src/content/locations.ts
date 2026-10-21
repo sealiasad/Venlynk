@@ -4,6 +4,8 @@
  * sourced and dated, and only projects actually delivered are shown.
  */
 
+import { CITY_PAGES, MORE_COUNTRIES } from "@/content/locations-more";
+
 export type LocationSource = { label: string; url: string };
 
 export type LocationPage = {
@@ -18,25 +20,29 @@ export type LocationPage = {
   /** The market in a few short paragraphs, specific to this country. */
   market: string[];
   /** Digital facts, each tied to a source in `sources`. */
-  stats: { label: string; value: string }[];
-  statsNote: string;
+  stats?: { label: string; value: string }[];
+  statsNote?: string;
   /** What businesses here commonly need, in their words. */
   needs: { title: string; body: string }[];
-  /** Payments we set up for buyers in this market. */
-  payments: { name: string; body: string }[];
-  /** Rules a website or app here should be built around. */
-  rules: { title: string; body: string }[];
+  /** Payments we set up for buyers in this market. City pages leave this to the country page. */
+  payments?: { name: string; body: string }[];
+  /** Rules a website or app here should be built around. City pages leave this to the country page. */
+  rules?: { title: string; body: string }[];
   /** How remote work with Venlynk runs from this country. */
   working: { title: string; body: string }[];
   /** Live service pages to feature, as "category/slug". */
   services: string[];
   proof: string[];
   proofNote?: string;
+  /** Heading for the projects block. Defaults to "Work we have delivered". */
+  proofTitle?: string;
   faq: { q: string; a: string }[];
   sources: LocationSource[];
   closing: string;
   updated: string;
   isoCode: string;
+  /** City pages only: the slug of the country page they sit under. */
+  parent?: string;
 };
 
 const UPDATED = "2026-10-21";
@@ -46,7 +52,7 @@ const DR = (country: string, slug: string): LocationSource => ({
   url: `https://datareportal.com/reports/digital-2026-${slug}`,
 });
 
-export const LOCATIONS: LocationPage[] = [
+const CORE: LocationPage[] = [
   /* ------------------------------------------------------------------ */
   {
     slug: "uae",
@@ -126,7 +132,7 @@ export const LOCATIONS: LocationPage[] = [
     country: "Saudi Arabia",
     inText: "Saudi Arabia",
     isoCode: "SA",
-    metaTitle: "Web, App and Ecommerce Development for Saudi Businesses",
+    metaTitle: "Web, App and Ecommerce Development in Saudi Arabia",
     metaDescription:
       "Websites, apps, online stores and AI agents for businesses in Saudi Arabia, built for Arabic-first customers, mada payments and the PDPL.",
     h1: "Web, app and ecommerce development for Saudi businesses",
@@ -273,7 +279,7 @@ export const LOCATIONS: LocationPage[] = [
     country: "Pakistan",
     inText: "Pakistan",
     isoCode: "PK",
-    metaTitle: "Software House in Karachi: Web, App and Shopify Development",
+    metaTitle: "Web, App and Shopify Development in Pakistan",
     metaDescription:
       "Venlynk is a Karachi-based studio building websites, mobile apps, Shopify stores and AI agents for Pakistani businesses, with local payments built in.",
     h1: "Web, app and ecommerce development in Pakistan",
@@ -341,6 +347,15 @@ export const LOCATIONS: LocationPage[] = [
   },
 ];
 
+export const LOCATIONS: LocationPage[] = [...CORE, ...MORE_COUNTRIES];
+export const CITIES: LocationPage[] = CITY_PAGES;
+
 export function getLocation(slug: string) {
   return LOCATIONS.find((l) => l.slug === slug);
 }
+
+export function getCity(country: string, city: string) {
+  return CITIES.find((c) => c.parent === country && c.slug === city);
+}
+
+export const citiesIn = (country: string) => CITIES.filter((c) => c.parent === country);

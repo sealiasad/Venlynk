@@ -8,7 +8,7 @@ import { pageMeta } from "@/lib/seo";
 export const metadata: Metadata = pageMeta({
   title: "Countries We Work With",
   description:
-    "Venlynk builds websites, apps, Shopify stores and AI agents for businesses in the UAE, Saudi Arabia, the UK and Pakistan, working remotely from Karachi.",
+    "Venlynk builds websites, apps, Shopify stores and AI agents for businesses in the Gulf, the UK, Europe, North America, Australia and Asia, working remotely from Karachi.",
   path: "/locations",
 });
 

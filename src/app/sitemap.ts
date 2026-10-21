@@ -4,7 +4,7 @@ import { INDUSTRIES } from "@/content/industries";
 import { INSIGHTS } from "@/content/insights";
 import { PROJECTS } from "@/content/projects";
 import { CATEGORIES } from "@/content/catalog";
-import { LOCATIONS } from "@/content/locations";
+import { CITIES, LOCATIONS } from "@/content/locations";
 import { SERVICE_PAGES, serviceUrl } from "@/content/service-pages";
 import { SITE } from "@/content/site";
 
@@ -28,6 +28,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     ...CATEGORIES.map((c) => page(`/services/${c.slug}`)),
     page("/locations"),
     ...LOCATIONS.map((l) => ({ ...page(`/locations/${l.slug}`), lastModified: new Date(l.updated) })),
+    ...CITIES.map((c) => ({ ...page(`/locations/${c.parent}/${c.slug}`), lastModified: new Date(c.updated) })),
     ...SERVICE_PAGES.map((s) => ({ ...page(serviceUrl(s)), lastModified: new Date(s.updated) })),
     ...INDUSTRIES.map((i) => page(`/industries/${i.slug}`)),
     ...INSIGHTS.map((a) => ({ ...page(`/insights/${a.slug}`), lastModified: new Date(a.date) })),
