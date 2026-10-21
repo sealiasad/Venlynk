@@ -6,10 +6,10 @@ import { useEffect, useRef, useState } from "react";
 
 import { BrandMark } from "@/components/brand/brand-mark";
 import { CONTACT } from "@/content/home";
-import type { MenuCategory } from "@/content/menu";
+import type { MenuCategory, MenuLink } from "@/content/menu";
 import { NAV, SITE } from "@/content/site";
 
-export function Header({ menu }: { menu: MenuCategory[] }) {
+export function Header({ menu, countries = [] }: { menu: MenuCategory[]; countries?: MenuLink[] }) {
   const pathname = usePathname();
   const [hidden, setHidden] = useState(false);
   const [solid, setSolid] = useState(false);
@@ -157,6 +157,16 @@ export function Header({ menu }: { menu: MenuCategory[] }) {
                                   </div>
                                 ))}
                               </div>
+                            ) : null}
+                            {countries.length ? (
+                              <p className="mega__countries">
+                                <span>Countries:</span>
+                                {countries.map((k) => (
+                                  <Link key={k.href} href={k.href}>
+                                    {k.label}
+                                  </Link>
+                                ))}
+                              </p>
                             ) : null}
                             <div className="mega__foot">
                               <Link className="mega__all" href={c.href}>

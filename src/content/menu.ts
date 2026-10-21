@@ -1,4 +1,5 @@
 import { CATEGORIES } from "@/content/catalog";
+import { LOCATIONS } from "@/content/locations";
 import { getServicePage, serviceUrl } from "@/content/service-pages";
 
 export type MenuLink = { href: string; label: string };
@@ -32,4 +33,9 @@ export function buildMenu(): MenuCategory[] {
       }))
       .filter((g) => g.links.length > 0),
   }));
+}
+
+/** Country pages, shown as a row at the foot of the mega menu. */
+export function buildCountries(): MenuLink[] {
+  return LOCATIONS.map((l) => ({ href: `/locations/${l.slug}`, label: l.country }));
 }

@@ -2,7 +2,7 @@ import { Footer } from "@/components/site/footer";
 import { Header } from "@/components/site/header";
 import { PageWipe } from "@/components/site/page-wipe";
 import { SiteFx } from "@/components/site/site-fx";
-import { buildMenu } from "@/content/menu";
+import { buildCountries, buildMenu } from "@/content/menu";
 
 export default function SiteLayout({ children }: { children: React.ReactNode }) {
   return (
@@ -11,7 +11,7 @@ export default function SiteLayout({ children }: { children: React.ReactNode }) 
         Skip to content
       </a>
       <span id="top" />
-      <Header menu={buildMenu()} />
+      <Header menu={buildMenu()} countries={buildCountries()} />
       <main id="main" className="ha">{children}</main>
       <Footer />
       <PageWipe />

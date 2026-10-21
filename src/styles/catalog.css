@@ -585,3 +585,39 @@
 .hdr .hdr__nav a.mega__cta:hover {
   background: #5a5bff;
 }
+
+/* Sources list on location pages */
+.cx-sources {
+  margin: 0;
+  padding-left: 1.1rem;
+  display: grid;
+  gap: 0.4rem;
+  font-size: 0.9rem;
+  color: var(--ha-dim);
+}
+.cx-sources a {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+.cx-sources a:hover {
+  color: var(--ha-lav-2);
+}
+
+/* Countries row inside the mega menu */
+.hdr .hdr__nav .mega__countries {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem 1rem;
+  margin-top: auto !important;
+  font-size: 0.85rem;
+  color: #8a8ca3;
+}
+.hdr .hdr__nav .mega__countries a {
+  color: #b9bad6;
+}
+.hdr .hdr__nav .mega__countries a:hover {
+  color: #a5a6ff;
+}
+.hdr .hdr__nav .mega__countries + .mega__foot {
+  margin-top: 0;
+}
