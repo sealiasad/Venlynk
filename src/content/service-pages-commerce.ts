@@ -119,7 +119,6 @@ export const COMMERCE_PAGES: ServicePage[] = [
         { label: "Redirect limit on Shopify Plus", value: "Up to 20,000,000 URL redirects" },
         { label: "Bulk redirects", value: "Imported in one go from a CSV file" },
       ],
-      sources: [{ label: "Shopify Help Center: Creating and managing URL redirects", url: "https://help.shopify.com/en/manual/online-store/menus-and-links/url-redirect" }],
     },
     notFit: [
       "If your store depends on deep WordPress features, like a large membership or learning platform, staying on WooCommerce and fixing it may be better.",
@@ -306,7 +305,6 @@ export const COMMERCE_PAGES: ServicePage[] = [
         { label: "New WordPress ecosystem vulnerabilities found in 2024", value: "7,966" },
         { label: "Share found in plugins", value: "96%" },
       ],
-      sources: [{ label: "Patchstack: State of WordPress Security in 2025", url: "https://patchstack.com/whitepaper/state-of-wordpress-security-in-2025/" }],
     },
     notFit: [
       "If you want a store with no hosting or updates to manage, Shopify is usually the easier choice. We also migrate WooCommerce stores to Shopify.",
@@ -490,7 +488,6 @@ export const COMMERCE_PAGES: ServicePage[] = [
         { label: "Outside the window", value: "Only pre-approved template messages" },
         { label: "Who you can message", value: "Only people who have opted in to hear from you" },
       ],
-      sources: [{ label: "Meta for Developers: WhatsApp Business Platform, sending messages", url: "https://developers.facebook.com/documentation/business-messaging/whatsapp/messages/send-messages" }],
     },
     notFit: [
       "If you only get a few WhatsApp messages a day, the free WhatsApp Business app with quick replies may be enough.",

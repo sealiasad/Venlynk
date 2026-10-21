@@ -24,14 +24,10 @@ const fmt = (tz: string, at: Date) =>
 const OPEN = 9;
 const CLOSE = 18;
 const PKT = "Asia/Karachi";
+const FALLBACK = new Date(Date.UTC(2026, 0, 15, 8, 0));
 
-/**
- * Two working days on one 24-hour axis in Karachi time, with the shared hours
- * highlighted. Uses the visitor's clock, so daylight saving is always right.
- */
-export function TimeOverlap({ tz, city }: { tz: string; city: string }) {
+function useNow() {
   const [now, setNow] = useState<Date | null>(null);
-
   useEffect(() => {
     const tick = () => setNow(new Date());
     const first = setTimeout(tick, 0);
@@ -41,81 +37,117 @@ export function TimeOverlap({ tz, city }: { tz: string; city: string }) {
       clearInterval(id);
     };
   }, []);
+  return now;
+}
 
-  const at = now ?? new Date(Date.UTC(2026, 0, 15, 8, 0));
-  const diffH = (offsetMinutes(tz, at) - offsetMinutes(PKT, at)) / 60;
-  // Their 09:00-18:00 expressed in Karachi hours.
-  const theirStart = OPEN - diffH;
-  const theirEnd = CLOSE - diffH;
-  const seg = (s: number, e: number) => {
-    const out: [number, number][] = [];
-    const norm = (x: number) => ((x % 24) + 24) % 24;
-    const a = norm(s);
-    const b = a + (e - s);
-    if (b <= 24) out.push([a, b]);
-    else out.push([a, 24], [0, b - 24]);
-    return out;
-  };
-  const theirs = seg(theirStart, theirEnd);
-  const overlap = theirs.reduce((sum, [a, b]) => sum + Math.max(0, Math.min(b, CLOSE) - Math.max(a, OPEN)), 0);
-  const same = diffH === 0;
-  const ahead = diffH < 0 ? "behind" : "ahead of";
+/** Hours Pakistan is ahead of the client (negative when behind), and the shared working hours. */
+function compare(tz: string, at: Date) {
+  const diff = (offsetMinutes(PKT, at) - offsetMinutes(tz, at)) / 60;
+  // Pakistan's 09:00-18:00 in the client's hours.
+  const ours = segments(OPEN - diff, CLOSE - diff);
+  const shared = ours.reduce((sum, [a, b]) => sum + Math.max(0, Math.min(b, CLOSE) - Math.max(a, OPEN)), 0);
+  return { diff, ours, shared };
+}
+
+function segments(s: number, e: number): [number, number][] {
+  const norm = (x: number) => ((x % 24) + 24) % 24;
+  const a = norm(s);
+  const b = a + (e - s);
+  return b <= 24 ? [[a, b]] : [[a, 24], [0, b - 24]];
+}
+
+const hours = (n: number) => `${n} hour${n === 1 ? "" : "s"}`;
+
+/** Gap in words: "1 hour apart" or "same time zone". */
+export function gapLabel(diff: number) {
+  return diff === 0 ? "Same time zone" : `${hours(Math.abs(diff))} apart`;
+}
+
+/** Three live readouts for the hero map card: their time, Pakistan time, shared hours. */
+export function HeroClocks({ tz, label }: { tz: string; label: string }) {
+  const now = useNow();
+  const { diff, shared } = compare(tz, now ?? FALLBACK);
+  const home = tz === PKT;
+  return (
+    <div className="vt-clocks">
+      {home ? null : (
+        <div>
+          <span>{label}</span>
+          <b suppressHydrationWarning>{now ? fmt(tz, now) : "--:--"}</b>
+        </div>
+      )}
+      <div>
+        <span>Pakistan</span>
+        <b suppressHydrationWarning>{now ? fmt(PKT, now) : "--:--"}</b>
+      </div>
+      <div>
+        <span>{home ? "Working hours" : shared > 0 || diff === 0 ? "Shared hours" : "Your morning"}</span>
+        <b className="vt-clocks__hl">{home ? "9:00 to 18:00" : diff === 0 ? "All day" : shared > 0 ? `${shared} a day` : "Work ready"}</b>
+      </div>
+    </div>
+  );
+}
+
+/** Both working days on one 24-hour axis in the client's time, shared hours highlighted. */
+export function TimeOverlap({ tz, label, place }: { tz: string; label: string; place?: string }) {
+  const now = useNow();
+  const { diff, ours, shared } = compare(tz, now ?? FALLBACK);
   const pct = (h: number) => `${(h / 24) * 100}%`;
+  const range = ([a, b]: [number, number]) => {
+    const f = (h: number) => `${String(Math.floor(h % 24)).padStart(2, "0")}:${h % 1 ? "30" : "00"}`;
+    return `${f(a)} to ${f(b)}`;
+  };
+
+  const title =
+    diff === 0
+      ? "The same working day, every day"
+      : shared > 0
+        ? `${hours(shared)} of shared working time, every weekday`
+        : "Work moves forward while you sleep";
+  const sentence =
+    diff === 0
+      ? "We work in your time zone, so calls and quick questions fit your normal day."
+      : `Pakistan is ${hours(Math.abs(diff))} ${diff > 0 ? "ahead of" : "behind"} ${place ?? label} today. ${
+          shared > 0
+            ? "Calls and reviews fit inside the hours we share."
+            : "We agree a short daily overlap for calls and hand over at the end of each day."
+        }`;
 
   return (
-    <div className="tov">
-      <div className="tov__clocks">
-        <div className="tov__clock">
-          <span className="tov__city">Karachi</span>
-          <b suppressHydrationWarning>{now ? fmt(PKT, now) : "--:--"}</b>
-        </div>
-        {!same ? (
-          <div className="tov__clock tov__clock--to">
-            <span className="tov__city">{city}</span>
-            <b suppressHydrationWarning>{now ? fmt(tz, now) : "--:--"}</b>
-          </div>
-        ) : null}
-        <p className="tov__summary">
-          {same
-            ? "Same time zone: our working day is yours."
-            : `${city} is ${Math.abs(diffH)} hour${Math.abs(diffH) === 1 ? "" : "s"} ${ahead} Karachi today. ${
-                overlap > 0
-                  ? `${overlap} shared working hour${overlap === 1 ? "" : "s"} every weekday.`
-                  : "We hand over at the end of each day, so work moves while you sleep."
-              }`}
-        </p>
-      </div>
-      {!same ? (
-        <div className="tov__bars" aria-hidden="true">
-          <div className="tov__row">
-            <span>Karachi</span>
-            <div className="tov__track">
-              <i className="tov__work" style={{ left: pct(OPEN), width: pct(CLOSE - OPEN) }} />
+    <div className="vt-tov">
+      <h3>{title}</h3>
+      <p className="vt-tov__lead">{sentence}</p>
+      {diff === 0 ? null : (
+        <div className="vt-tov__bars" aria-hidden="true">
+          <div className="vt-tov__row">
+            <span>{label}</span>
+            <div className="vt-tov__track">
+              <i className="vt-tov__work" style={{ left: pct(OPEN), width: pct(CLOSE - OPEN) }}>
+                09:00 to 18:00
+              </i>
             </div>
           </div>
-          <div className="tov__row">
-            <span>{city}</span>
-            <div className="tov__track">
-              {theirs.map(([a, b]) => (
-                <i key={a} className="tov__work tov__work--to" style={{ left: pct(a), width: pct(b - a) }} />
+          <div className="vt-tov__row">
+            <span>Pakistan</span>
+            <div className="vt-tov__track">
+              {ours.map((s) => (
+                <i key={s[0]} className="vt-tov__work vt-tov__work--us" style={{ left: pct(s[0]), width: pct(s[1] - s[0]) }}>
+                  {ours.length === 1 ? range(s) : null}
+                </i>
               ))}
-              {theirs.map(([a, b]) => {
-                const s = Math.max(a, OPEN);
-                const e = Math.min(b, CLOSE);
-                return e > s ? <i key={`o${a}`} className="tov__shared" style={{ left: pct(s), width: pct(e - s) }} /> : null;
-              })}
             </div>
           </div>
-          <div className="tov__axis">
-            {[0, 6, 12, 18, 24].map((h) => (
-              <span key={h} style={{ left: pct(h) }}>
-                {String(h % 24).padStart(2, "0")}:00
-              </span>
-            ))}
+          <div className="vt-tov__axis">
+            <span />
+            <div>
+              {["00:00", "06:00", "12:00", "18:00", "24:00"].map((h) => (
+                <span key={h}>{h}</span>
+              ))}
+            </div>
           </div>
-          <p className="tov__note">Working hours 09:00 to 18:00 in each city, shown in Karachi time.</p>
         </div>
-      ) : null}
+      )}
+      {diff === 0 ? null : <p className="vt-tov__note">9:00 to 18:00 in each country, shown in {label} time.</p>}
     </div>
   );
 }

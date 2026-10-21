@@ -2,13 +2,14 @@ import type { Metadata } from "next";
 import Link from "next/link";
 
 import { ClosingCta, delay, PageHead } from "@/components/site/blocks";
+import { FlagIcon } from "@/components/site/mega-menu";
 import { LOCATIONS } from "@/content/locations";
 import { pageMeta } from "@/lib/seo";
 
 export const metadata: Metadata = pageMeta({
   title: "Countries We Work With",
   description:
-    "Venlynk builds websites, apps, Shopify stores and AI agents for businesses in the Gulf, the UK, Europe, North America, Australia and Asia, working remotely from Karachi.",
+    "Venlynk builds websites, apps, Shopify stores and AI agents for businesses in the Gulf, the UK, Europe, North America, Australia and Asia, working remotely from Pakistan.",
   path: "/locations",
 });
 
@@ -18,14 +19,17 @@ export default function LocationsPage() {
       <PageHead
         eyebrow="Locations"
         title={"Where our\n*clients are.*"}
-        lead="We work remotely from Karachi with businesses around the world. Each page below covers what we have learned about building for that market: how people pay, the rules that apply and how we work across time zones."
+        lead="We work remotely from Pakistan with businesses around the world. Each page below covers what we have learned about building for that market: how people pay, the rules that apply and how we work across time zones."
       />
       <section className="ha-block wrap">
         <ul className="cx-links cx-links--related">
           {LOCATIONS.map((l, i) => (
             <li key={l.slug} data-fade="" style={delay(i)}>
               <Link href={`/locations/${l.slug}`} className="cx-link">
-                <span className="cx-link__t">{l.country}</span>
+                <span className="cx-link__t vt-loc-t">
+                  <FlagIcon code={l.isoCode} className="vt-flag" />
+                  {l.country}
+                </span>
                 <span className="cx-link__s">{l.metaDescription}</span>
                 <span className="cx-link__go" aria-hidden="true">
                   →

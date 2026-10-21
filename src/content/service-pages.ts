@@ -10,7 +10,6 @@ import { COMMERCE_PAGES } from "@/content/service-pages-commerce";
  * invented numbers. Any figure from outside Venlynk carries its source.
  */
 
-export type Source = { label: string; url: string };
 
 export type ServicePage = {
   category: CategorySlug;
@@ -29,8 +28,8 @@ export type ServicePage = {
   /** How long it usually takes, and what changes that. */
   timing: string;
   price: { headline: string; factors: string[]; note?: string };
-  /** Useful facts from outside Venlynk, each with its source. */
-  facts?: { title: string; intro?: string; items: { label: string; value: string }[]; sources: Source[] };
+  /** Useful facts about the platform or market. */
+  facts?: { title: string; intro?: string; items: { label: string; value: string }[] };
   proof?: { project: string; story: string };
   alsoProjects?: string[];
   notFit: string[];
@@ -131,7 +130,6 @@ const CORE_PAGES: ServicePage[] = [
         { label: "Interaction to Next Paint (page reacts to a tap)", value: "200 milliseconds or less" },
         { label: "Cumulative Layout Shift (nothing jumps around)", value: "0.1 or less" },
       ],
-      sources: [{ label: "web.dev: Core Web Vitals thresholds", url: "https://web.dev/articles/defining-core-web-vitals-thresholds" }],
     },
     proof: {
       project: "dxb-off-plan",
@@ -377,7 +375,6 @@ const CORE_PAGES: ServicePage[] = [
         { label: "Bank transfer and money orders", value: "Supported as manual payment methods" },
         { label: "Cards and wallets", value: "Through Shopify Payments or a third-party gateway, depending on your country" },
       ],
-      sources: [{ label: "Shopify Help Center: manual payment methods", url: "https://help.shopify.com/manual/payments/manual-payments" }],
     },
     proof: {
       project: "stylefits",
@@ -612,10 +609,6 @@ const CORE_PAGES: ServicePage[] = [
         { label: "Tags", value: "Up to 13 per listing, 20 characters each" },
         { label: "Listing fee", value: "$0.20 per listing" },
         { label: "Transaction fee", value: "6.5% of the total the buyer pays, including shipping" },
-      ],
-      sources: [
-        { label: "Outfy: Etsy character limits", url: "https://www.outfy.com/blog/etsy-character-limit/" },
-        { label: "Gelato: Etsy fees explained", url: "https://www.gelato.com/blog/etsy-fees" },
       ],
     },
     notFit: [
@@ -1056,7 +1049,6 @@ const CORE_PAGES: ServicePage[] = [
         { label: "Interaction to Next Paint", value: "200 milliseconds or less" },
         { label: "Cumulative Layout Shift", value: "0.1 or less" },
       ],
-      sources: [{ label: "web.dev: Core Web Vitals thresholds", url: "https://web.dev/articles/defining-core-web-vitals-thresholds" }],
     },
     notFit: [
       "If you need enquiries this week, start with ads while SEO builds up. SEO takes months, not days.",
@@ -1266,10 +1258,6 @@ const CORE_PAGES: ServicePage[] = [
         { label: "Google Play: app title", value: "Up to 30 characters" },
         { label: "Google Play: short description", value: "Up to 80 characters" },
         { label: "Google Play: full description", value: "Up to 4,000 characters" },
-      ],
-      sources: [
-        { label: "Apple: Creating your product page", url: "https://developer.apple.com/app-store/product-page/" },
-        { label: "Google Play Console Help: store listing best practices", url: "https://support.google.com/googleplay/android-developer/answer/13393723" },
       ],
     },
     notFit: [

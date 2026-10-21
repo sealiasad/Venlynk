@@ -6,7 +6,6 @@
 
 import { CITY_PAGES, MORE_COUNTRIES } from "@/content/locations-more";
 
-export type LocationSource = { label: string; url: string };
 
 export type LocationPage = {
   slug: string;
@@ -19,9 +18,8 @@ export type LocationPage = {
   lead: string;
   /** The market in a few short paragraphs, specific to this country. */
   market: string[];
-  /** Digital facts, each tied to a source in `sources`. */
+  /** Key digital and payment facts for the market. */
   stats?: { label: string; value: string }[];
-  statsNote?: string;
   /** What businesses here commonly need, in their words. */
   needs: { title: string; body: string }[];
   /** Payments we set up for buyers in this market. City pages leave this to the country page. */
@@ -37,7 +35,6 @@ export type LocationPage = {
   /** Heading for the projects block. Defaults to "Work we have delivered". */
   proofTitle?: string;
   faq: { q: string; a: string }[];
-  sources: LocationSource[];
   closing: string;
   updated: string;
   isoCode: string;
@@ -45,16 +42,12 @@ export type LocationPage = {
   parent?: string;
   /** IANA time zone of the main business city, for the working-hours overlap. */
   tz: string;
-  /** Main business city, pinned on the route map from Karachi. */
+  /** Main business city, pinned on the route map from Pakistan. */
   pin: { name: string; lat: number; lng: number };
 };
 
 const UPDATED = "2026-10-21";
 
-const DR = (country: string, slug: string): LocationSource => ({
-  label: `DataReportal: Digital 2026, ${country}`,
-  url: `https://datareportal.com/reports/digital-2026-${slug}`,
-});
 
 const CORE: LocationPage[] = [
   /* ------------------------------------------------------------------ */
@@ -73,7 +66,7 @@ const CORE: LocationPage[] = [
       "We design and build websites, mobile apps, Shopify stores and AI agents for businesses in Dubai, Abu Dhabi and across the UAE. We work remotely from Pakistan, one hour ahead of the UAE, so our working days line up almost completely.",
     market: [
       "The UAE is one of the most connected countries in the world. Almost everyone is online, people carry more than one phone connection each, and mobile internet is among the fastest anywhere. That raises the bar: a slow site or a clumsy app feels broken here sooner than in most markets.",
-      "Customers also expect choice at checkout. Cards and Apple Pay are standard, buy now pay later services are common, and the Central Bank's own Aani instant payments and Jaywan domestic card are adding new options. A store that only takes one kind of card leaves money on the table.",
+      "Customers also expect choice at checkout. Cards and Apple Pay are standard, buy now pay later services are common, and the UAE's new Aani instant payments and Jaywan domestic card are adding more options. A store that only takes one kind of card leaves money on the table.",
       "The UAE population is international, so many businesses need English and Arabic, and some need Urdu, Hindi or Russian as well. Right-to-left Arabic layouts have to be designed in from the start, not bolted on later.",
     ],
     stats: [
@@ -82,7 +75,6 @@ const CORE: LocationPage[] = [
       { label: "Social media user identities", value: "12.5 million" },
       { label: "Median mobile download speed", value: "614 Mbps" },
     ],
-    statsNote: "Figures for late 2025, from DataReportal's Digital 2026 report for the UAE.",
     needs: [
       { title: "Property and real estate portals", body: "Listings, search, virtual tours and a CRM that catches every enquiry, for developers and brokers selling to local and overseas buyers." },
       { title: "Service marketplaces and booking", body: "Booking flows for home services, clinics, salons and rentals, where customers expect to book and pay in a few taps." },
@@ -123,11 +115,6 @@ const CORE: LocationPage[] = [
       { q: "Do you work with companies in free zones?", a: "Yes. We follow the data rules that apply to your company, whether federal law or a free zone's own regime." },
       { q: "How do we start?", a: "Message us on WhatsApp or book a 30-minute call. We reply within one working day." },
     ],
-    sources: [
-      DR("United Arab Emirates", "united-arab-emirates"),
-      { label: "The National: UAE expands federal payment channels with Aani and Jaywan", url: "https://thenationalnews.com/business/banking/2026/08/03/uae-expands-federal-payment-channels-with-aani-and-jaywan" },
-      { label: "Clyde & Co: UAE issues landmark personal data protection law", url: "https://www.clydeco.com/en/insights/2021/11/uae-issues-landmark-personal-data-protection-law" },
-    ],
     closing: "Building something for the UAE market?",
     updated: UPDATED,
   },
@@ -148,7 +135,7 @@ const CORE: LocationPage[] = [
       "We design and build websites, mobile apps, online stores and AI agents for businesses in Riyadh, Jeddah and across Saudi Arabia. We build Arabic-first where your customers need it, with the payment methods they use and the data rules Saudi law sets.",
     market: [
       "Saudi Arabia is a large, young and almost fully online market. More than 34 million people use the internet, and mobile is how most of them shop, book and bank. Customers here are quick to compare, so the experience on a phone often decides who gets the sale.",
-      "Payments have moved fast. The Saudi Central Bank reports that electronic payments made up 79% of all retail payments in 2024, up from 70% the year before. Shoppers expect mada cards, Apple Pay and instalment options, and many still like the safety of paying on delivery for a first order.",
+      "Payments have moved fast. Close to four in every five retail payments in the Kingdom are now electronic, up sharply in just a year. Shoppers expect mada cards, Apple Pay and instalment options, and many still like the safety of paying on delivery for a first order.",
       "Arabic is the first language for most customers, and a translated afterthought shows. Good Saudi sites and apps are planned in Arabic and English together, with layouts, search and content that work in both directions.",
     ],
     stats: [
@@ -157,7 +144,6 @@ const CORE: LocationPage[] = [
       { label: "Social media user identities", value: "38.6 million" },
       { label: "Electronic share of retail payments, 2024", value: "79%, up from 70% in 2023" },
     ],
-    statsNote: "Digital figures for late 2025 from DataReportal's Digital 2026 report for Saudi Arabia. Payments figure from the Saudi Central Bank (SAMA).",
     needs: [
       { title: "Arabic-first online stores", body: "Stores built around Arabic search and browsing, with English as a full second language, not a word-for-word copy." },
       { title: "Booking and service apps", body: "Apps for clinics, salons, education and home services, where customers book, pay and get reminders on their phone." },
@@ -198,12 +184,6 @@ const CORE: LocationPage[] = [
       { q: "Can our data stay in Saudi Arabia?", a: "Where the PDPL or your sector requires it, we can host with cloud providers that offer Saudi data centres." },
       { q: "How do we start?", a: "Message us on WhatsApp or book a 30-minute call. We reply within one working day." },
     ],
-    sources: [
-      DR("Saudi Arabia", "saudi-arabia"),
-      { label: "SAMA: E-payments account for 79% of total retail payments in 2024", url: "https://www.sama.gov.sa/en-us/mediacenter/news/pages/news-1083.aspx" },
-      { label: "Clyde & Co: Saudi Arabia's Personal Data Protection Law becomes enforceable", url: "https://www.clydeco.com/en/insights/2024/09/saudi-arabia-s-personal-data-protection-law-become" },
-      { label: "Saudipedia: E-commerce Law in Saudi Arabia", url: "https://saudipedia.com/en/e-commerce-law-in-saudi-arabia" },
-    ],
     closing: "Building something for Saudi customers?",
     updated: UPDATED,
   },
@@ -224,7 +204,7 @@ const CORE: LocationPage[] = [
       "We design and build websites, mobile apps, Shopify stores and AI agents for UK businesses, from London start-ups to established firms across England, Scotland and Wales. We work remotely from Pakistan, and your working morning overlaps with our afternoon every day.",
     market: [
       "The UK is a mature, demanding online market. Almost everyone is online and most people bank on their phone, so customers judge a business by how quickly its site loads, how easy it is to book or buy, and whether it feels trustworthy.",
-      "Payments are overwhelmingly digital. UK Finance reports that debit cards made up more than half of all UK payments in 2025, cash fell to 8%, and nearly two thirds of adults were registered for a mobile wallet. Checkout has to make card and wallet payments effortless.",
+      "Payments are overwhelmingly digital. Debit cards now carry more than half of all UK payments, cash is down to fewer than one in ten, and around two in three adults have a mobile wallet set up. Checkout has to make card and wallet payments effortless.",
       "UK buyers also read the small print. Clear pricing, honest delivery times, accessible design and a privacy notice written in plain English are part of what makes a UK site convert, not just legal boxes to tick.",
     ],
     stats: [
@@ -233,7 +213,6 @@ const CORE: LocationPage[] = [
       { label: "Cash share of all payments, 2025", value: "8%, down from 9% in 2024" },
       { label: "Adults registered for a mobile wallet, 2025", value: "65%" },
     ],
-    statsNote: "Internet figure for late 2025 from DataReportal's Digital 2026 report for the UK. Payment figures from UK Finance's Payment Markets Report 2025.",
     needs: [
       { title: "Websites that win trust fast", body: "Clear, fast service sites for professional firms, clinics and trades, where the first impression decides whether someone calls." },
       { title: "Shopify stores for D2C brands", body: "Stores built for card and wallet checkouts, reviews and returns policies UK shoppers expect." },
@@ -274,11 +253,6 @@ const CORE: LocationPage[] = [
       { q: "Can you work with our in-house team?", a: "Yes. Many UK clients use us alongside their own developers or marketers." },
       { q: "How do we start?", a: "Book a 30-minute call or send us a message. We reply within one working day." },
     ],
-    sources: [
-      DR("United Kingdom", "united-kingdom"),
-      { label: "UK Finance: Payment Markets Report 2025 key findings", url: "https://www.ukfinance.org.uk/news-and-insight/press-release/digital-payments-continue-grow-mobile-wallets-become-more-popular" },
-      { label: "Osborne Clarke: Data (Use and Access) Act becomes law", url: "https://www.osborneclarke.com/insights/data-use-and-access-act-becomes-law-first-ever-changes-uk-gdpr" },
-    ],
     closing: "Building something for UK customers?",
     updated: UPDATED,
   },
@@ -299,7 +273,7 @@ const CORE: LocationPage[] = [
       "Venlynk is a design and engineering studio based in Karachi. We build websites, mobile apps, Shopify stores and AI agents for Pakistani businesses, with the payment methods, delivery options and mobile-first design that customers here expect.",
     market: [
       "Pakistan's online market is growing quickly from a lower base. About 117 million people were online at the end of 2025, less than half the population, and mobile download speeds average a fraction of the Gulf's. That changes how good products are built: light pages, small apps and screens that still work on patchy connections and older phones.",
-      "Payments are going digital fast. The State Bank of Pakistan reports that digital channels handled 88% of retail transactions in FY25, up from 78% two years earlier, with Raast instant payments more than doubling. Yet many online shoppers still choose cash on delivery, especially for a first order from a new store.",
+      "Payments are going digital fast. Close to nine in ten retail transactions now go through digital channels, up from under eight in ten two years earlier, and Raast instant payments have more than doubled. Yet many online shoppers still choose cash on delivery, especially for a first order from a new store.",
       "Customers here message before they buy. WhatsApp is often the real storefront, so stores and service businesses that answer quickly, show clear prices and offer cash on delivery win more orders.",
     ],
     stats: [
@@ -308,7 +282,6 @@ const CORE: LocationPage[] = [
       { label: "Median mobile download speed", value: "24.3 Mbps" },
       { label: "Digital share of retail transactions, FY25", value: "88%, up from 78% in FY23" },
     ],
-    statsNote: "Digital figures for late 2025 from DataReportal's Digital 2026 report for Pakistan. Payments figure from the State Bank of Pakistan's FY25 payment systems review.",
     needs: [
       { title: "Shopify and WooCommerce stores", body: "Stores with cash on delivery, local wallets and courier integrations, built light enough to load on any phone." },
       { title: "Apps for education and health", body: "Learning platforms, telemedicine and booking apps that work in Urdu and English on low-cost phones." },
@@ -348,11 +321,6 @@ const CORE: LocationPage[] = [
       { q: "Can you build in Urdu?", a: "Yes. We design right-to-left Urdu layouts with suitable fonts, alongside English." },
       { q: "Do you work with small businesses?", a: "Yes. Many projects start small, like a Shopify store or a WhatsApp agent, and grow from there." },
       { q: "How do we start?", a: "Message us on WhatsApp or book a call. We reply within one working day." },
-    ],
-    sources: [
-      DR("Pakistan", "pakistan"),
-      { label: "State Bank of Pakistan: Annual Payment Systems Review FY25 (press release)", url: "https://www.sbp.org.pk/press/2025/Pr-03-Nov-2025.pdf" },
-      { label: "Commoner Law: Data privacy in Pakistan without a PDP Act (2026)", url: "https://commoner-law.com/pakistan/data-privacy-digital-rights/data-privacy-without-pdp-act" },
     ],
     closing: "Building something for customers in Pakistan?",
     updated: UPDATED,

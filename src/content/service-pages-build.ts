@@ -248,7 +248,6 @@ export const BUILD_PAGES: ServicePage[] = [
         { label: "Share found in plugins", value: "96%" },
         { label: "Share found in themes", value: "4%" },
       ],
-      sources: [{ label: "Patchstack: State of WordPress Security in 2025", url: "https://patchstack.com/whitepaper/state-of-wordpress-security-in-2025/" }],
     },
     proof: {
       project: "the-jumbo-jump",
@@ -322,7 +321,6 @@ export const BUILD_PAGES: ServicePage[] = [
         { label: "New WordPress vulnerabilities found in 2024", value: "7,966" },
         { label: "Share found in plugins", value: "96%" },
       ],
-      sources: [{ label: "Patchstack: State of WordPress Security in 2025", url: "https://patchstack.com/whitepaper/state-of-wordpress-security-in-2025/" }],
     },
     notFit: [
       "If the site is beyond saving, with a broken theme or dozens of abandoned plugins, a rebuild may cost less than maintaining it.",
@@ -932,7 +930,6 @@ export const BUILD_PAGES: ServicePage[] = [
         { label: "Google Play target API level, new apps and updates from 31 August 2026", value: "Android 16 (API level 36) or higher" },
         { label: "Extension available on request until", value: "1 November 2026" },
       ],
-      sources: [{ label: "Android Developers: Target API level requirements for Google Play", url: "https://developer.android.com/google/play/requirements/target-sdk" }],
     },
     notFit: [
       "If people would only use the app occasionally, test the idea as a mobile-friendly web app first. It is faster to change.",
@@ -1059,7 +1056,6 @@ export const BUILD_PAGES: ServicePage[] = [
         { label: "Required for new apps and updates from 31 August 2026", value: "Target Android 16 (API level 36) or higher" },
         { label: "Extension available on request until", value: "1 November 2026" },
       ],
-      sources: [{ label: "Android Developers: Target API level requirements for Google Play", url: "https://developer.android.com/google/play/requirements/target-sdk" }],
     },
     proof: {
       project: "stock-stream",

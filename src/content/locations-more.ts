@@ -1,18 +1,10 @@
-import type { LocationPage, LocationSource } from "@/content/locations";
+import type { LocationPage } from "@/content/locations";
 
 /** Second wave of country pages and the first city pages. Same rules as locations.ts. */
 
 const UPDATED = "2026-10-21";
 
-const DR = (country: string, slug: string): LocationSource => ({
-  label: `DataReportal: Digital 2026, ${country}`,
-  url: `https://datareportal.com/reports/digital-2026-${slug}`,
-});
 
-const EAA: LocationSource = {
-  label: "Noerr: Accessibility in e-commerce, new obligations from June 2025",
-  url: "https://www.noerr.com/en/insights/accessibility-in-e-commerce-new-obligations-for-online-shop-operators-starting-from-june-2025",
-};
 
 export const MORE_COUNTRIES: LocationPage[] = [
   /* ------------------------------------------------------------------ */
@@ -40,7 +32,6 @@ export const MORE_COUNTRIES: LocationPage[] = [
       { label: "Median mobile download speed", value: "154 Mbps" },
       { label: "States with comprehensive consumer privacy laws in effect", value: "20, as of August 2026" },
     ],
-    statsNote: "Digital figures for late 2025 from DataReportal's Digital 2026 report for the US. Privacy law count from Enzuzo's 2026 state privacy law tracker.",
     needs: [
       { title: "MVPs and SaaS for founders", body: "First versions of web and mobile products, built fast enough to test with users and show investors." },
       { title: "Shopify stores for D2C brands", body: "Stores built for conversion, subscriptions and the apps US shoppers expect, from reviews to buy now pay later." },
@@ -82,10 +73,6 @@ export const MORE_COUNTRIES: LocationPage[] = [
       { q: "Can you help with CCPA and state privacy laws?", a: "We build the technical side: consent, opt-outs and data requests. Your lawyer decides the policy." },
       { q: "How do we start?", a: "Book a 30-minute call or send a message. We reply within one working day." },
     ],
-    sources: [
-      DR("United States", "united-states-of-america"),
-      { label: "Enzuzo: US state privacy laws, 2026 tracker", url: "https://www.enzuzo.com/blog/us-state-privacy-laws" },
-    ],
     closing: "Building something for US customers?",
     updated: UPDATED,
   },
@@ -115,7 +102,6 @@ export const MORE_COUNTRIES: LocationPage[] = [
       { label: "Cards' share of payment volume, 2024", value: "63% (credit 33%, debit 30%)" },
       { label: "Digital share of all payment transactions, 2024", value: "86%" },
     ],
-    statsNote: "Digital figures for late 2025 from DataReportal's Digital 2026 report for Canada. Payment figures from Payments Canada data as summarised by the NCFA.",
     needs: [
       { title: "Shopify stores selling across Canada and the US", body: "Stores priced in CAD and USD, with clear duties, shipping and tax for each market." },
       { title: "English and French websites", body: "Bilingual sites with proper French versions of every page, not machine translations." },
@@ -157,11 +143,6 @@ export const MORE_COUNTRIES: LocationPage[] = [
       { q: "Can my store sell to the US too?", a: "Yes. We set up separate currencies, prices and shipping rules for each market." },
       { q: "How do we start?", a: "Book a 30-minute call or send a message. We reply within one working day." },
     ],
-    sources: [
-      DR("Canada", "canada"),
-      { label: "NCFA: How Canadians pay online in 2026", url: "https://ncfacanada.org/how-canadians-pay-online-in-2026-interac-digital-wallets-and-open-banking/" },
-      { label: "Office of the Privacy Commissioner of Canada: provincial laws that may apply instead of PIPEDA", url: "https://www.priv.gc.ca/en/privacy-topics/privacy-laws-in-canada/the-personal-information-protection-and-electronic-documents-act-pipeda/legislation-related-to-pipeda/provincial-legislation-deemed-substantially-similar-to-pipeda/" },
-    ],
     closing: "Building something for Canadian customers?",
     updated: UPDATED,
   },
@@ -181,7 +162,7 @@ export const MORE_COUNTRIES: LocationPage[] = [
     lead:
       "We design and build websites, mobile apps, Shopify stores and AI agents for Australian businesses, from Sydney and Melbourne to Brisbane and Perth. Our working morning overlaps with your afternoon, and we have built for Australian clients before.",
     market: [
-      "Australians are almost all online, and they pay by tapping. The Reserve Bank's 2025 consumer payments survey found cards made up about 73% of payments, and 43% of consumers used a phone to pay contactlessly in the survey week. Cash has steadied at around 15%.",
+      "Australians are almost all online, and most of them pay by tapping. Cards now cover around three quarters of everyday payments, more than four in ten people pay with their phone in a typical week, and cash has settled at roughly one payment in seven.",
       "That habit carries online. Checkouts with Apple Pay, Google Pay and buy now pay later convert better here than long card forms, and Afterpay started in Australia, so shoppers know it well.",
       "Australian buyers also expect clarity: GST-inclusive prices, honest delivery times and easy returns. Small details like an Australian phone number format and local spelling make a site feel local.",
     ],
@@ -189,9 +170,8 @@ export const MORE_COUNTRIES: LocationPage[] = [
       { label: "Internet users", value: "26.2 million, 97.1% of the population" },
       { label: "Median mobile download speed", value: "122 Mbps" },
       { label: "Cards' share of consumer payments, 2025", value: "About 73%" },
-      { label: "Consumers paying by phone in the survey week, 2025", value: "43%, up from 35% in 2022" },
+      { label: "People who pay with their phone in a typical week", value: "43%, up from 35% three years earlier" },
     ],
-    statsNote: "Digital figures for late 2025 from DataReportal's Digital 2026 report for Australia. Payment figures from the Reserve Bank of Australia's 2025 Consumer Payments Survey.",
     needs: [
       { title: "Service business websites", body: "Clear, fast sites for trades, clinics and professional firms that turn local searches into calls and bookings." },
       { title: "Shopify stores", body: "Stores with Afterpay, wallet payments and shipping rules for Australia and New Zealand." },
@@ -232,11 +212,6 @@ export const MORE_COUNTRIES: LocationPage[] = [
       { q: "Have you worked with Australian clients?", a: "Yes, including TechOutsource, an Australian software house." },
       { q: "How do we start?", a: "Book a 30-minute call or send a message. We reply within one working day." },
     ],
-    sources: [
-      DR("Australia", "australia"),
-      { label: "Reserve Bank of Australia: Consumer Payment Behaviour in Australia (May 2026)", url: "https://rba.gov.au/publications/bulletin/2026/may/consumer-payment-behaviour-in-australia.html" },
-      { label: "HWL Ebsworth: Privacy for small businesses", url: "https://hwlebsworth.com.au/privacy-for-small-businesses/" },
-    ],
     closing: "Building something for Australian customers?",
     updated: UPDATED,
   },
@@ -257,7 +232,7 @@ export const MORE_COUNTRIES: LocationPage[] = [
       "We design and build websites, mobile apps, Shopify stores and AI agents for businesses in Amsterdam, Rotterdam and across the Netherlands. We work in English, which most Dutch businesses use comfortably, and build for iDEAL, GDPR and EU accessibility rules.",
     market: [
       "The Netherlands is one of Europe's most digital countries: about 99% of people are online and mobile networks are fast. Dutch shoppers buy online often and expect a smooth, honest checkout.",
-      "One payment method stands out. iDEAL, which pays straight from the shopper's bank, accounts for around 71% of Dutch online payments according to 2025 figures. A store without iDEAL looks foreign to many Dutch buyers.",
+      "One payment method stands out. iDEAL, which pays straight from the shopper's bank, handles around seven in ten Dutch online payments. A store without iDEAL looks foreign to many Dutch buyers.",
       "EU rules shape every build: GDPR for personal data and cookies, and since 28 June 2025 the European Accessibility Act for many online shops. We design for both from the first wireframe.",
     ],
     stats: [
@@ -266,7 +241,6 @@ export const MORE_COUNTRIES: LocationPage[] = [
       { label: "iDEAL's share of Dutch online payments, 2025", value: "About 71%" },
       { label: "European Accessibility Act applies to e-commerce from", value: "28 June 2025" },
     ],
-    statsNote: "Digital figures for late 2025 from DataReportal's Digital 2026 report for the Netherlands. iDEAL share as reported by Searchlab from Currence data. Accessibility date per Noerr.",
     needs: [
       { title: "Shopify stores for EU shoppers", body: "Stores with iDEAL, EU VAT, multiple currencies and shipping across Europe." },
       { title: "SaaS and MVPs", body: "Products for Dutch start-ups and scale-ups, designed for European customers and GDPR." },
@@ -308,11 +282,6 @@ export const MORE_COUNTRIES: LocationPage[] = [
       { q: "Can you make our site meet the European Accessibility Act?", a: "We design and build to WCAG and can audit an existing site. Your legal adviser confirms whether the Act applies to you." },
       { q: "How do we start?", a: "Book a 30-minute call or send a message. We reply within one working day." },
     ],
-    sources: [
-      DR("The Netherlands", "netherlands"),
-      { label: "Searchlab: online payment statistics Netherlands 2026", url: "https://searchlab.nl/statistieken/online-betalen-statistieken-nederland-2026" },
-      EAA,
-    ],
     closing: "Building something for Dutch customers?",
     updated: UPDATED,
   },
@@ -342,7 +311,6 @@ export const MORE_COUNTRIES: LocationPage[] = [
       { label: "Median mobile download speed", value: "59 Mbps" },
       { label: "European Accessibility Act applies to e-commerce from", value: "28 June 2025" },
     ],
-    statsNote: "Digital figures for late 2025 from DataReportal's Digital 2026 report for Ireland. Accessibility date per Noerr.",
     needs: [
       { title: "Stores that sell across borders", body: "Shopify stores in EUR and GBP, with EU VAT and shipping to the UK and Europe." },
       { title: "Websites for professional firms", body: "Clear sites for accountants, solicitors, clinics and consultancies that turn searches into enquiries." },
@@ -384,7 +352,6 @@ export const MORE_COUNTRIES: LocationPage[] = [
       { q: "Can you check our site for accessibility?", a: "Yes. We audit against WCAG and fix the issues we find." },
       { q: "How do we start?", a: "Book a 30-minute call or send a message. We reply within one working day." },
     ],
-    sources: [DR("Ireland", "ireland"), EAA],
     closing: "Building something for Irish customers?",
     updated: UPDATED,
   },
@@ -414,7 +381,6 @@ export const MORE_COUNTRIES: LocationPage[] = [
       { label: "Social media user identities", value: "5.33 million, 90.6% of the population" },
       { label: "Median mobile download speed", value: "165 Mbps" },
     ],
-    statsNote: "Figures for late 2025 from DataReportal's Digital 2026 report for Singapore.",
     needs: [
       { title: "Regional ecommerce", body: "Stores that sell across Singapore and Southeast Asia with the right currencies and payments." },
       { title: "SaaS and fintech products", body: "Web and mobile products for start-ups building from Singapore for the region." },
@@ -456,10 +422,6 @@ export const MORE_COUNTRIES: LocationPage[] = [
       { q: "Can you work to the PDPA?", a: "Yes. We build consent, notices and data handling into what we make. Your adviser confirms the policy." },
       { q: "How do we start?", a: "Book a 30-minute call or send a message. We reply within one working day." },
     ],
-    sources: [
-      DR("Singapore", "singapore"),
-      { label: "IAPP: The personal data protection framework in Singapore", url: "https://iapp.org/news/a/the-personal-data-protection-framework-in-singapore" },
-    ],
     closing: "Building something for Singapore and the region?",
     updated: UPDATED,
   },
@@ -489,7 +451,6 @@ export const MORE_COUNTRIES: LocationPage[] = [
       { label: "Median mobile download speed", value: "144 Mbps" },
       { label: "PDPA breach notification and DPO duties in force from", value: "1 June 2025" },
     ],
-    statsNote: "Digital figures for late 2025 from DataReportal's Digital 2026 report for Malaysia. PDPA dates from DLA Piper's data protection guide.",
     needs: [
       { title: "Shopify and WooCommerce stores", body: "Stores with FPX, DuitNow and e-wallets, built for shoppers coming from social media." },
       { title: "English and Malay websites", body: "Bilingual sites, with Chinese or Tamil versions where your audience needs them." },
@@ -531,11 +492,6 @@ export const MORE_COUNTRIES: LocationPage[] = [
       { q: "Will our product meet the new PDPA rules?", a: "We build the technical side, such as consent, breach logging and data requests. Your adviser confirms the policy." },
       { q: "How do we start?", a: "Message us on WhatsApp or book a call. We reply within one working day." },
     ],
-    sources: [
-      DR("Malaysia", "malaysia"),
-      { label: "Curlec: FPX vs DuitNow", url: "https://curlec.com/blog/fpx-vs-duitnow/" },
-      { label: "DLA Piper: Data protection in Malaysia", url: "https://www.dlapiperdataprotection.com/?c=MY&t=law" },
-    ],
     closing: "Building something for Malaysian customers?",
     updated: UPDATED,
   },
@@ -565,7 +521,6 @@ export const MORE_COUNTRIES: LocationPage[] = [
       { label: "Median mobile download speed", value: "68 Mbps" },
       { label: "Credit cards' share of online payments, 2025", value: "52%" },
     ],
-    statsNote: "Digital figures for late 2025 from DataReportal's Digital 2026 report for Turkey. Payment share from Worldpay data as cited by Antom.",
     needs: [
       { title: "Stores with instalment checkout", body: "Online stores where taksit options are shown clearly on product pages and at checkout." },
       { title: "Export websites", body: "Sites and stores in English and other languages for Turkish manufacturers and brands selling abroad." },
@@ -607,11 +562,6 @@ export const MORE_COUNTRIES: LocationPage[] = [
       { q: "Can you help us sell abroad?", a: "Yes. We set up languages, currencies and shipping for each export market." },
       { q: "How do we start?", a: "Book a 30-minute call or send a message. We reply within one working day." },
     ],
-    sources: [
-      DR("Turkey", "turkey"),
-      { label: "Antom: Turkey payment methods market guide", url: "https://www.antom.com/markets/turkey" },
-      { label: "CMS: Data protection reform in Turkiye", url: "https://cms.law/en/tur/legal-updates/data-protection-reform-in-turkiye-a-step-towards-alignment-with-eu-s-gdpr2" },
-    ],
     closing: "Building something for customers in Turkey?",
     updated: UPDATED,
   },
@@ -635,7 +585,7 @@ export const CITY_PAGES: LocationPage[] = [
     lead:
       "We build websites, apps, Shopify stores and WhatsApp AI agents for Dubai businesses, with real projects in the city behind us: a property portal for off-plan investors and ongoing work for one of the UAE's home services marketplaces.",
     market: [
-      "Dubai grew to 4.58 million people by the end of 2025, up 7.5% in a year, according to the emirate's statistics office. Many of those people are new to the city and find services online, from somewhere to live to someone to clean it.",
+      "Dubai passed 4.5 million residents in 2025 and is still growing by several percent a year. Many of those people are new to the city and find services online, from somewhere to live to someone to clean it.",
       "That makes Dubai's competitive sectors very digital: property, home services, hospitality, clinics and retail. Customers compare several options on their phone and message the first business that answers clearly.",
       "Dubai businesses also serve a very international audience. Sites often need English and Arabic, and sometimes Russian, Chinese or Hindi, with prices and booking that work for visitors and residents alike.",
     ],
@@ -644,7 +594,6 @@ export const CITY_PAGES: LocationPage[] = [
       { label: "Population growth in 2025", value: "7.5%" },
       { label: "UAE internet users", value: "About 99% of the population" },
     ],
-    statsNote: "Dubai figures from the Dubai Data and Statistics Establishment, as reported by The National. Internet figure from DataReportal's Digital 2026 report for the UAE.",
     needs: [
       { title: "Property portals and developer sites", body: "Listings, virtual tours, fast search and CRM-connected enquiry forms for developers and brokers." },
       { title: "Booking for home and personal services", body: "Booking and payment flows for cleaning, maintenance, salons and clinics." },
@@ -673,10 +622,6 @@ export const CITY_PAGES: LocationPage[] = [
       { q: "Can you build in Arabic and English?", a: "Yes, with right-to-left layouts designed in from the start." },
       { q: "Can you connect enquiries to our CRM?", a: "Yes. Forms, WhatsApp and calls can all feed your CRM, so no lead is lost." },
     ],
-    sources: [
-      { label: "The National: Dubai population surpassed 4.5 million by end of 2025", url: "https://thenationalnews.com/news/uae/2026/07/30/dubai-population-surpassed-45-million-by-end-of-2025" },
-      DR("United Arab Emirates", "united-arab-emirates"),
-    ],
     closing: "Building something for Dubai?",
     updated: UPDATED,
   },
@@ -704,7 +649,6 @@ export const CITY_PAGES: LocationPage[] = [
       { label: "UK internet users", value: "97.8% of the population" },
       { label: "UK adults registered for a mobile wallet, 2025", value: "65%" },
     ],
-    statsNote: "London population from the ONS mid-2023 estimate via the London Datastore. UK figures from DataReportal's Digital 2026 report and UK Finance.",
     needs: [
       { title: "MVPs for founders", body: "First versions of web and mobile products, launched to real users within a few months." },
       { title: "Booking and service platforms", body: "Booking, quoting and payment flows for service businesses, like the ByStored booking flow our founder built." },
@@ -732,11 +676,6 @@ export const CITY_PAGES: LocationPage[] = [
       { q: "Can you build an MVP we can show investors?", a: "Yes. We build a real, working first version, not just slides or a clickable mock-up." },
       { q: "Can you work to UK GDPR?", a: "Yes. Consent, notices, data access and deletion are built into what we make." },
       { q: "How do we start?", a: "Book a 30-minute call. We reply within one working day." },
-    ],
-    sources: [
-      { label: "London Datastore: demography", url: "https://data.london.gov.uk/demography" },
-      DR("United Kingdom", "united-kingdom"),
-      { label: "UK Finance: Payment Markets Report 2025 key findings", url: "https://www.ukfinance.org.uk/news-and-insight/press-release/digital-payments-continue-grow-mobile-wallets-become-more-popular" },
     ],
     closing: "Building something in London?",
     updated: UPDATED,
@@ -788,7 +727,6 @@ export const CITY_PAGES: LocationPage[] = [
       { q: "Do you work with small businesses?", a: "Yes. Many projects start small, like a Shopify store or a WhatsApp agent, and grow from there." },
       { q: "How do we start?", a: "Message us on WhatsApp or book a call. We reply within one working day." },
     ],
-    sources: [DR("Pakistan", "pakistan")],
     closing: "Building something in Karachi?",
     updated: UPDATED,
   },

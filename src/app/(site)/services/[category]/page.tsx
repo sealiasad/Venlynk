@@ -3,7 +3,8 @@ import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 
-import { ClosingCta, delay, Head, ProjectCard } from "@/components/site/blocks";
+import { delay, ProjectCard } from "@/components/site/blocks";
+import { CtaCard, Crumbs, Faq, SecHead } from "@/components/site/template-parts";
 import { JsonLd } from "@/components/site/json-ld";
 import { CATEGORIES, getCategory } from "@/content/catalog";
 import { CONTACT } from "@/content/home";
@@ -45,6 +46,7 @@ export default async function CategoryPage({ params }: Props) {
   const live = groups.flatMap((g) => g.live);
   const proof = c.proof.map((s) => getProject(s)).filter((p) => p !== undefined);
   const others = CATEGORIES.filter((x) => x.slug !== c.slug);
+  const total = groups.reduce((n, g) => n + g.live.length + g.later.length, 0);
 
   return (
     <>
@@ -88,139 +90,138 @@ export default async function CategoryPage({ params }: Props) {
         ]}
       />
 
-      <section className="pa-head pa-head--svc cx-head">
-        <div className="pa-head__bg" aria-hidden="true" data-parallax="0.3" />
-        <div className="wrap pa-svc-hero">
-          <div className="pa-head__inner">
-            <Link className="pa-crumb" href="/services" data-intro="">
-              <span aria-hidden="true">←</span> All services
-            </Link>
-            <p className="lx-eyebrow" data-intro="" style={{ animationDelay: "0.08s" }}>
-              {c.label} · {live.length} service{live.length === 1 ? "" : "s"}
-            </p>
-            <h1>
-              <span className="ha-line">
-                <span style={{ animationDelay: "0.15s" }}>{c.h1}</span>
-              </span>
-            </h1>
-            <p className="pa-head__lead" data-intro="" style={{ animationDelay: "0.35s" }}>
-              {c.lead}
-            </p>
-            <div className="ha-row-cta cx-hero-cta" data-intro="" style={{ animationDelay: "0.5s" }}>
-              <Link className="ha-btn ha-btn--light" href="/contact">
-                Get a fixed quote
-              </Link>
-              <a className="ha-btn ha-btn--ghost" href={CONTACT.whatsapp} rel="noopener" target="_blank">
-                WhatsApp us
-              </a>
+      <section className="vt-hero">
+        <div className="vt-hero__bg" aria-hidden="true" />
+        <div className="wrap">
+          <Crumbs items={[{ label: "Services", href: "/services" }, { label: c.label }]} />
+          <div className="vt-hero__grid vt-hero__grid--svc">
+            <div className="vt-hero__text">
+              <p className="vt-kicker" data-intro="">
+                {c.label} · {total} services
+              </p>
+              <h1 className="vt-h1 vt-h1--xl" data-intro="" style={{ animationDelay: "0.1s" }}>
+                {c.h1}
+              </h1>
+              <p className="vt-lead" data-intro="" style={{ animationDelay: "0.2s" }}>
+                {c.lead}
+              </p>
+              <div className="vt-ctas" data-intro="" style={{ animationDelay: "0.3s" }}>
+                <Link className="vt-btn vt-btn--primary" href="/contact">
+                  Get a fixed quote <span aria-hidden="true">→</span>
+                </Link>
+                <a className="vt-btn vt-btn--ghost" href="#services">
+                  See all {c.label} services
+                </a>
+              </div>
             </div>
-          </div>
-          <div className="pa-svc-hero__img" data-clip="">
-            <Image src={c.image} alt={c.imageAlt} fill priority sizes="(max-width: 900px) 92vw, 42vw" />
+            <figure className="vt-heroimg vt-heroimg--square" data-clip="">
+              <Image src={c.image} alt={c.imageAlt} fill priority sizes="(max-width: 1000px) 92vw, 40vw" />
+            </figure>
           </div>
         </div>
       </section>
 
-      <section className="ha-block wrap" aria-labelledby="cx-services">
-        <h2 id="cx-services" className="sr-only">
-          {c.label} services
-        </h2>
-        <div className="cx-groups">
-          {groups.map((g, gi) => (
-            <div className="cx-group" key={g.title} data-fade="" style={delay(gi)}>
-              <h3 className="cx-group__title">{g.title}</h3>
-              {g.live.length ? (
-                <ul className="cx-links">
-                  {g.live.map((p) => (
-                    <li key={p.slug}>
-                      <Link href={serviceUrl(p)} className="cx-link">
-                        <span className="cx-link__t">{p.h1}</span>
-                        <span className="cx-link__s">{p.forWho}</span>
-                        <span className="cx-link__go" aria-hidden="true">
-                          →
-                        </span>
-                      </Link>
-                    </li>
-                  ))}
-                </ul>
-              ) : null}
-              {g.later.length ? (
-                <>
-                  <p className="cx-later__label">{g.live.length ? "Also on request" : "On request"}</p>
-                  <ul className="cx-later">
+      <section className="vt-sec vt-sec--first" id="services">
+        <div className="wrap">
+          <SecHead
+            kicker={`${c.label} services`}
+            title="Pick what you need"
+            text="Services with an arrow have their own page. Everything else is available on request, with the same fixed quote."
+          />
+          <div className={`vt-groups vt-groups--${Math.min(groups.length, 4)}`}>
+            {groups.map((g, gi) => (
+              <div className="vt-panel vt-group" key={g.title} data-fade="" style={delay(gi)}>
+                <h3>
+                  {g.title} <span>{g.live.length + g.later.length}</span>
+                </h3>
+                {g.live.length ? (
+                  <ul className="vt-group__live">
+                    {g.live.map((p) => (
+                      <li key={p.slug}>
+                        <Link href={serviceUrl(p)}>
+                          {p.h1} <span aria-hidden="true">→</span>
+                        </Link>
+                      </li>
+                    ))}
+                  </ul>
+                ) : null}
+                {g.later.length ? (
+                  <ul className="vt-group__req">
                     {g.later.map((it) => (
                       <li key={it.slug}>{it.title}</li>
                     ))}
                   </ul>
-                </>
-              ) : null}
-            </div>
-          ))}
+                ) : null}
+              </div>
+            ))}
+          </div>
         </div>
       </section>
 
-      <section className="ha-block wrap cx-prose">
-        <Head title="How we approach it" />
-        <div className="cx-prose__body" data-fade="">
-          {c.body.map((p) => (
-            <p key={p.slice(0, 24)}>{p}</p>
-          ))}
-        </div>
-      </section>
-
-      <section className="ha-block wrap">
-        <Head title="Choosing the right option" />
-        <div className="cx-choose">
-          {c.choose.map((q, i) => (
-            <div className="cx-choose__item" key={q.q} data-fade="" style={delay(i)}>
-              <h3>{q.q}</h3>
-              <p>{q.a}</p>
+      <section className="vt-sec">
+        <div className="wrap">
+          <div className="vt-split">
+            <div className="vt-split__side" data-fade="">
+              <p className="vt-kicker">Our approach</p>
+              <h2 className="vt-h2">How we approach {c.label}</h2>
             </div>
-          ))}
+            <div className="vt-prose" data-fade="">
+              {c.body.map((p, i) => (
+                <p key={p.slice(0, 24)} className={i === 0 ? "vt-prose__first" : undefined}>
+                  {p}
+                </p>
+              ))}
+            </div>
+          </div>
+          <div className="vt-duo vt-duo--gap">
+            {c.choose.map((q, i) => (
+              <div className="vt-panel vt-panel--pad vt-choose" key={q.q} data-fade="" style={delay(i)}>
+                <p className="vt-label">Choosing</p>
+                <h3 className="vt-h3">{q.q}</h3>
+                <p className="vt-muted">{q.a}</p>
+              </div>
+            ))}
+          </div>
         </div>
       </section>
 
       {proof.length ? (
-        <section className="ha-block wrap">
-          <Head title="Work we have delivered" more={{ label: "See all work", href: "/work" }} />
-          <div className="pa-grid">
-            {proof.map((p) => (
-              <ProjectCard key={p.slug} project={p} />
-            ))}
+        <section className="vt-sec">
+          <div className="wrap">
+            <SecHead
+              kicker="Work"
+              title="Work we have delivered"
+              aside={
+                <Link className="vt-more" href="/work">
+                  See all work <span aria-hidden="true">→</span>
+                </Link>
+              }
+            />
+            <div className={`vt-cases vt-cases--${Math.min(proof.length, 3)}`}>
+              {proof.map((p) => (
+                <ProjectCard key={p.slug} project={p} />
+              ))}
+            </div>
           </div>
         </section>
       ) : null}
 
-      <section className="ha-block wrap">
-        <div className="ha-faq">
-          <Head title="Questions clients ask" />
-          <div data-fade="">
-            {c.faq.map((f) => (
-              <details key={f.q}>
-                <summary>{f.q}</summary>
-                <p>{f.a}</p>
-              </details>
+      <Faq title={`Questions about ${c.label}`} items={c.faq} />
+
+      <section className="vt-sec vt-sec--tight">
+        <div className="wrap vt-others">
+          <p className="vt-kicker">Other services</p>
+          <ul className="vt-chips">
+            {others.map((o) => (
+              <li key={o.slug}>
+                <Link href={`/services/${o.slug}`}>{o.label}</Link>
+              </li>
             ))}
-          </div>
+          </ul>
         </div>
       </section>
 
-      <section className="ha-block wrap pa-tight">
-        <h2 className="ha-eyebrow" style={{ marginBottom: "1.25rem" }}>
-          Other services
-        </h2>
-        <ul className="cx-chips">
-          {others.map((o) => (
-            <li key={o.slug}>
-              <Link className="pa-chip" href={`/services/${o.slug}`}>
-                {o.label}
-              </Link>
-            </li>
-          ))}
-        </ul>
-      </section>
-
-      <ClosingCta title={c.closing} />
+      <CtaCard title={c.closing} />
     </>
   );
 }

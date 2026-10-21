@@ -1,15 +1,19 @@
 import * as Flags from "country-flag-icons/react/3x2";
 import Link from "next/link";
 
-import { ClosingCta, delay, Head, ProjectCard } from "@/components/site/blocks";
+import { delay, ProjectCard } from "@/components/site/blocks";
 import { JsonLd } from "@/components/site/json-ld";
+import { AreaIcon } from "@/components/site/mega-menu";
 import { RouteMapVisual } from "@/components/site/route-map";
-import { TimeOverlap } from "@/components/site/time-overlap";
+import { SectionNav } from "@/components/site/section-nav";
+import { CtaCard, Crumbs, Faq, formatDate, HeroCtas, IconList, SecHead } from "@/components/site/template-parts";
+import { HeroClocks, TimeOverlap } from "@/components/site/time-overlap";
 import { CONTACT } from "@/content/home";
-import { citiesIn, LOCATIONS, type LocationPage } from "@/content/locations";
+import { citiesIn, type LocationPage } from "@/content/locations";
 import { getProject } from "@/content/projects";
 import { getServicePage, serviceUrl } from "@/content/service-pages";
 import { SITE } from "@/content/site";
+import { buildRouteMap } from "@/lib/route-map";
 import { absUrl, breadcrumbLd } from "@/lib/seo";
 
 function Flag({ code, className }: { code: string; className?: string }) {
@@ -23,16 +27,7 @@ function splitStat(v: string) {
   return i > 0 ? { big: v.slice(0, i), small: v.slice(i + 2) } : { big: v, small: "" };
 }
 
-const ICON = {
-  card: "M3 6.5A2.5 2.5 0 0 1 5.5 4h13A2.5 2.5 0 0 1 21 6.5v11a2.5 2.5 0 0 1-2.5 2.5h-13A2.5 2.5 0 0 1 3 17.5v-11ZM3 9h18M7 15h4",
-  shield: "M12 3 4.5 6v5.5c0 4.7 3.2 8.4 7.5 9.5 4.3-1.1 7.5-4.8 7.5-9.5V6L12 3Zm-3 9 2 2 4-4",
-  spark: "M12 3v4m0 10v4M3 12h4m10 0h4M5.6 5.6l2.8 2.8m7.2 7.2 2.8 2.8m0-12.8-2.8 2.8m-7.2 7.2-2.8 2.8",
-};
-const Icon = ({ d }: { d: string }) => (
-  <svg viewBox="0 0 24 24" aria-hidden="true" className="lx-icon">
-    <path d={d} fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
-  </svg>
-);
+const SHORT: Record<string, string> = { AE: "UAE", GB: "UK", US: "USA" };
 
 /** Shared layout for country and city pages. */
 export function LocationView({ l, parent }: { l: LocationPage; parent?: LocationPage }) {
@@ -45,9 +40,23 @@ export function LocationView({ l, parent }: { l: LocationPage; parent?: Location
   const proof = l.proof.map((s) => getProject(s)).filter((p) => p !== undefined);
   const path = parent ? `/locations/${parent.slug}/${l.slug}` : `/locations/${l.slug}`;
   const cities = parent ? [] : citiesIn(l.slug);
-  const siblings = parent ? citiesIn(parent.slug).filter((c) => c.slug !== l.slug) : LOCATIONS.filter((x) => x.slug !== l.slug);
-  const home = l.pin.name === "Karachi";
-  const crumb = parent ? { label: parent.country, href: `/locations/${parent.slug}` } : { label: "All locations", href: "/locations" };
+  const home = l.tz === "Asia/Karachi";
+  const label = parent ? l.pin.name : (SHORT[l.isoCode] ?? l.country);
+  const route = home ? null : buildRouteMap({ lat: l.pin.lat, lng: l.pin.lng });
+  const crumbs = [
+    { label: "Locations", href: "/locations" },
+    ...(parent ? [{ label: parent.country, href: `/locations/${parent.slug}` }] : []),
+    { label: l.country },
+  ];
+  const nav = [
+    { id: "services", label: "Services" },
+    { id: "market", label: "The market" },
+    { id: "needs", label: "What we build" },
+    { id: "together", label: "Working together" },
+    ...(l.payments || l.rules ? [{ id: "pay", label: l.payments ? "Payments and rules" : "Rules" }] : []),
+    ...(proof.length ? [{ id: "work", label: "Our work" }] : []),
+    { id: "faq", label: "FAQ" },
+  ];
 
   return (
     <>
@@ -81,249 +90,225 @@ export function LocationView({ l, parent }: { l: LocationPage; parent?: Location
         ]}
       />
 
-      <section className="pa-head lx-head">
-        <div className="pa-head__bg" aria-hidden="true" data-parallax="0.3" />
-        <div className="wrap lx-hero">
-          <div className="lx-hero__text">
-            <Link className="pa-crumb" href={crumb.href} data-intro="">
-              <span aria-hidden="true">←</span> {crumb.label}
-            </Link>
-            <p className="lx-eyebrow" data-intro="" style={{ animationDelay: "0.08s" }}>
-              <Flag code={l.isoCode} className="lx-flag" />
-              {l.country}
-            </p>
-            <h1>
-              <span className="ha-line">
-                <span style={{ animationDelay: "0.15s" }}>{l.h1}</span>
-              </span>
-            </h1>
-            <p className="pa-head__lead" data-intro="" style={{ animationDelay: "0.35s" }}>
-              {l.lead}
-            </p>
-            <div className="ha-row-cta cx-hero-cta" data-intro="" style={{ animationDelay: "0.5s" }}>
-              <Link className="ha-btn ha-btn--light" href="/contact">
-                Get a fixed quote
-              </Link>
-              <a className="ha-btn ha-btn--ghost" href={CONTACT.whatsapp} rel="noopener" target="_blank">
-                WhatsApp us
-              </a>
-            </div>
-          </div>
-          <figure className="lx-card" data-intro="" style={{ animationDelay: "0.3s" }}>
-            <figcaption className="lx-card__top">
-              <span className="lx-card__place">
-                <Flag code={l.isoCode} className="lx-flag lx-flag--lg" />
-                <span>
-                  <b>{l.pin.name}</b>
-                  <small>{home ? "Our home city" : "Served remotely from Karachi"}</small>
-                </span>
-              </span>
-              <span className="lx-card__tag">{home ? "Home base" : "Remote"}</span>
-            </figcaption>
-            <RouteMapVisual to={home ? null : { lat: l.pin.lat, lng: l.pin.lng }} label={l.pin.name} id={`rm-${l.slug}`} />
-          </figure>
-        </div>
-      </section>
-
-      {l.stats ? (
-        <section className="wrap lx-stats-wrap" aria-label="Key figures">
-          <ul className="lx-stats">
-            {l.stats.map((s, i) => {
-              const v = splitStat(s.value);
-              return (
-                <li key={s.label} className="lx-stat" data-fade="" style={delay(i)}>
-                  <b>{v.big}</b>
-                  {v.small ? <em>{v.small}</em> : null}
-                  <span>{s.label}</span>
-                </li>
-              );
-            })}
-          </ul>
-          {l.statsNote ? <p className="lx-note">{l.statsNote}</p> : null}
-        </section>
-      ) : null}
-
-      <section className="ha-block wrap lx-split">
-        <div className="lx-split__head">
-          <p className="lx-kicker">The market</p>
-          <h2>What building for {l.inText} really means</h2>
-        </div>
-        <div className="lx-split__body" data-fade="">
-          {l.market.map((p, i) => (
-            <p key={p.slice(0, 32)} className={i === 0 ? "lx-first" : undefined}>
-              {p}
-            </p>
-          ))}
-        </div>
-      </section>
-
-      <section className="ha-block wrap">
-        <Head title={`What businesses in ${l.inText} ask us for`} />
-        <div className="lx-bento">
-          {l.needs.map((n, i) => (
-            <div className={`lx-bento__item lx-bento__item--${i}`} key={n.title} data-fade="" style={delay(i)}>
-              <span className="lx-num">{String(i + 1).padStart(2, "0")}</span>
-              <h3>{n.title}</h3>
-              <p>{n.body}</p>
-            </div>
-          ))}
-        </div>
-      </section>
-
-      <section className="ha-block wrap lx-time">
-        <div className="lx-time__panel" data-fade="">
-          <div className="lx-time__head">
-            <p className="lx-kicker">Time zones</p>
-            <h2>Working with us from {l.inText}</h2>
-          </div>
-          <TimeOverlap tz={l.tz} city={l.pin.name} />
-        </div>
-        <ul className="lx-work">
-          {l.working.map((w, i) => (
-            <li key={w.title} data-fade="" style={delay(i)}>
-              <h3>{w.title}</h3>
-              <p>{w.body}</p>
-            </li>
-          ))}
-        </ul>
-      </section>
-
-      {l.payments ? (
-        <section className="ha-block wrap">
-          <Head title="Payments your customers expect" />
-          <div className="lx-pay">
-            {l.payments.map((p, i) => (
-              <div className="lx-pay__item" key={p.name} data-fade="" style={delay(i)}>
-                <Icon d={ICON.card} />
-                <h3>{p.name}</h3>
-                <p>{p.body}</p>
+      <section className="vt-hero">
+        <div className="vt-hero__bg" aria-hidden="true" />
+        <div className="wrap">
+          <Crumbs items={crumbs} />
+          <div className="vt-hero__grid vt-hero__grid--loc">
+            <div className="vt-hero__text">
+              <p className="vt-kicker vt-kicker--flag" data-intro="">
+                <Flag code={l.isoCode} className="vt-flag" />
+                {parent ? `${l.country}, ${parent.country}` : l.country}
+              </p>
+              <h1 className="vt-h1" data-intro="" style={{ animationDelay: "0.1s" }}>
+                {l.h1}
+              </h1>
+              <p className="vt-lead" data-intro="" style={{ animationDelay: "0.2s" }}>
+                {l.lead}
+              </p>
+              <div data-intro="" style={{ animationDelay: "0.3s" }}>
+                <HeroCtas />
               </div>
-            ))}
-          </div>
-        </section>
-      ) : null}
-
-      {l.rules ? (
-        <section className="ha-block wrap">
-          <Head title="Rules we build around" text="General information, not legal advice. Your lawyer has the final word on compliance." />
-          <div className="lx-rules">
-            {l.rules.map((r, i) => (
-              <div className="lx-rules__item" key={r.title} data-fade="" style={delay(i)}>
-                <Icon d={ICON.shield} />
-                <div>
-                  <h3>{r.title}</h3>
-                  <p>{r.body}</p>
-                </div>
-              </div>
-            ))}
-          </div>
-        </section>
-      ) : null}
-
-      {parent ? (
-        <section className="wrap lx-parent">
-          <p>
-            Payments, data rules and how we work across time zones are covered on our{" "}
-            <Link className="link" href={`/locations/${parent.slug}`}>
-              {parent.country} page
-            </Link>
-            .
-          </p>
-        </section>
-      ) : null}
-
-      <section className="ha-block wrap">
-        <Head title="Services clients here choose most" more={{ label: "All services", href: "/services" }} />
-        <ul className="cx-links cx-links--related">
-          {services.map((p) => (
-            <li key={p.slug}>
-              <Link href={serviceUrl(p)} className="cx-link">
-                <span className="cx-link__t">{p.h1}</span>
-                <span className="cx-link__s">{p.forWho}</span>
-                <span className="cx-link__go" aria-hidden="true">
-                  →
-                </span>
-              </Link>
-            </li>
-          ))}
-        </ul>
-      </section>
-
-      {proof.length ? (
-        <section className="ha-block wrap">
-          <Head title={l.proofTitle ?? "Work we have delivered"} text={l.proofNote} more={{ label: "See all work", href: "/work" }} />
-          <div className="pa-grid">
-            {proof.map((p) => (
-              <ProjectCard key={p.slug} project={p} />
-            ))}
-          </div>
-        </section>
-      ) : null}
-
-      <section className="ha-block wrap">
-        <div className="ha-faq">
-          <Head title="Questions clients ask" />
-          <div data-fade="">
-            {l.faq.map((f) => (
-              <details key={f.q}>
-                <summary>{f.q}</summary>
-                <p>{f.a}</p>
-              </details>
-            ))}
+              <ul className="vt-trust" data-intro="" style={{ animationDelay: "0.4s" }}>
+                <li>
+                  <i aria-hidden="true" />
+                  Reply within one working day
+                </li>
+                <li>Fixed quote before work starts</li>
+                <li>Weekly preview links</li>
+              </ul>
+            </div>
+            <figure className="vt-mapcard" data-intro="" style={{ animationDelay: "0.25s" }}>
+              <figcaption className="vt-mapcard__top">
+                <span>{home ? "Our home base: Pakistan" : <>Pakistan <span aria-hidden="true">→</span> {label}</>}</span>
+                {route ? <small>{route.km.toLocaleString("en-GB")} km away</small> : <small>Where our team works</small>}
+              </figcaption>
+              <RouteMapVisual to={home ? null : { lat: l.pin.lat, lng: l.pin.lng }} label={label} id={`rm-${l.slug}`} />
+              <HeroClocks tz={l.tz} label={label} />
+            </figure>
           </div>
         </div>
       </section>
 
-      <section className="ha-block wrap pa-tight lx-foot">
-        {cities.length ? (
-          <div>
-            <p className="lx-kicker">Cities</p>
-            <ul className="lx-chips">
-              {cities.map((c) => (
-                <li key={c.slug}>
-                  <Link className="lx-chip" href={`/locations/${l.slug}/${c.slug}`}>
-                    <Flag code={c.isoCode} className="lx-flag" />
-                    {c.country}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </div>
-        ) : null}
-        <div>
-          <p className="lx-kicker">{parent ? `Other cities in ${parent.inText}` : "Other countries"}</p>
-          <ul className="lx-chips">
-            {siblings.map((x) => (
-              <li key={x.slug}>
-                <Link className="lx-chip" href={parent ? `/locations/${parent.slug}/${x.slug}` : `/locations/${x.slug}`}>
-                  <Flag code={x.isoCode} className="lx-flag" />
-                  {x.country}
+      <SectionNav items={nav} whatsapp={CONTACT.whatsapp} />
+
+      <section className="vt-sec vt-sec--first" id="services">
+        <div className="wrap">
+          <SecHead
+            kicker={`Services for ${l.inText}`}
+            title={`What clients in ${l.inText} hire us for`}
+          />
+          <ul className="vt-tiles">
+            {services.map((p, i) => (
+              <li key={p.slug} data-fade="" style={delay(i)}>
+                <Link href={serviceUrl(p)}>
+                  <span className="vt-ico">
+                    <AreaIcon slug={p.category} />
+                  </span>
+                  <h3>{p.h1}</h3>
+                  <span className="vt-go">
+                    View service <span aria-hidden="true">→</span>
+                  </span>
                 </Link>
               </li>
             ))}
           </ul>
-        </div>
-        <div>
-          <p className="lx-kicker">Sources</p>
-          <ul className="cx-sources">
-            {l.sources.map((s) => (
-              <li key={s.url}>
-                <a href={s.url} rel="noopener" target="_blank">
-                  {s.label}
-                </a>
-              </li>
-            ))}
-          </ul>
-          <p className="cx-updated">
-            Last reviewed{" "}
-            <time dateTime={l.updated}>
-              {new Date(`${l.updated}T00:00:00Z`).toLocaleDateString("en-GB", { day: "numeric", month: "long", year: "numeric", timeZone: "UTC" })}
-            </time>
-          </p>
+          <div className="vt-tiles__foot">
+            <span>Need something else? We cover web, mobile, ecommerce, AI, design and growth.</span>
+            <Link href="/services">
+              Browse all services <span aria-hidden="true">→</span>
+            </Link>
+          </div>
         </div>
       </section>
 
-      <ClosingCta title={l.closing} />
+      <section className="vt-sec" id="market">
+        <div className="wrap">
+          <div className="vt-split">
+            <div className="vt-split__side" data-fade="">
+              <p className="vt-kicker">The market</p>
+              <h2 className="vt-h2">What building for {l.inText} really means</h2>
+            </div>
+            <div className="vt-prose" data-fade="">
+              {l.market.map((p, i) => (
+                <p key={p.slice(0, 32)} className={i === 0 ? "vt-prose__first" : undefined}>
+                  {p}
+                </p>
+              ))}
+              {parent ? (
+                <p className="vt-muted">
+                  Payments, data rules and working across time zones are covered on our{" "}
+                  <Link className="link" href={`/locations/${parent.slug}`}>
+                    {parent.country} page
+                  </Link>
+                  .
+                </p>
+              ) : null}
+            </div>
+          </div>
+          {l.stats ? (
+            <ul className="vt-stats" aria-label="Key figures">
+              {l.stats.map((s, i) => {
+                const v = splitStat(s.value);
+                return (
+                  <li key={s.label} data-fade="" style={delay(i)}>
+                    <b>{v.big}</b>
+                    <span>{s.label}</span>
+                    {v.small ? <em>{v.small}</em> : null}
+                  </li>
+                );
+              })}
+            </ul>
+          ) : null}
+        </div>
+      </section>
+
+      <section className="vt-sec" id="needs">
+        <div className="wrap">
+          <SecHead kicker="What we build" title={`What businesses in ${l.inText} ask us for`} />
+          <ol className="vt-rows">
+            {l.needs.map((n, i) => (
+              <li key={n.title} data-fade="" style={delay(i)}>
+                <span className="vt-num">{String(i + 1).padStart(2, "0")}</span>
+                <div>
+                  <h3>{n.title}</h3>
+                  <p>{n.body}</p>
+                </div>
+              </li>
+            ))}
+          </ol>
+        </div>
+      </section>
+
+      <section className="vt-sec" id="together">
+        <div className="wrap vt-split vt-split--even">
+          <div className="vt-panel vt-panel--pad" data-fade="">
+            <p className="vt-kicker">Working hours</p>
+            <TimeOverlap tz={l.tz} label={label} place={l.inText} />
+          </div>
+          <div className="vt-split__side" data-fade="">
+            <p className="vt-kicker">Working together</p>
+            <h2 className="vt-h2">Working with us from {l.inText}</h2>
+            <IconList icon="check" items={l.working} />
+          </div>
+        </div>
+      </section>
+
+      {l.payments || l.rules ? (
+        <section className="vt-sec" id="pay">
+          <div className="wrap">
+            <SecHead
+              kicker={l.payments ? "Payments and rules" : "Rules"}
+              title={l.payments ? `Built for how ${l.inText} pays, and what the law expects` : "Rules we build around"}
+              text={l.rules ? "General information, not legal advice. Your lawyer has the final word on compliance." : undefined}
+            />
+            <div className={`vt-duo${l.payments && l.rules ? "" : " vt-duo--one"}`}>
+              {l.payments ? (
+                <div className="vt-panel vt-panel--pad" data-fade="">
+                  <h3 className="vt-h3">Payments customers expect</h3>
+                  <IconList icon="card" items={l.payments.map((p) => ({ title: p.name, body: p.body }))} />
+                </div>
+              ) : null}
+              {l.rules ? (
+                <div className="vt-panel vt-panel--pad" data-fade="">
+                  <h3 className="vt-h3">Rules we build around</h3>
+                  <IconList icon="shield" items={l.rules} />
+                </div>
+              ) : null}
+            </div>
+          </div>
+        </section>
+      ) : null}
+
+      {proof.length ? (
+        <section className="vt-sec" id="work">
+          <div className="wrap">
+            <SecHead
+              kicker="Our work"
+              title={l.proofTitle ?? "Work we have delivered"}
+              text={l.proofNote}
+              aside={
+                <Link className="vt-more" href="/work">
+                  See all work <span aria-hidden="true">→</span>
+                </Link>
+              }
+            />
+            <div className={`vt-cases vt-cases--${Math.min(proof.length, 3)}`}>
+              {proof.map((p) => (
+                <ProjectCard key={p.slug} project={p} />
+              ))}
+            </div>
+          </div>
+        </section>
+      ) : null}
+
+      <Faq
+        title={`Questions clients in ${l.inText} ask`}
+        items={l.faq}
+        note={
+          <>
+            {cities.length ? (
+              <div className="vt-cities">
+                <p className="vt-kicker">City pages</p>
+                <ul>
+                  {cities.map((c) => (
+                    <li key={c.slug}>
+                      <Link href={`/locations/${l.slug}/${c.slug}`}>
+                        {c.country} <span aria-hidden="true">→</span>
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            ) : null}
+            <p className="vt-updated">
+              Last reviewed <time dateTime={l.updated}>{formatDate(l.updated)}</time>
+            </p>
+          </>
+        }
+      />
+
+      <CtaCard title={l.closing} />
     </>
   );
 }

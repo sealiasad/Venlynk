@@ -8,7 +8,7 @@ import land110 from "world-atlas/land-110m.json";
 
 /**
  * Borderless world map for location pages: land only, no country borders,
- * with a route from Karachi to the client's city. The world is projected once
+ * with a route from Pakistan to the client's country or city. The world is projected once
  * and each page zooms in with the SVG viewBox, which keeps the land shapes exact.
  */
 
@@ -52,8 +52,8 @@ export function buildRouteMap(to: LatLng | null, aspect = 640 / 420): RouteMap {
   } else {
     const xs = pb ? [pa[0], pb[0]] : [pa[0]];
     const ys = pb ? [pa[1], pb[1]] : [pa[1]];
-    const span = Math.max(Math.max(...xs) - Math.min(...xs), Math.max(...ys) - Math.min(...ys), 260);
-    const padX = span * 0.75;
+    const span = Math.max(Math.max(...xs) - Math.min(...xs), Math.max(...ys) - Math.min(...ys), 200);
+    const padX = span * 0.7;
     x0 = Math.min(...xs) - padX;
     x1 = Math.max(...xs) + padX;
     y0 = Math.min(...ys) - padX * 0.7;
@@ -76,6 +76,6 @@ export function buildRouteMap(to: LatLng | null, aspect = 640 / 420): RouteMap {
     from: pa,
     to: pb,
     km,
-    right: cx + w * 0.22,
+    right: cx + w * 0.36,
   };
 }
