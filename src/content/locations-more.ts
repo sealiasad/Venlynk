@@ -18,6 +18,8 @@ export const MORE_COUNTRIES: LocationPage[] = [
   /* ------------------------------------------------------------------ */
   {
     slug: "usa",
+    tz: "America/New_York",
+    pin: { name: "New York", lat: 40.71, lng: -74.01 },
     country: "United States",
     inText: "the US",
     isoCode: "US",
@@ -91,6 +93,8 @@ export const MORE_COUNTRIES: LocationPage[] = [
   /* ------------------------------------------------------------------ */
   {
     slug: "canada",
+    tz: "America/Toronto",
+    pin: { name: "Toronto", lat: 43.65, lng: -79.38 },
     country: "Canada",
     inText: "Canada",
     isoCode: "CA",
@@ -165,6 +169,8 @@ export const MORE_COUNTRIES: LocationPage[] = [
   /* ------------------------------------------------------------------ */
   {
     slug: "australia",
+    tz: "Australia/Sydney",
+    pin: { name: "Sydney", lat: -33.87, lng: 151.21 },
     country: "Australia",
     inText: "Australia",
     isoCode: "AU",
@@ -238,6 +244,8 @@ export const MORE_COUNTRIES: LocationPage[] = [
   /* ------------------------------------------------------------------ */
   {
     slug: "netherlands",
+    tz: "Europe/Amsterdam",
+    pin: { name: "Amsterdam", lat: 52.37, lng: 4.9 },
     country: "Netherlands",
     inText: "the Netherlands",
     isoCode: "NL",
@@ -312,6 +320,8 @@ export const MORE_COUNTRIES: LocationPage[] = [
   /* ------------------------------------------------------------------ */
   {
     slug: "ireland",
+    tz: "Europe/Dublin",
+    pin: { name: "Dublin", lat: 53.35, lng: -6.26 },
     country: "Ireland",
     inText: "Ireland",
     isoCode: "IE",
@@ -382,6 +392,8 @@ export const MORE_COUNTRIES: LocationPage[] = [
   /* ------------------------------------------------------------------ */
   {
     slug: "singapore",
+    tz: "Asia/Singapore",
+    pin: { name: "Singapore", lat: 1.35, lng: 103.82 },
     country: "Singapore",
     inText: "Singapore",
     isoCode: "SG",
@@ -455,6 +467,8 @@ export const MORE_COUNTRIES: LocationPage[] = [
   /* ------------------------------------------------------------------ */
   {
     slug: "malaysia",
+    tz: "Asia/Kuala_Lumpur",
+    pin: { name: "Kuala Lumpur", lat: 3.14, lng: 101.69 },
     country: "Malaysia",
     inText: "Malaysia",
     isoCode: "MY",
@@ -529,6 +543,8 @@ export const MORE_COUNTRIES: LocationPage[] = [
   /* ------------------------------------------------------------------ */
   {
     slug: "turkey",
+    tz: "Europe/Istanbul",
+    pin: { name: "Istanbul", lat: 41.01, lng: 28.98 },
     country: "Turkey",
     inText: "Turkey",
     isoCode: "TR",
@@ -606,6 +622,8 @@ export const MORE_COUNTRIES: LocationPage[] = [
 export const CITY_PAGES: LocationPage[] = [
   {
     slug: "dubai",
+    tz: "Asia/Dubai",
+    pin: { name: "Dubai", lat: 25.2, lng: 55.27 },
     parent: "uae",
     country: "Dubai",
     inText: "Dubai",
@@ -664,6 +682,8 @@ export const CITY_PAGES: LocationPage[] = [
   },
   {
     slug: "london",
+    tz: "Europe/London",
+    pin: { name: "London", lat: 51.51, lng: -0.13 },
     parent: "uk",
     country: "London",
     inText: "London",
@@ -723,6 +743,8 @@ export const CITY_PAGES: LocationPage[] = [
   },
   {
     slug: "karachi",
+    tz: "Asia/Karachi",
+    pin: { name: "Karachi", lat: 24.86, lng: 67.01 },
     parent: "pakistan",
     country: "Karachi",
     inText: "Karachi",

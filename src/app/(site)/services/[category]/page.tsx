@@ -1,8 +1,9 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 
-import { ClosingCta, delay, Head, PageHead, ProjectCard } from "@/components/site/blocks";
+import { ClosingCta, delay, Head, ProjectCard } from "@/components/site/blocks";
 import { JsonLd } from "@/components/site/json-ld";
 import { CATEGORIES, getCategory } from "@/content/catalog";
 import { CONTACT } from "@/content/home";
@@ -87,16 +88,38 @@ export default async function CategoryPage({ params }: Props) {
         ]}
       />
 
-      <PageHead eyebrow={c.label} title={c.h1} lead={c.lead} crumb={{ label: "All services", href: "/services" }}>
-        <div className="ha-row-cta cx-hero-cta">
-          <Link className="ha-btn ha-btn--light" href="/contact">
-            Get a fixed quote
-          </Link>
-          <a className="ha-btn ha-btn--ghost" href={CONTACT.whatsapp} rel="noopener" target="_blank">
-            Message us on WhatsApp
-          </a>
+      <section className="pa-head pa-head--svc cx-head">
+        <div className="pa-head__bg" aria-hidden="true" data-parallax="0.3" />
+        <div className="wrap pa-svc-hero">
+          <div className="pa-head__inner">
+            <Link className="pa-crumb" href="/services" data-intro="">
+              <span aria-hidden="true">←</span> All services
+            </Link>
+            <p className="lx-eyebrow" data-intro="" style={{ animationDelay: "0.08s" }}>
+              {c.label} · {live.length} service{live.length === 1 ? "" : "s"}
+            </p>
+            <h1>
+              <span className="ha-line">
+                <span style={{ animationDelay: "0.15s" }}>{c.h1}</span>
+              </span>
+            </h1>
+            <p className="pa-head__lead" data-intro="" style={{ animationDelay: "0.35s" }}>
+              {c.lead}
+            </p>
+            <div className="ha-row-cta cx-hero-cta" data-intro="" style={{ animationDelay: "0.5s" }}>
+              <Link className="ha-btn ha-btn--light" href="/contact">
+                Get a fixed quote
+              </Link>
+              <a className="ha-btn ha-btn--ghost" href={CONTACT.whatsapp} rel="noopener" target="_blank">
+                WhatsApp us
+              </a>
+            </div>
+          </div>
+          <div className="pa-svc-hero__img" data-clip="">
+            <Image src={c.image} alt={c.imageAlt} fill priority sizes="(max-width: 900px) 92vw, 42vw" />
+          </div>
         </div>
-      </PageHead>
+      </section>
 
       <section className="ha-block wrap" aria-labelledby="cx-services">
         <h2 id="cx-services" className="sr-only">

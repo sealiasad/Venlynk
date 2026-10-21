@@ -188,16 +188,14 @@ export default async function ServicePage({ params }: Props) {
         <section className="ha-block wrap">
           <Head title={p.facts.title} text={p.facts.intro} />
           <div className="cx-facts" data-fade="">
-            <table>
-              <tbody>
-                {p.facts.items.map((f) => (
-                  <tr key={f.label}>
-                    <th scope="row">{f.label}</th>
-                    <td>{f.value}</td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
+            <ul className="lx-stats cx-factcards">
+              {p.facts.items.map((f, i) => (
+                <li key={f.label} className={`lx-stat${f.value.length > 30 ? " lx-stat--text" : ""}`} style={delay(i)}>
+                  <b>{f.value}</b>
+                  <span>{f.label}</span>
+                </li>
+              ))}
+            </ul>
             <p className="cx-facts__src">
               Source{p.facts.sources.length > 1 ? "s" : ""}:{" "}
               {p.facts.sources.map((s, i) => (

@@ -2,13 +2,14 @@ import { CATEGORIES } from "@/content/catalog";
 import { LOCATIONS } from "@/content/locations";
 import { getServicePage, serviceUrl } from "@/content/service-pages";
 
-export type MenuLink = { href: string; label: string };
+export type MenuLink = { href: string; label: string; code?: string };
 export type MenuCategory = {
   slug: string;
   label: string;
   short: string;
   lead: string;
   href: string;
+  image: string;
   groups: { title: string; links: MenuLink[] }[];
 };
 
@@ -23,6 +24,7 @@ export function buildMenu(): MenuCategory[] {
     short: c.short,
     lead: c.lead,
     href: `/services/${c.slug}`,
+    image: c.image,
     groups: c.groups
       .map((g) => ({
         title: g.title,
@@ -37,5 +39,5 @@ export function buildMenu(): MenuCategory[] {
 
 /** Country pages, shown as a row at the foot of the mega menu. */
 export function buildCountries(): MenuLink[] {
-  return LOCATIONS.map((l) => ({ href: `/locations/${l.slug}`, label: l.country }));
+  return LOCATIONS.map((l) => ({ href: `/locations/${l.slug}`, label: l.country, code: l.isoCode }));
 }

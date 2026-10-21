@@ -43,6 +43,10 @@ export type LocationPage = {
   isoCode: string;
   /** City pages only: the slug of the country page they sit under. */
   parent?: string;
+  /** IANA time zone of the main business city, for the working-hours overlap. */
+  tz: string;
+  /** Main business city, pinned on the route map from Karachi. */
+  pin: { name: string; lat: number; lng: number };
 };
 
 const UPDATED = "2026-10-21";
@@ -56,6 +60,8 @@ const CORE: LocationPage[] = [
   /* ------------------------------------------------------------------ */
   {
     slug: "uae",
+    tz: "Asia/Dubai",
+    pin: { name: "Dubai", lat: 25.2, lng: 55.27 },
     country: "United Arab Emirates",
     inText: "the UAE",
     isoCode: "AE",
@@ -129,6 +135,8 @@ const CORE: LocationPage[] = [
   /* ------------------------------------------------------------------ */
   {
     slug: "saudi-arabia",
+    tz: "Asia/Riyadh",
+    pin: { name: "Riyadh", lat: 24.71, lng: 46.68 },
     country: "Saudi Arabia",
     inText: "Saudi Arabia",
     isoCode: "SA",
@@ -203,6 +211,8 @@ const CORE: LocationPage[] = [
   /* ------------------------------------------------------------------ */
   {
     slug: "uk",
+    tz: "Europe/London",
+    pin: { name: "London", lat: 51.51, lng: -0.13 },
     country: "United Kingdom",
     inText: "the UK",
     isoCode: "GB",
@@ -276,6 +286,8 @@ const CORE: LocationPage[] = [
   /* ------------------------------------------------------------------ */
   {
     slug: "pakistan",
+    tz: "Asia/Karachi",
+    pin: { name: "Karachi", lat: 24.86, lng: 67.01 },
     country: "Pakistan",
     inText: "Pakistan",
     isoCode: "PK",

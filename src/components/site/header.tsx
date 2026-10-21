@@ -6,6 +6,7 @@ import { useEffect, useRef, useState } from "react";
 
 import { BrandMark } from "@/components/brand/brand-mark";
 import { CONTACT } from "@/content/home";
+import { MegaPanel, MobileServices } from "@/components/site/mega-menu";
 import type { MenuCategory, MenuLink } from "@/content/menu";
 import { NAV, SITE } from "@/content/site";
 
@@ -122,64 +123,7 @@ export function Header({ menu, countries = [] }: { menu: MenuCategory[]; countri
                         </svg>
                       </button>
                     </span>
-                    <div id="mega-menu" className="mega" data-open={mega ? "" : undefined}>
-                      <div className="mega__inner">
-                        <ul className="mega__rail" aria-label="Service areas">
-                          {menu.map((c) => (
-                            <li key={c.slug}>
-                              <Link
-                                href={c.href}
-                                className={`mega__tab${active === c.slug ? " is-active" : ""}`}
-                                onMouseEnter={() => setActive(c.slug)}
-                                onFocus={() => setActive(c.slug)}
-                              >
-                                <span>{c.label}</span>
-                                <small>{c.short}</small>
-                              </Link>
-                            </li>
-                          ))}
-                        </ul>
-                        {menu.map((c) => (
-                          <div key={c.slug} className="mega__panel" hidden={active !== c.slug}>
-                            <p className="mega__lead">{c.lead}</p>
-                            {c.groups.length ? (
-                              <div className="mega__groups">
-                                {c.groups.map((g) => (
-                                  <div key={g.title} className="mega__group">
-                                    <p className="mega__gtitle">{g.title}</p>
-                                    <ul>
-                                      {g.links.map((l) => (
-                                        <li key={l.href}>
-                                          <Link href={l.href}>{l.label}</Link>
-                                        </li>
-                                      ))}
-                                    </ul>
-                                  </div>
-                                ))}
-                              </div>
-                            ) : null}
-                            {countries.length ? (
-                              <p className="mega__countries">
-                                <span>Countries:</span>
-                                {countries.map((k) => (
-                                  <Link key={k.href} href={k.href}>
-                                    {k.label}
-                                  </Link>
-                                ))}
-                              </p>
-                            ) : null}
-                            <div className="mega__foot">
-                              <Link className="mega__all" href={c.href}>
-                                See everything in {c.label} <span aria-hidden="true">→</span>
-                              </Link>
-                              <Link className="mega__cta" href="/contact">
-                                Get a fixed quote
-                              </Link>
-                            </div>
-                          </div>
-                        ))}
-                      </div>
-                    </div>
+                    <MegaPanel menu={menu} countries={countries} active={active} onActive={setActive} open={mega} />
                   </li>
                 ) : (
                   <li key={item.href}>
@@ -223,15 +167,7 @@ export function Header({ menu, countries = [] }: { menu: MenuCategory[]; countri
                   <span className="menu__t">{item.label}</span>
                   <span className="menu__go" aria-hidden="true">→</span>
                 </Link>
-                {item.href === "/services" ? (
-                  <ul className="menu__sub" aria-label="Service areas">
-                    {menu.map((c) => (
-                      <li key={c.slug}>
-                        <Link href={c.href}>{c.label}</Link>
-                      </li>
-                    ))}
-                  </ul>
-                ) : null}
+                {item.href === "/services" ? <MobileServices menu={menu} countries={countries} /> : null}
               </li>
             ))}
           </ul>
