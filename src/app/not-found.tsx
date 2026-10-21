@@ -2,11 +2,12 @@ import Link from "next/link";
 
 import { Footer } from "@/components/site/footer";
 import { Header } from "@/components/site/header";
+import { buildMenu } from "@/content/menu";
 
 export default function NotFound() {
   return (
     <>
-      <Header />
+      <Header menu={buildMenu()} />
       <main id="main" className="ha">
         <section className="pa-head pa-head--nf">
           <div className="pa-head__bg" aria-hidden="true" />

@@ -3,7 +3,8 @@ import type { MetadataRoute } from "next";
 import { INDUSTRIES } from "@/content/industries";
 import { INSIGHTS } from "@/content/insights";
 import { PROJECTS } from "@/content/projects";
-import { SERVICES } from "@/content/services";
+import { CATEGORIES } from "@/content/catalog";
+import { SERVICE_PAGES, serviceUrl } from "@/content/service-pages";
 import { SITE } from "@/content/site";
 
 /**
@@ -23,7 +24,8 @@ export default function sitemap(): MetadataRoute.Sitemap {
     page("/contact"),
     page("/privacy"),
     ...PROJECTS.map((p) => page(`/work/${p.slug}`)),
-    ...SERVICES.map((s) => page(`/services/${s.slug}`)),
+    ...CATEGORIES.map((c) => page(`/services/${c.slug}`)),
+    ...SERVICE_PAGES.map((s) => ({ ...page(serviceUrl(s)), lastModified: new Date(s.updated) })),
     ...INDUSTRIES.map((i) => page(`/industries/${i.slug}`)),
     ...INSIGHTS.map((a) => ({ ...page(`/insights/${a.slug}`), lastModified: new Date(a.date) })),
   ];

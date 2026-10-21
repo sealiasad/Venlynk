@@ -10,6 +10,7 @@ import { INSIGHT_LINKS } from "@/content/seo";
 import { getService } from "@/content/services";
 import { SITE } from "@/content/site";
 import { absUrl, breadcrumbLd, pageMeta } from "@/lib/seo";
+import { LEGACY_SERVICE_URL } from "@/content/service-pages";
 
 type Props = { params: Promise<{ slug: string }> };
 
@@ -91,7 +92,7 @@ export default async function ArticlePage({ params }: Props) {
                 {related.map((svc, i) => (
                   <Fragment key={svc.slug}>
                     {i ? ", " : null}
-                    <Link className="link" href={`/services/${svc.slug}`}>
+                    <Link className="link" href={LEGACY_SERVICE_URL[svc.slug]}>
                       {svc.title}
                     </Link>
                   </Fragment>

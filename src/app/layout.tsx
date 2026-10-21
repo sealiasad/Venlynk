@@ -17,6 +17,7 @@ import "@/styles/pages.css";
 import "@/styles/home-a.css";
 import "@/styles/pages-a.css";
 import "@/styles/refine-a.css";
+import "@/styles/catalog.css";
 
 const grotesk = localFont({
   src: "../fonts/space-grotesk-latin-wght-normal.woff2",

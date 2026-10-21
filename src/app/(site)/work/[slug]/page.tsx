@@ -10,6 +10,7 @@ import { getNextProject, getProject, PROJECTS } from "@/content/projects";
 import { CASE_TYPE } from "@/content/seo";
 import { getPractice, getService } from "@/content/services";
 import { breadcrumbLd, pageMeta } from "@/lib/seo";
+import { LEGACY_SERVICE_URL } from "@/content/service-pages";
 
 type Props = { params: Promise<{ slug: string }> };
 
@@ -130,7 +131,7 @@ export default async function CasePage({ params }: Props) {
               if (!svc) return null;
               return (
                 <li key={s} data-fade="" style={delay(i)}>
-                  <Link href={`/services/${s}`}>
+                  <Link href={LEGACY_SERVICE_URL[s]}>
                     <span>{svc.title}</span>
                     <span aria-hidden="true">→</span>
                   </Link>

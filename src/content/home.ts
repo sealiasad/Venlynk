@@ -236,5 +236,6 @@ export const CAREER = [
 export const CONTACT = {
   phone: "+92 339 0019727",
   phoneHref: "tel:+923390019727",
+  whatsapp: "https://wa.me/923390019727",
   markets: ["United States", "United Kingdom", "UAE", "Australia", "Germany", "Pakistan"],
 };

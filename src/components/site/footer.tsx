@@ -5,7 +5,7 @@ import { BrandMark } from "@/components/brand/brand-mark";
 import { ConsentLink } from "@/components/site/consent-link";
 import { CopyEmail } from "@/components/site/copy-email";
 import { INDUSTRIES } from "@/content/industries";
-import { SERVICES } from "@/content/services";
+import { CATEGORIES } from "@/content/catalog";
 import { NAV, SITE, SOCIALS } from "@/content/site";
 import { SOCIAL_ICONS } from "@/content/social-icons";
 
@@ -78,9 +78,9 @@ export function Footer() {
             <div>
               <p className="label">Services</p>
               <ul>
-                {SERVICES.map((s) => (
-                  <li key={s.slug}>
-                    <Link href={`/services/${s.slug}`}>{s.title}</Link>
+                {CATEGORIES.map((c) => (
+                  <li key={c.slug}>
+                    <Link href={`/services/${c.slug}`}>{c.label}</Link>
                   </li>
                 ))}
               </ul>

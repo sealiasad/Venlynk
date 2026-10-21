@@ -6,15 +6,48 @@ import { useEffect, useRef, useState } from "react";
 
 import { BrandMark } from "@/components/brand/brand-mark";
 import { CONTACT } from "@/content/home";
+import type { MenuCategory } from "@/content/menu";
 import { NAV, SITE } from "@/content/site";
 
-export function Header() {
+export function Header({ menu }: { menu: MenuCategory[] }) {
   const pathname = usePathname();
   const [hidden, setHidden] = useState(false);
   const [solid, setSolid] = useState(false);
   const [open, setOpen] = useState(false);
   const lastY = useRef(0);
   const toggleRef = useRef<HTMLButtonElement>(null);
+  const [mega, setMega] = useState(false);
+  const [active, setActive] = useState(menu[0]?.slug ?? "");
+  const closeTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const megaRef = useRef<HTMLLIElement>(null);
+
+  const openMega = () => {
+    if (closeTimer.current) clearTimeout(closeTimer.current);
+    setMega(true);
+  };
+  const closeMegaSoon = () => {
+    if (closeTimer.current) clearTimeout(closeTimer.current);
+    closeTimer.current = setTimeout(() => setMega(false), 160);
+  };
+
+  useEffect(() => {
+    if (!mega) return;
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") {
+        setMega(false);
+        megaRef.current?.querySelector<HTMLElement>(".hdr__mega-btn")?.focus();
+      }
+    };
+    const onDown = (e: PointerEvent) => {
+      if (megaRef.current && !megaRef.current.contains(e.target as Node)) setMega(false);
+    };
+    window.addEventListener("keydown", onKey);
+    window.addEventListener("pointerdown", onDown);
+    return () => {
+      window.removeEventListener("keydown", onKey);
+      window.removeEventListener("pointerdown", onDown);
+    };
+  }, [mega]);
 
   useEffect(() => {
     const onScroll = () => {
@@ -33,6 +66,7 @@ export function Header() {
   if (lastPath !== pathname) {
     setLastPath(pathname);
     setOpen(false);
+    setMega(false);
   }
 
   useEffect(() => {
@@ -62,13 +96,89 @@ export function Header() {
           </Link>
           <nav className="hdr__nav" aria-label="Primary">
             <ul>
-              {NAV.map((item) => (
-                <li key={item.href}>
-                  <Link href={item.href} aria-current={current(item.href) ? "page" : undefined}>
-                    <span className="roll"><span>{item.label}</span></span>
-                  </Link>
-                </li>
-              ))}
+              {NAV.map((item) =>
+                item.href === "/services" ? (
+                  <li
+                    key={item.href}
+                    ref={megaRef}
+                    className={`hdr__has-mega${mega ? " is-open" : ""}`}
+                    onMouseEnter={openMega}
+                    onMouseLeave={closeMegaSoon}
+                  >
+                    <span className="hdr__mega-trigger">
+                      <Link href={item.href} aria-current={current(item.href) ? "page" : undefined}>
+                        <span className="roll"><span>{item.label}</span></span>
+                      </Link>
+                      <button
+                        type="button"
+                        className="hdr__mega-btn"
+                        aria-expanded={mega}
+                        aria-controls="mega-menu"
+                        onClick={() => (mega ? setMega(false) : openMega())}
+                      >
+                        <span className="sr-only">{mega ? "Close services menu" : "Open services menu"}</span>
+                        <svg viewBox="0 0 12 12" aria-hidden="true">
+                          <path d="M2.5 4.5 6 8l3.5-3.5" fill="none" stroke="currentColor" strokeWidth="1.5" />
+                        </svg>
+                      </button>
+                    </span>
+                    <div id="mega-menu" className="mega" data-open={mega ? "" : undefined}>
+                      <div className="mega__inner">
+                        <ul className="mega__rail" aria-label="Service areas">
+                          {menu.map((c) => (
+                            <li key={c.slug}>
+                              <Link
+                                href={c.href}
+                                className={`mega__tab${active === c.slug ? " is-active" : ""}`}
+                                onMouseEnter={() => setActive(c.slug)}
+                                onFocus={() => setActive(c.slug)}
+                              >
+                                <span>{c.label}</span>
+                                <small>{c.short}</small>
+                              </Link>
+                            </li>
+                          ))}
+                        </ul>
+                        {menu.map((c) => (
+                          <div key={c.slug} className="mega__panel" hidden={active !== c.slug}>
+                            <p className="mega__lead">{c.lead}</p>
+                            {c.groups.length ? (
+                              <div className="mega__groups">
+                                {c.groups.map((g) => (
+                                  <div key={g.title} className="mega__group">
+                                    <p className="mega__gtitle">{g.title}</p>
+                                    <ul>
+                                      {g.links.map((l) => (
+                                        <li key={l.href}>
+                                          <Link href={l.href}>{l.label}</Link>
+                                        </li>
+                                      ))}
+                                    </ul>
+                                  </div>
+                                ))}
+                              </div>
+                            ) : null}
+                            <div className="mega__foot">
+                              <Link className="mega__all" href={c.href}>
+                                See everything in {c.label} <span aria-hidden="true">→</span>
+                              </Link>
+                              <Link className="mega__cta" href="/contact">
+                                Get a fixed quote
+                              </Link>
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  </li>
+                ) : (
+                  <li key={item.href}>
+                    <Link href={item.href} aria-current={current(item.href) ? "page" : undefined}>
+                      <span className="roll"><span>{item.label}</span></span>
+                    </Link>
+                  </li>
+                ),
+              )}
             </ul>
           </nav>
           <Link className="hdr__cta" href="/contact">
@@ -103,6 +213,15 @@ export function Header() {
                   <span className="menu__t">{item.label}</span>
                   <span className="menu__go" aria-hidden="true">→</span>
                 </Link>
+                {item.href === "/services" ? (
+                  <ul className="menu__sub" aria-label="Service areas">
+                    {menu.map((c) => (
+                      <li key={c.slug}>
+                        <Link href={c.href}>{c.label}</Link>
+                      </li>
+                    ))}
+                  </ul>
+                ) : null}
               </li>
             ))}
           </ul>

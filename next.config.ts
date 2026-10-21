@@ -1,3 +1,4 @@
+import { LEGACY_SERVICE_URL } from "./src/content/service-pages";
 import type { NextConfig } from "next";
 
 const isDev = process.env.NODE_ENV === "development";
@@ -75,8 +76,18 @@ const nextConfig: NextConfig = {
   async redirects() {
     return [
       { source: "/approach", destination: "/about", permanent: true },
-      { source: "/services/ecommerce", destination: "/services/online-stores", permanent: true },
-      { source: "/services/business-systems", destination: "/services/ai", permanent: true },
+      // One address per page: www.venlynk.com moves permanently to venlynk.com.
+      {
+        source: "/:path*",
+        has: [{ type: "host", value: "www.venlynk.com" }],
+        destination: "https://venlynk.com/:path*",
+        permanent: true,
+      },
+      // Old one-level service pages now live under their category.
+      ...Object.entries(LEGACY_SERVICE_URL)
+        .filter(([slug]) => slug !== "growth")
+        .map(([slug, destination]) => ({ source: `/services/${slug}`, destination, permanent: true })),
+      { source: "/services/business-systems", destination: "/services/ai-agents/ai-agent-development", permanent: true },
       { source: "/work/:slug(platform|commerce|product|systems|mobile|mobility-apps|hello-my-ticket|global-rescue|helpjuice|grid-global-rescue)", destination: "/work", permanent: true },
       {
         source: "/insights/:slug(clarity-before-craft|systems-that-scale|conversion-with-character)",

@@ -15,9 +15,9 @@ export const PAGE_SEO = {
       "21 websites, online stores and mobile apps for clients in the UK, US, UAE, Australia, Germany and Pakistan, each labelled with how it was delivered.",
   },
   services: {
-    title: "Web, app, ecommerce and AI services",
+    title: "Website, App, Shopify and AI Development Services",
     description:
-      "Product and UX design, Next.js and WordPress websites, Flutter apps, Shopify stores, Odoo, AI automation, SEO and growth, from one team.",
+      "Websites, web apps, iOS and Android apps, Shopify and ecommerce, AI agents, UI/UX design and SEO, planned, built and improved by one team.",
   },
   industries: {
     title: "Industries we build for",

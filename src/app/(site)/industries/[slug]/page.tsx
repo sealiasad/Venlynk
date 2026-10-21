@@ -11,6 +11,7 @@ import { getProjectsBy } from "@/content/projects";
 import { insightsFor } from "@/content/seo";
 import { getService } from "@/content/services";
 import { breadcrumbLd, pageMeta } from "@/lib/seo";
+import { LEGACY_SERVICE_URL } from "@/content/service-pages";
 
 type Props = { params: Promise<{ slug: string }> };
 
@@ -77,7 +78,7 @@ export default async function IndustryPage({ params }: Props) {
             if (!svc) return null;
             return (
               <li key={s} data-fade="">
-                <Link href={`/services/${s}`} className="pa-svc-row">
+                <Link href={LEGACY_SERVICE_URL[s]} className="pa-svc-row">
                   <span className="pa-svc-row__n">{svc.n}</span>
                   <span className="pa-svc-row__t">
                     {svc.title}
