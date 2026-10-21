@@ -1,4 +1,6 @@
 import type { CategorySlug } from "@/content/catalog";
+import { BUILD_PAGES } from "@/content/service-pages-build";
+import { COMMERCE_PAGES } from "@/content/service-pages-commerce";
 
 /**
  * Written service pages. A service in catalog.ts becomes a live page, a menu
@@ -46,7 +48,7 @@ export type ServicePage = {
 const photo = (k: string) => `/images/services/${k}.webp`;
 const UPDATED = "2026-10-21";
 
-export const SERVICE_PAGES: ServicePage[] = [
+const CORE_PAGES: ServicePage[] = [
   /* ------------------------------------------------------------------ */
   {
     category: "websites",
@@ -1405,6 +1407,8 @@ export const SERVICE_PAGES: ServicePage[] = [
   },
 ];
 
+export const SERVICE_PAGES: ServicePage[] = [...CORE_PAGES, ...BUILD_PAGES, ...COMMERCE_PAGES];
+
 export function getServicePage(category: string, slug: string) {
   return SERVICE_PAGES.find((p) => p.category === category && p.slug === slug);
 }
@@ -1417,17 +1421,4 @@ export const isLive = (category: string, slug: string) => Boolean(getServicePage
 
 export const serviceUrl = (p: { category: string; slug: string }) => `/services/${p.category}/${p.slug}`;
 
-/** Old one-level service addresses and where they now live. Used for redirects and internal links. */
-export const LEGACY_SERVICE_URL: Record<string, string> = {
-  "product-design": "/services/design/ui-ux-design",
-  web: "/services/websites/custom-website-development",
-  mobile: "/services/mobile-apps/ios-android-app-development",
-  "online-stores": "/services/shopify/shopify-development",
-  etsy: "/services/ecommerce/etsy-store-setup",
-  odoo: "/services/ecommerce/odoo-implementation",
-  ai: "/services/ai-agents/ai-agent-development",
-  seo: "/services/growth/seo",
-  aeo: "/services/growth/aeo",
-  aso: "/services/growth/aso",
-  growth: "/services/growth/growth-support",
-};
+export { LEGACY_SERVICE_URL } from "@/content/legacy-services";

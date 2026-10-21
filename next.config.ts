@@ -1,4 +1,4 @@
-import { LEGACY_SERVICE_URL } from "./src/content/service-pages";
+import { LEGACY_SERVICE_URL } from "./src/content/legacy-services";
 import type { NextConfig } from "next";
 
 const isDev = process.env.NODE_ENV === "development";
