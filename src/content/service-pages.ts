@@ -357,7 +357,7 @@ export const SERVICE_PAGES: ServicePage[] = [
     timing:
       "Most stores are ready to launch within a few weeks. The biggest factor is how quickly product photos, prices and descriptions are ready, so we give you a simple checklist on day one.",
     price: {
-      headline: "Shopify store setup starts from $1,000, with a fixed quote after the first call.",
+      headline: "Every store gets a fixed quote after the first call, so you know the full cost before work starts.",
       factors: [
         "How many products and variants you have",
         "Whether a well-chosen theme is enough or you need a custom design",
