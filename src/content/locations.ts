@@ -6,6 +6,7 @@
 
 import { CITY_PAGES, MORE_COUNTRIES } from "@/content/locations-more";
 import { MORE_CITIES } from "@/content/locations-cities";
+import { GULF_COUNTRIES } from "@/content/locations-gulf";
 
 
 export type LocationPage = {
@@ -328,7 +329,7 @@ const CORE: LocationPage[] = [
   },
 ];
 
-export const LOCATIONS: LocationPage[] = [...CORE, ...MORE_COUNTRIES];
+export const LOCATIONS: LocationPage[] = [...CORE, ...MORE_COUNTRIES, ...GULF_COUNTRIES];
 export const CITIES: LocationPage[] = [...CITY_PAGES, ...MORE_CITIES];
 
 export function getLocation(slug: string) {

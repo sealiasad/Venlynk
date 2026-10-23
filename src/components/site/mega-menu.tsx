@@ -1,12 +1,12 @@
 "use client";
 
-import { AE, AU, CA, GB, IE, MY, NL, PK, SA, SG, TR, US } from "country-flag-icons/react/3x2";
+import { AE, AU, BH, CA, GB, IE, KW, MY, NL, OM, PK, QA, SA, SG, TR, US } from "country-flag-icons/react/3x2";
 import Image from "next/image";
 import Link from "next/link";
 
 import type { MenuCategory, MenuLink } from "@/content/menu";
 
-const FLAGS: Record<string, typeof AE> = { AE, AU, CA, GB, IE, MY, NL, PK, SA, SG, TR, US };
+const FLAGS: Record<string, typeof AE> = { AE, AU, BH, CA, GB, IE, KW, MY, NL, OM, PK, QA, SA, SG, TR, US };
 
 /** Simple line icons per service area. */
 const AREA_ICON: Record<string, string> = {

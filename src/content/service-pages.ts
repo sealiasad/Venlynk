@@ -2,6 +2,7 @@ import type { CategorySlug } from "@/content/catalog";
 import { BUILD_PAGES } from "@/content/service-pages-build";
 import { COMMERCE_PAGES } from "@/content/service-pages-commerce";
 import { WAVE3_PAGES } from "@/content/service-pages-wave3";
+import { WAVE4_PAGES } from "@/content/service-pages-wave4";
 
 /**
  * Written service pages. A service in catalog.ts becomes a live page, a menu
@@ -1396,7 +1397,7 @@ const CORE_PAGES: ServicePage[] = [
   },
 ];
 
-export const SERVICE_PAGES: ServicePage[] = [...CORE_PAGES, ...BUILD_PAGES, ...COMMERCE_PAGES, ...WAVE3_PAGES];
+export const SERVICE_PAGES: ServicePage[] = [...CORE_PAGES, ...BUILD_PAGES, ...COMMERCE_PAGES, ...WAVE3_PAGES, ...WAVE4_PAGES];
 
 export function getServicePage(category: string, slug: string) {
   return SERVICE_PAGES.find((p) => p.category === category && p.slug === slug);

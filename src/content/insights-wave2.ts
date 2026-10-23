@@ -3,6 +3,187 @@ import type { Insight } from "@/content/types";
 /** Buyer-question articles that support the service and location pages. */
 export const INSIGHTS_WAVE2: Insight[] = [
   {
+    slug: "noon-or-amazon-ae-for-new-sellers",
+    title: "noon or Amazon.ae: where should a new Gulf seller start?",
+    category: "Ecommerce",
+    date: "2026-10-23",
+    readingTime: "5 min",
+    excerpt:
+      "Both marketplaces reach millions of Gulf shoppers. The better first choice depends on your products, your margins and how much of the work you want to hand over.",
+    author: "Venlynk",
+    serviceLinks: ["ecommerce/noon-store-setup", "shopify/shopify-store-setup", "ecommerce/shipping-integration"],
+    content: [
+      {
+        type: "p",
+        text: "For brands entering the UAE or Saudi Arabia, marketplaces are often the fastest way to reach shoppers. The two names everyone asks about are noon and Amazon.ae. You can sell on both, but most sellers do better starting with one and doing it properly.",
+      },
+      { type: "h", text: "What they have in common" },
+      {
+        type: "list",
+        items: [
+          "Both expect a registered business. noon asks for a trade licence or commercial registration, and Amazon.ae asks for business, tax and bank details.",
+          "Both charge commission on each sale, which varies by category, plus fees for using their warehouses if you choose to.",
+          "Both reward complete, accurate listings: good titles, attributes, images and, increasingly, Arabic content.",
+        ],
+      },
+      { type: "h", text: "Where they differ in practice" },
+      {
+        type: "p",
+        text: "noon is a regional marketplace built around Gulf shoppers, with Arabic and English throughout and a strong presence in Saudi Arabia as well as the UAE. Amazon.ae is part of Amazon's global network, which matters if you already sell on Amazon elsewhere and know its tools and rules.",
+      },
+      {
+        type: "p",
+        text: "The categories that do well differ too, and so do promotions, delivery promises and how search ranks listings. Look at who already sells products like yours on each, at what price, and with how many reviews.",
+      },
+      { type: "h", text: "Questions that decide it" },
+      {
+        type: "list",
+        items: [
+          "Where are your customers: mostly UAE, or Saudi Arabia as well?",
+          "Do you already sell on Amazon in another country?",
+          "Can your margins carry marketplace commission and fulfilment fees?",
+          "Do you want to ship orders yourself, or hand storage and delivery to the marketplace?",
+          "Can you provide good Arabic listings, or will you need help?",
+        ],
+      },
+      {
+        type: "quote",
+        text: "A marketplace brings you shoppers. Your own store keeps them.",
+      },
+      { type: "h", text: "Do not skip your own store" },
+      {
+        type: "p",
+        text: "Marketplaces own the customer relationship. A simple Shopify store alongside them gives you a place to send repeat buyers, run your own offers and keep more margin. Plan from the start how stock and prices stay in step across channels, so you do not oversell.",
+      },
+      {
+        type: "p",
+        text: "If you are deciding now, we can review your products and margins and recommend where to start, then set up the account and listings in English and Arabic.",
+      },
+    ],
+  },
+  {
+    slug: "flutter-or-react-native",
+    title: "Flutter or React Native: how to choose for your app",
+    category: "Mobile",
+    date: "2026-10-23",
+    readingTime: "6 min",
+    excerpt:
+      "Both build iPhone and Android apps from one codebase, and both power big apps. The right choice depends more on your team and product than on benchmarks.",
+    author: "Venlynk",
+    serviceLinks: ["mobile-apps/flutter-app-development", "mobile-apps/react-native-app-development", "mobile-apps/ios-android-app-development"],
+    content: [
+      {
+        type: "p",
+        text: "We build in both, so we get asked this a lot. The honest answer: for most business apps, either will do the job well. The choice matters most for who will maintain the app and what else your team already builds.",
+      },
+      { type: "h", text: "What they share" },
+      {
+        type: "list",
+        items: [
+          "One codebase for iPhone and Android, which usually means lower cost than two native apps.",
+          "Mature tooling, large communities and plenty of ready-made packages.",
+          "Access to device features such as the camera, location and payments, with native code where needed.",
+        ],
+      },
+      { type: "h", text: "Choose Flutter when" },
+      {
+        type: "list",
+        items: [
+          "You want the app to look and behave the same on every device, down to the pixel.",
+          "The design is custom and animation-heavy rather than standard platform screens.",
+          "You do not have an existing React team whose skills you want to reuse.",
+        ],
+      },
+      { type: "h", text: "Choose React Native when" },
+      {
+        type: "list",
+        items: [
+          "Your team already builds your website or product in React and TypeScript.",
+          "You want to share logic, types or even some components with your web app.",
+          "You prefer the app to use each platform's own native controls.",
+        ],
+      },
+      { type: "h", text: "What matters more than the framework" },
+      {
+        type: "p",
+        text: "Most app problems we are asked to fix are not caused by the framework. They come from unclear scope, weak back-end design, no crash monitoring and no plan for updates after launch. A well-built Flutter app and a well-built React Native app both beat a poorly built native one.",
+      },
+      {
+        type: "quote",
+        text: "Pick the framework your future team can maintain, not the one that won last week's benchmark.",
+      },
+      {
+        type: "p",
+        text: "Tilawat, a Quran audio app we designed and built, runs on Flutter. For teams with a React web product, React Native is often the more natural fit. Tell us about your product and team and we will recommend one, with reasons.",
+      },
+    ],
+  },
+  {
+    slug: "how-to-brief-a-development-agency",
+    title: "How to brief a development agency (and get a quote you can trust)",
+    category: "Product design",
+    date: "2026-10-23",
+    readingTime: "5 min",
+    excerpt:
+      "A good brief does not need to be long. It needs to answer six questions, so agencies quote the same thing and you can compare them fairly.",
+    author: "Venlynk",
+    serviceLinks: ["web-apps/mvp-development", "design/ux-audit", "websites/custom-website-development"],
+    content: [
+      {
+        type: "p",
+        text: "Quotes for the same project can differ wildly because each agency imagines a different project. A short, clear brief fixes most of that. You do not need technical language. You need to answer these six questions.",
+      },
+      { type: "h", text: "1. What problem are you solving?" },
+      {
+        type: "p",
+        text: "Describe the business problem, not the solution. 'Customers keep calling to book, and we miss calls at night' is more useful than 'we need an app'. It lets the agency suggest the simplest thing that works.",
+      },
+      { type: "h", text: "2. Who will use it?" },
+      {
+        type: "p",
+        text: "List the kinds of users: customers, staff, admins, partners. Each one is a set of screens and permissions, so this is the biggest single factor in size.",
+      },
+      { type: "h", text: "3. What must the first version do?" },
+      {
+        type: "p",
+        text: "Split your list into must-have for launch and later. A focused first version launches sooner, costs less and teaches you what to build next.",
+      },
+      { type: "h", text: "4. What already exists?" },
+      {
+        type: "p",
+        text: "Mention current websites, apps, CRMs, payment providers, brand guidelines and designs. Connections to existing systems are a common source of surprise costs.",
+      },
+      { type: "h", text: "5. What does success look like?" },
+      {
+        type: "p",
+        text: "More bookings, fewer support calls, faster pages, a product investors can try. A measurable goal helps the agency make trade-offs on your behalf.",
+      },
+      { type: "h", text: "6. When, and roughly how much?" },
+      {
+        type: "p",
+        text: "Share your deadline and a rough budget range. It is not a negotiating weakness; it lets a good agency propose what fits instead of guessing.",
+      },
+      {
+        type: "quote",
+        text: "The best briefs are short, honest about constraints and clear about what success means.",
+      },
+      { type: "h", text: "When comparing quotes" },
+      {
+        type: "list",
+        items: [
+          "Check that each quote covers the same scope, and ask what is excluded.",
+          "Ask who will actually do the work, and whether you will meet them.",
+          "Ask how you will see progress during the project.",
+          "Ask what happens after launch: fixes, updates and support.",
+        ],
+      },
+      {
+        type: "p",
+        text: "If you would like a second opinion on your brief, send it to us. Every project we take on starts with a 30-minute call and a fixed quote.",
+      },
+    ],
+  },
+  {
     slug: "shopify-or-woocommerce-for-a-gulf-store",
     title: "Shopify or WooCommerce for a store in the UAE or Saudi Arabia?",
     category: "Ecommerce",
