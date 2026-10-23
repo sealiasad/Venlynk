@@ -359,7 +359,7 @@ export default function HomePage() {
       {/* Countries */}
       <section className="ha-block wrap" id="countries" data-node="">
         <Head
-          title={`One team, ${LOCATIONS.length} markets.`}
+          title="One team, working across time zones."
           text="We work from Pakistan: one to two hours from the Gulf, a morning overlap with the UK and Europe, and work that moves overnight for North America and Australia."
           more={{ label: "All locations", href: "/locations" }}
         />

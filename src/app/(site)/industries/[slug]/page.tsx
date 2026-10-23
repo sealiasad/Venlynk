@@ -73,13 +73,13 @@ export default async function IndustryPage({ params }: Props) {
       <section className="ha-block wrap">
         <Head title="Services we bring" more={{ label: "All services", href: "/services" }} />
         <ul className="pa-svc-rows">
-          {ind.services.map((s) => {
+          {ind.services.map((s, i) => {
             const svc = getService(s);
             if (!svc) return null;
             return (
               <li key={s} data-fade="">
                 <Link href={LEGACY_SERVICE_URL[s]} className="pa-svc-row">
-                  <span className="pa-svc-row__n">{svc.n}</span>
+                  <span className="pa-svc-row__n">{String(i + 1).padStart(2, "0")}</span>
                   <span className="pa-svc-row__t">
                     {svc.title}
                     <small>{svc.question}</small>

@@ -22,6 +22,8 @@ import "@/styles/locations.css";
 import "@/styles/mega.css";
 import "@/styles/templates.css";
 import "@/styles/i18n.css";
+import "@/styles/footer.css";
+import "@/styles/legal.css";
 
 const grotesk = localFont({
   src: "../fonts/space-grotesk-latin-wght-normal.woff2",

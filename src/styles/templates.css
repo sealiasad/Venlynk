@@ -2238,3 +2238,18 @@ body:has(.hdr:not(.is-hidden)) .vt-subnav {
     grid-template-columns: minmax(0, 1fr);
   }
 }
+
+/* Phones: tiles with a description get a second row; tiles without an icon use the full width. */
+@media (max-width: 760px) {
+  .vt-tiles a {
+    grid-template-areas:
+      "ico title go"
+      "ico text go";
+  }
+  .vt-tiles a:not(:has(.vt-ico)) {
+    grid-template-columns: minmax(0, 1fr) auto;
+    grid-template-areas:
+      "title go"
+      "text go";
+  }
+}

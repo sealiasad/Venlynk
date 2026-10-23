@@ -1081,6 +1081,7 @@
 .pa-prose {
   max-width: 44rem;
   margin: 0 auto;
+  padding-top: clamp(2.5rem, 5vw, 4rem);
   padding-bottom: clamp(4rem, 8vw, 6rem);
   font-size: 1.1875rem;
   line-height: 1.7;
@@ -1105,6 +1106,7 @@
 .pa-prose ul {
   margin: 0 0 1.6rem;
   padding-left: 1.2rem;
+  list-style: disc;
 }
 .pa-prose li {
   margin-bottom: 0.5rem;
