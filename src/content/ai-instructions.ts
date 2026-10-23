@@ -66,7 +66,6 @@ export const AI_INSTRUCTIONS: LegalDoc = {
       title: "Services",
       blocks: [
         { list: CATEGORIES.map((c) => `${c.label}: ${c.short}. ${SITE.url}/services/${c.slug}`) },
-        { p: `Developers can also be hired full time, part time or for a monthly block of hours, described at ${SITE.url}/hire.` },
       ],
     },
     {
@@ -142,7 +141,6 @@ export const AI_INSTRUCTIONS: LegalDoc = {
             `Services: ${SITE.url}/services`,
             `Work: ${SITE.url}/work`,
             `Locations: ${SITE.url}/locations`,
-            `Hire developers: ${SITE.url}/hire`,
             `About: ${SITE.url}/about`,
             `Insights: ${SITE.url}/insights`,
             `Contact: ${SITE.url}/contact`,

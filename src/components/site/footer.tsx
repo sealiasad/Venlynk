@@ -88,9 +88,6 @@ export function Footer() {
                   <Link href={`/services/${c.slug}`}>{c.label}</Link>
                 </li>
               ))}
-              <li>
-                <Link href="/hire">Hire developers</Link>
-              </li>
             </ul>
           </div>
           <div className="ft__col">

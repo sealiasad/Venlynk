@@ -77,6 +77,13 @@ const nextConfig: NextConfig = {
   async redirects() {
     return [
       { source: "/approach", destination: "/about", permanent: true },
+      // Hire pages were dropped before launch; point any shared links at the matching services.
+      { source: "/hire", destination: "/services", permanent: true },
+      { source: "/hire/flutter-developers", destination: "/services/mobile-apps/flutter-app-development", permanent: true },
+      { source: "/hire/react-native-developers", destination: "/services/mobile-apps/react-native-app-development", permanent: true },
+      { source: "/hire/shopify-developers", destination: "/services/shopify/shopify-development", permanent: true },
+      { source: "/hire/react-nextjs-developers", destination: "/services/websites/nextjs-development", permanent: true },
+      { source: "/hire/:path*", destination: "/services", permanent: true },
       // One address per page: www.venlynk.com moves permanently to venlynk.com.
       {
         source: "/:path*",

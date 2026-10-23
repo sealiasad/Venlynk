@@ -1,6 +1,5 @@
 import type { MetadataRoute } from "next";
 
-import { HIRE_PAGES } from "@/content/hire";
 import { INDUSTRIES } from "@/content/industries";
 import { INSIGHTS } from "@/content/insights";
 import { PROJECTS } from "@/content/projects";
@@ -48,8 +47,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
     ...LOCATIONS.map((l) => ({ ...page(`/locations/${l.slug}`), lastModified: new Date(l.updated) })),
     ...CITIES.map((c) => ({ ...page(`/locations/${c.parent}/${c.slug}`), lastModified: new Date(c.updated) })),
     ...SERVICE_PAGES.map((s) => ({ ...page(serviceUrl(s)), lastModified: new Date(s.updated) })),
-    page("/hire"),
-    ...HIRE_PAGES.map((h) => ({ ...page(`/hire/${h.slug}`), lastModified: new Date(h.updated) })),
     ...INDUSTRIES.map((i) => page(`/industries/${i.slug}`)),
     ...INSIGHTS.map((a) => ({ ...page(`/insights/${a.slug}`), lastModified: new Date(a.date) })),
     ...translated,
