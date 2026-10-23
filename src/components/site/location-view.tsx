@@ -191,7 +191,7 @@ export function LocationView({ l, parent }: { l: LocationPage; parent?: Location
               {l.stats.map((s, i) => {
                 const v = splitStat(s.value);
                 return (
-                  <li key={s.label} data-fade="" style={delay(i)}>
+                  <li key={s.label} className={v.big.length > 14 ? "vt-stats__text" : undefined} data-fade="" style={delay(i)}>
                     <b>{v.big}</b>
                     <span>{s.label}</span>
                     {v.small ? <em>{v.small}</em> : null}

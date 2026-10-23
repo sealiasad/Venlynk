@@ -111,6 +111,8 @@ export type Insight = {
   excerpt: string;
   author: string;
   content: InsightBlock[];
+  /** Live service pages this article supports, as "category/slug". */
+  serviceLinks?: string[];
 };
 
 export type Testimonial = {

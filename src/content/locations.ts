@@ -5,6 +5,7 @@
  */
 
 import { CITY_PAGES, MORE_COUNTRIES } from "@/content/locations-more";
+import { MORE_CITIES } from "@/content/locations-cities";
 
 
 export type LocationPage = {
@@ -103,7 +104,7 @@ const CORE: LocationPage[] = [
       "mobile-apps/ios-android-app-development",
       "shopify/shopify-store-setup",
       "ai-agents/whatsapp-ai-agents",
-      "design/ui-ux-design",
+      "ecommerce/noon-store-setup",
       "web-apps/custom-web-app-development",
     ],
     proof: ["dxb-off-plan", "servicemarket"],
@@ -173,7 +174,7 @@ const CORE: LocationPage[] = [
       "ai-agents/whatsapp-ai-agents",
       "websites/custom-website-development",
       "web-apps/custom-web-app-development",
-      "design/ui-ux-design",
+      "websites/multilingual-websites",
     ],
     proof: ["dxb-off-plan", "servicemarket"],
     proofNote: "Our Gulf work so far is for UAE clients: a Dubai property portal and an ongoing retainer with a home services marketplace.",
@@ -310,7 +311,7 @@ const CORE: LocationPage[] = [
       "ecommerce/woocommerce-development",
       "mobile-apps/ios-android-app-development",
       "ai-agents/whatsapp-ai-agents",
-      "websites/wordpress-development",
+      "ecommerce/daraz-store-setup",
       "web-apps/custom-web-app-development",
     ],
     proof: ["insaf-academy", "care-foundation", "the-jumbo-jump"],
@@ -328,7 +329,7 @@ const CORE: LocationPage[] = [
 ];
 
 export const LOCATIONS: LocationPage[] = [...CORE, ...MORE_COUNTRIES];
-export const CITIES: LocationPage[] = CITY_PAGES;
+export const CITIES: LocationPage[] = [...CITY_PAGES, ...MORE_CITIES];
 
 export function getLocation(slug: string) {
   return LOCATIONS.find((l) => l.slug === slug);

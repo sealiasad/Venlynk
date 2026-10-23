@@ -472,3 +472,124 @@
 .hdr .hdr__nav .mega__countries + .mega__foot {
   margin-top: 0;
 }
+
+/* ---------- Services overview: eight area cards in the homepage tones ---------- */
+.sv-areas {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1.25rem;
+}
+.sv-area {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  padding: clamp(2rem, 3vw, 2.5rem);
+  border-radius: 2rem;
+  border: 1px solid #23243a;
+  background: #14151c;
+  color: #f6f6f3;
+  scroll-margin-top: calc(var(--header-h) + 1rem);
+}
+.sv-area__head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.sv-area__ico {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 3rem;
+  height: 3rem;
+  border-radius: 0.9rem;
+  background: rgba(255, 255, 255, 0.1);
+}
+.sv-area__ico svg {
+  width: 1.4rem;
+  height: 1.4rem;
+}
+.sv-area__n {
+  font-size: 0.9375rem;
+  font-weight: 600;
+  opacity: 0.7;
+}
+.sv-area h2 {
+  margin: 0.75rem 0 0;
+  font-size: clamp(2rem, 3.2vw, 2.75rem);
+  font-weight: 600;
+  line-height: 1;
+  letter-spacing: -0.035em;
+}
+.sv-area h2 a {
+  color: inherit;
+}
+.sv-area__lead {
+  margin: 0;
+  font-size: 1.0625rem;
+  line-height: 1.55;
+  opacity: 0.8;
+}
+.sv-area__list {
+  margin: 0.5rem 0 0;
+  padding: 0;
+  list-style: none;
+}
+.sv-area__list a {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.8rem 0;
+  border-top: 1px solid rgba(246, 246, 243, 0.14);
+  color: inherit;
+  font-size: 1.0625rem;
+  font-weight: 500;
+}
+.sv-area__list a span {
+  opacity: 0.6;
+  transition: transform 0.25s, opacity 0.25s;
+}
+.sv-area__list a:hover span {
+  opacity: 1;
+  transform: translateX(3px);
+}
+.sv-area__all {
+  align-self: flex-start;
+  margin-top: auto;
+  padding: 0.4rem 0 2px;
+  border-bottom: 1px solid currentColor;
+  font-weight: 600;
+  color: inherit;
+}
+.sv-area--lav,
+.sv-area--paper {
+  color: #08080b;
+  border-color: transparent;
+}
+.sv-area--lav {
+  background: #dadbff;
+}
+.sv-area--paper {
+  background: #f6f6f3;
+}
+.sv-area--blue {
+  background: #4546f8;
+  border-color: #4546f8;
+}
+.sv-area--lav .sv-area__ico,
+.sv-area--paper .sv-area__ico {
+  background: rgba(69, 70, 248, 0.12);
+  color: #4546f8;
+}
+.sv-area--lav .sv-area__list a,
+.sv-area--paper .sv-area__list a {
+  border-top-color: rgba(8, 8, 11, 0.12);
+}
+.sv-area--lav .sv-area__all,
+.sv-area--paper .sv-area__all {
+  color: #4546f8;
+}
+@media (max-width: 860px) {
+  .sv-areas {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}

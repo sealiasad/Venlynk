@@ -8,6 +8,9 @@ import { HeroMark } from "@/components/home/a/hero-mark";
 import { HomeFx } from "@/components/home/a/home-fx";
 import { accent, delay, Head, ScrubText } from "@/components/site/blocks";
 import { JsonLd } from "@/components/site/json-ld";
+import { AreaIcon, FlagIcon } from "@/components/site/mega-menu";
+import { CATEGORIES } from "@/content/catalog";
+import { LOCATIONS } from "@/content/locations";
 import { PAGE_SEO } from "@/content/seo";
 import { SITE } from "@/content/site";
 import { pageMeta } from "@/lib/seo";
@@ -22,16 +25,15 @@ import {
   MARQUEE,
   NUMBERS,
   PLANS,
-  PRACTICES,
-  PROBLEMS,
   QUOTES,
   RESULTS,
   STEPS,
-  VALUES,
   WORK_ROWS,
 } from "@/content/home";
 
 export const metadata: Metadata = pageMeta({ ...PAGE_SEO.home, path: "/", absolute: true });
+
+const AREA_TONES = ["lav", "paper", "blue", "ink"] as const;
 
 export default function HomePage() {
   const heroText = HERO.lines.join(" ").replace(/\*/g, "");
@@ -117,51 +119,33 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Problems */}
-      <section className="ha-block wrap" id="problems" data-node="">
-        <Head title="Problems we fix" text="Sound familiar? Here is where we usually start." />
-        <div className="ha-grid3">
-          {PROBLEMS.map((p, i) => (
-            <div className={`ha-prob${p.highlight ? " ha-prob--hl" : ""}`} key={p.label} data-fade="" style={delay(i)}>
-              <div className="ha-prob__top">
-                <small>{p.label}</small>
-              </div>
-              <h3>{p.text}</h3>
-            </div>
-          ))}
-        </div>
-      </section>
-
-      {/* Practices */}
+      {/* Service areas */}
       <section className="ha-block wrap" id="services" data-node="">
         <Head
-          title="Three practices. One team."
+          title="Eight things we build. One team."
           text="The people who plan your product are the ones who build it and keep improving it."
           more={{ label: "All services", href: "/services" }}
         />
-        <div className="ha-grid3">
-          {PRACTICES.map((p, i) => (
+        <div className="ha-areas">
+          {CATEGORIES.map((c, i) => (
             <Link
-              className={`ha-card ha-card--${p.tone}`}
-              href={`/services#${["products", "commerce", "growth"][i]}`}
-              key={p.n}
+              className={`ha-card ha-card--${AREA_TONES[i % AREA_TONES.length]} ha-area`}
+              href={`/services/${c.slug}`}
+              key={c.slug}
               data-tilt=""
               data-fade=""
               style={delay(i)}
             >
               <span className="ha-card__shine" aria-hidden="true" />
               <span className="ha-card__top">
-                <span className="ha-card__n">{p.n}</span>
+                <span className="ha-area__ico">
+                  <AreaIcon slug={c.slug} />
+                </span>
                 <span className="ha-go" aria-hidden="true">↗</span>
               </span>
               <div>
-                <h3>{p.title}</h3>
-                <p>{p.sub}</p>
-                <ul className="ha-svc">
-                  {p.services.map((s) => (
-                    <li key={s}>{s}</li>
-                  ))}
-                </ul>
+                <h3>{c.label}</h3>
+                <p>{c.short}</p>
               </div>
             </Link>
           ))}
@@ -350,46 +334,45 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Testimonials */}
-      <section className="ha-block wrap" id="testimonials" data-node="">
-        <Head
-          title="What clients say"
-          text={
-            QUOTES.some((q) => q.placeholder)
-              ? "[Placeholder quotes. Replace with real client words and permission.]"
-              : "In their own words."
-          }
-        />
-        <div className="ha-quotes">
-          {QUOTES.map((q, i) => (
-            <figure className="ha-q" key={i} data-fade="" style={delay(i)}>
-              <blockquote>“{q.quote}”</blockquote>
-              <figcaption className="ha-who">
-                <i aria-hidden="true" />
-                <div>
-                  <b>{q.name}</b>
-                  <span>{q.role}</span>
-                </div>
-              </figcaption>
-            </figure>
-          ))}
-        </div>
-      </section>
+      {/* Testimonials: shown only once real, approved client quotes exist */}
+      {QUOTES.some((q) => !q.placeholder) ? (
+        <section className="ha-block wrap" id="testimonials" data-node="">
+          <Head title="What clients say" text="In their own words." />
+          <div className="ha-quotes">
+            {QUOTES.filter((q) => !q.placeholder).map((q, i) => (
+              <figure className="ha-q" key={q.name} data-fade="" style={delay(i)}>
+                <blockquote>“{q.quote}”</blockquote>
+                <figcaption className="ha-who">
+                  <i aria-hidden="true" />
+                  <div>
+                    <b>{q.name}</b>
+                    <span>{q.role}</span>
+                  </div>
+                </figcaption>
+              </figure>
+            ))}
+          </div>
+        </section>
+      ) : null}
 
-      {/* Values */}
-      <section className="ha-block wrap" id="values" data-node="">
-        <Head title="Why clients stay with us" text="Four habits we keep on every project, big or small." />
-        <div className="ha-vals">
-          {VALUES.map((v, i) => (
-            <div className="ha-val" key={v.title} data-fade="" style={delay(i)}>
-              <span aria-hidden="true">{String(i + 1).padStart(2, "0")}</span>
-              <div>
-                <h3>{v.title}</h3>
-                <p>{v.text}</p>
-              </div>
-            </div>
+      {/* Countries */}
+      <section className="ha-block wrap" id="countries" data-node="">
+        <Head
+          title="One team, twelve markets."
+          text="We work from Pakistan: one hour from the Gulf, a morning overlap with the UK and Europe, and work that moves overnight for North America and Australia."
+          more={{ label: "All locations", href: "/locations" }}
+        />
+        <ul className="ha-countries">
+          {LOCATIONS.map((l, i) => (
+            <li key={l.slug} data-fade="" style={delay(i, 40)}>
+              <Link href={`/locations/${l.slug}`}>
+                <FlagIcon code={l.isoCode} className="ha-countries__flag" />
+                <span>{l.country}</span>
+                <span className="ha-countries__go" aria-hidden="true">→</span>
+              </Link>
+            </li>
           ))}
-        </div>
+        </ul>
       </section>
 
       {/* FAQ */}

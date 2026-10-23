@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
-import Image from "next/image";
 import Link from "next/link";
 
 import { ClosingCta, delay, Head, PageHead } from "@/components/site/blocks";
+import { AreaIcon } from "@/components/site/mega-menu";
 import { CATEGORIES } from "@/content/catalog";
 import { PLANS, STEPS } from "@/content/home";
 import { PAGE_SEO } from "@/content/seo";
@@ -10,6 +10,8 @@ import { livePagesIn, serviceUrl } from "@/content/service-pages";
 import { pageMeta } from "@/lib/seo";
 
 export const metadata: Metadata = pageMeta({ ...PAGE_SEO.services, path: "/services" });
+
+const TONES = ["lav", "ink", "paper", "blue"] as const;
 
 export default function ServicesPage() {
   return (
@@ -28,50 +30,39 @@ export default function ServicesPage() {
         </nav>
       </PageHead>
 
-      {CATEGORIES.map((c, ci) => {
-        const live = livePagesIn(c.slug);
-        return (
-          <section className="ha-block wrap pa-practice" id={c.slug} key={c.slug}>
-            <Link href={`/services/${c.slug}`} className="pa-practice__card cx-cat-card" data-fade="">
-              <span className="pa-practice__top">
-                <span className="ha-card__n">{String(ci + 1).padStart(2, "0")}</span>
-              </span>
-              <h2>{c.label}</h2>
-              <p>{c.lead}</p>
-              <span className="ha-more">
-                See everything in {c.label} <span aria-hidden="true">→</span>
-              </span>
-            </Link>
-            <ul className="pa-svc-rows">
-              {live.map((s, i) => (
-                <li key={s.slug} data-fade="" style={delay(i)}>
-                  <Link href={serviceUrl(s)} className="pa-svc-row" data-cursor="Open">
-                    <span className="pa-svc-row__n">{String(i + 1).padStart(2, "0")}</span>
-                    <span className="pa-svc-row__t">
-                      {s.h1}
-                      <small>{s.forWho}</small>
-                    </span>
-                    <span className="pa-svc-row__img" aria-hidden="true">
-                      <Image src={s.image} alt="" fill sizes="140px" />
-                    </span>
-                  </Link>
-                </li>
-              ))}
-              {!live.length ? (
-                <li>
-                  <Link href={`/services/${c.slug}`} className="pa-svc-row">
-                    <span className="pa-svc-row__n">01</span>
-                    <span className="pa-svc-row__t">
-                      See every {c.label.toLowerCase()} service
-                      <small>{c.short}</small>
-                    </span>
-                  </Link>
-                </li>
-              ) : null}
-            </ul>
-          </section>
-        );
-      })}
+      <section className="ha-block wrap">
+        <div className="sv-areas">
+          {CATEGORIES.map((c, ci) => {
+            const live = livePagesIn(c.slug);
+            return (
+              <article className={`sv-area sv-area--${TONES[ci % TONES.length]}`} id={c.slug} key={c.slug} data-fade="" style={delay(ci % 2)}>
+                <header className="sv-area__head">
+                  <span className="sv-area__ico">
+                    <AreaIcon slug={c.slug} />
+                  </span>
+                  <span className="sv-area__n">{String(ci + 1).padStart(2, "0")}</span>
+                </header>
+                <h2>
+                  <Link href={`/services/${c.slug}`}>{c.label}</Link>
+                </h2>
+                <p className="sv-area__lead">{c.lead}</p>
+                <ul className="sv-area__list">
+                  {live.map((sp) => (
+                    <li key={sp.slug}>
+                      <Link href={serviceUrl(sp)}>
+                        {sp.h1} <span aria-hidden="true">→</span>
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
+                <Link className="sv-area__all" href={`/services/${c.slug}`}>
+                  See everything in {c.label} <span aria-hidden="true">→</span>
+                </Link>
+              </article>
+            );
+          })}
+        </div>
+      </section>
 
       <section className="ha-block wrap">
         <Head title="How we work" text="Five steps, the same on every project. You see progress at each one." />

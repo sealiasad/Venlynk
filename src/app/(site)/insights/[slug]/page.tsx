@@ -10,7 +10,7 @@ import { INSIGHT_LINKS } from "@/content/seo";
 import { getService } from "@/content/services";
 import { SITE } from "@/content/site";
 import { absUrl, breadcrumbLd, pageMeta } from "@/lib/seo";
-import { LEGACY_SERVICE_URL } from "@/content/service-pages";
+import { getServicePage, LEGACY_SERVICE_URL, serviceUrl } from "@/content/service-pages";
 
 type Props = { params: Promise<{ slug: string }> };
 
@@ -37,6 +37,12 @@ export default async function ArticlePage({ params }: Props) {
   if (!a) notFound();
   const others = INSIGHTS.filter((x) => x.slug !== a.slug);
   const related = (INSIGHT_LINKS[a.slug]?.services ?? []).map((x) => getService(x)).filter((x) => x !== undefined);
+  const serviceLinks = (a.serviceLinks ?? [])
+    .map((ref) => {
+      const [c, s] = ref.split("/");
+      return getServicePage(c, s);
+    })
+    .filter((x) => x !== undefined);
 
   const jsonLd = {
     "@context": "https://schema.org",
@@ -86,7 +92,20 @@ export default async function ArticlePage({ params }: Props) {
                 );
               return <p key={i}>{b.text}</p>;
             })}
-            {related.length ? (
+            {serviceLinks.length ? (
+              <p className="pa-prose__more">
+                Related services:{" "}
+                {serviceLinks.map((svc, i) => (
+                  <Fragment key={svc.slug}>
+                    {i ? ", " : null}
+                    <Link className="link" href={serviceUrl(svc)}>
+                      {svc.h1}
+                    </Link>
+                  </Fragment>
+                ))}
+                .
+              </p>
+            ) : related.length ? (
               <p className="pa-prose__more">
                 Related services:{" "}
                 {related.map((svc, i) => (

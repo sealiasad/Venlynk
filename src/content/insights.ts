@@ -1,6 +1,8 @@
+import { INSIGHTS_WAVE2 } from "@/content/insights-wave2";
 import type { Insight } from "@/content/types";
 
 export const INSIGHTS: Insight[] = [
+  ...INSIGHTS_WAVE2,
   {
     slug: "before-you-redesign-a-booking-flow",
     title: "Before you redesign a booking flow, measure these five things",

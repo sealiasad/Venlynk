@@ -181,10 +181,10 @@ export const VALUES = [
 
 export const HOME_FAQ = [
   { q: "How long does a project take?", a: "A discovery sprint takes two weeks. A full product build usually takes 6 to 16 weeks, depending on scope." },
-  { q: "Who do you work with?", a: "Startups, small businesses and established brands, with clients in the US, UK, UAE, Australia, Germany and Pakistan." },
+  { q: "Who do you work with?", a: "Startups, small businesses and established brands across the Gulf, the UK and Europe, North America, Australia and Asia." },
   { q: "What happens after launch?", a: "We can stay on as your monthly growth partner for releases, SEO, speed and support." },
   { q: "Can you work with our existing team?", a: "Yes. We have worked alongside in-house teams and other agencies, sharing code and design systems." },
-  { q: "How much does it cost?", a: "[Your pricing guidance, for example a starting range per engagement.]" },
+  { q: "How much does it cost?", a: "Every project gets a fixed quote after a 30 minute call, so you know the full cost before any work starts." },
 ];
 
 export const CLOSING = {
