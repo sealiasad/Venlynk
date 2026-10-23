@@ -1,8 +1,13 @@
 import Link from "next/link";
 import type { ReactNode } from "react";
 
-import { delay } from "@/components/site/blocks";
+import { delay, LABEL_TONE } from "@/components/site/blocks";
 import { CONTACT } from "@/content/home";
+import type { Project } from "@/content/types";
+import { LOCALE_META, ui, type Locale } from "@/i18n/ui";
+import Image from "next/image";
+
+import { HtmlLangClient } from "@/components/site/html-lang";
 
 /** Shared pieces for the country, category and service page templates (vt-*). */
 
@@ -33,15 +38,16 @@ export function SecHead({ kicker, title, text, id, aside }: { kicker: string; ti
   );
 }
 
-export function HeroCtas() {
+export function HeroCtas({ locale = "en" }: { locale?: Locale }) {
+  const t = ui(locale);
   return (
     <div className="vt-ctas">
       <Link className="vt-btn vt-btn--primary" href="/contact">
-        Get a fixed quote <span aria-hidden="true">→</span>
+        {t.getQuote} <span className="vt-arrow" aria-hidden="true">→</span>
       </Link>
       <a className="vt-btn vt-btn--ghost" href={CONTACT.whatsapp} rel="noopener" target="_blank">
         <WaIcon />
-        WhatsApp us
+        {t.whatsapp}
       </a>
     </div>
   );
@@ -89,19 +95,20 @@ export function IconList({ icon, items }: { icon: keyof typeof ICONS; items: { t
   );
 }
 
-export function Faq({ title, items, note }: { title: string; items: { q: string; a: string }[]; note?: ReactNode }) {
+export function Faq({ title, items, note, locale = "en" }: { title: string; items: { q: string; a: string }[]; note?: ReactNode; locale?: Locale }) {
+  const t = ui(locale);
   return (
     <section className="vt-sec" id="faq" aria-labelledby="faq-title">
       <div className="wrap vt-split">
         <div className="vt-split__side vt-faq__side" data-fade="">
-          <p className="vt-kicker">FAQ</p>
+          <p className="vt-kicker">{t.faqKicker}</p>
           <h2 className="vt-h2" id="faq-title">
             {title}
           </h2>
-          <p className="vt-muted">Something else on your mind? Ask us on WhatsApp.</p>
+          <p className="vt-muted">{t.askWhatsApp}</p>
           <a className="vt-btn vt-btn--ghost" href={CONTACT.whatsapp} rel="noopener" target="_blank">
             <WaIcon />
-            WhatsApp us
+            {t.whatsapp}
           </a>
           {note}
         </div>
@@ -121,21 +128,22 @@ export function Faq({ title, items, note }: { title: string; items: { q: string;
   );
 }
 
-export function CtaCard({ title, text }: { title: string; text?: string }) {
+export function CtaCard({ title, text, locale = "en" }: { title: string; text?: string; locale?: Locale }) {
+  const t = ui(locale);
   return (
     <section className="vt-cta-wrap" aria-labelledby="cta-title">
       <div className="wrap">
         <div className="vt-cta" data-fade="">
           <h2 id="cta-title">{title}</h2>
           <div>
-            <p>{text ?? "Tell us what you need. After a 30-minute call, you get a fixed quote for the whole project."}</p>
+            <p>{text ?? t.ctaText}</p>
             <div className="vt-ctas">
               <Link className="vt-btn vt-btn--light" href="/contact">
-                Get a fixed quote
+                {t.getQuote}
               </Link>
               <a className="vt-btn vt-btn--outline-light" href={CONTACT.whatsapp} rel="noopener" target="_blank">
                 <WaIcon />
-                WhatsApp us
+                {t.whatsapp}
               </a>
             </div>
           </div>
@@ -147,4 +155,57 @@ export function CtaCard({ title, text }: { title: string; text?: string }) {
 
 export function formatDate(iso: string) {
   return new Date(`${iso}T00:00:00Z`).toLocaleDateString("en-GB", { day: "numeric", month: "long", year: "numeric", timeZone: "UTC" });
+}
+
+/** Links to the same page in other languages. Only rendered when a translation exists. */
+export function LangSwitch({ current, links }: { current: Locale; links: Partial<Record<Locale, string>> }) {
+  const entries = (Object.entries(links) as [Locale, string][]).filter(([, href]) => href);
+  if (entries.length < 2) return null;
+  return (
+    <nav className="vt-lang" aria-label="Language">
+      {entries.map(([loc, href]) =>
+        loc === current ? (
+          <span key={loc} aria-current="true" lang={LOCALE_META[loc].bcp47}>
+            {LOCALE_META[loc].name}
+          </span>
+        ) : (
+          <Link key={loc} href={href} hrefLang={LOCALE_META[loc].bcp47} lang={LOCALE_META[loc].bcp47}>
+            {LOCALE_META[loc].name}
+          </Link>
+        ),
+      )}
+    </nav>
+  );
+}
+
+/** Project card with a translated engagement label, for translated pages. */
+export function LocalProjectCard({ project, locale }: { project: Project; locale: Locale }) {
+  const label = ui(locale).projectLabel[project.label] ?? project.label;
+  return (
+    <Link className="pa-card" href={`/work/${project.slug}`}>
+      <span className="pa-card__media">
+        {project.image ? (
+          <Image src={project.image} alt={project.imageAlt ?? project.client} fill sizes="(max-width: 760px) 100vw, 33vw" />
+        ) : null}
+      </span>
+      <span className="pa-card__body">
+        <span className="pa-card__top">
+          <span className="pa-card__name">{project.client}</span>
+          <span className={`pa-pill pa-pill--${LABEL_TONE[project.label]}`}>{label}</span>
+        </span>
+      </span>
+    </Link>
+  );
+}
+
+/** Sets <html lang> on translated pages. The shared root layout renders lang="en". */
+export function HtmlLang({ locale }: { locale: Locale }) {
+  if (locale === "en") return null;
+  const lang = LOCALE_META[locale].bcp47;
+  return (
+    <>
+      <script dangerouslySetInnerHTML={{ __html: `document.documentElement.lang=${JSON.stringify(lang)}` }} />
+      <HtmlLangClient lang={lang} />
+    </>
+  );
 }

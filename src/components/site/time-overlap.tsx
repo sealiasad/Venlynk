@@ -2,6 +2,8 @@
 
 import { useEffect, useState } from "react";
 
+import { ui, type Locale } from "@/i18n/ui";
+
 /** Offset of a time zone from UTC in minutes, at a given moment. */
 function offsetMinutes(tz: string, at: Date) {
   const parts = new Intl.DateTimeFormat("en-GB", {
@@ -64,7 +66,8 @@ export function gapLabel(diff: number) {
 }
 
 /** Three live readouts for the hero map card: their time, Pakistan time, shared hours. */
-export function HeroClocks({ tz, label }: { tz: string; label: string }) {
+export function HeroClocks({ tz, label, locale = "en" }: { tz: string; label: string; locale?: Locale }) {
+  const t = ui(locale);
   const now = useNow();
   const { diff, shared } = compare(tz, now ?? FALLBACK);
   const home = tz === PKT;
@@ -77,41 +80,30 @@ export function HeroClocks({ tz, label }: { tz: string; label: string }) {
         </div>
       )}
       <div>
-        <span>Pakistan</span>
+        <span>{t.pakistan}</span>
         <b suppressHydrationWarning>{now ? fmt(PKT, now) : "--:--"}</b>
       </div>
       <div>
-        <span>{home ? "Working hours" : shared > 0 || diff === 0 ? "Shared hours" : "Your morning"}</span>
-        <b className="vt-clocks__hl">{home ? "9:00 to 18:00" : diff === 0 ? "All day" : shared > 0 ? `${shared} a day` : "Work ready"}</b>
+        <span>{home ? t.workingHours : shared > 0 || diff === 0 ? t.sharedHours : t.yourMorning}</span>
+        <b className="vt-clocks__hl">{home ? t.nineToSix : diff === 0 ? t.allDay : shared > 0 ? t.aDay(shared) : t.workReady}</b>
       </div>
     </div>
   );
 }
 
 /** Both working days on one 24-hour axis in the client's time, shared hours highlighted. */
-export function TimeOverlap({ tz, label, place }: { tz: string; label: string; place?: string }) {
+export function TimeOverlap({ tz, label, place, locale = "en" }: { tz: string; label: string; place?: string; locale?: Locale }) {
+  const t = ui(locale);
   const now = useNow();
   const { diff, ours, shared } = compare(tz, now ?? FALLBACK);
   const pct = (h: number) => `${(h / 24) * 100}%`;
   const range = ([a, b]: [number, number]) => {
     const f = (h: number) => `${String(Math.floor(h % 24)).padStart(2, "0")}:${h % 1 ? "30" : "00"}`;
-    return `${f(a)} to ${f(b)}`;
+    return locale === "en" ? `${f(a)} to ${f(b)}` : `${f(a)}-${f(b)}`;
   };
 
-  const title =
-    diff === 0
-      ? "The same working day, every day"
-      : shared > 0
-        ? `${hours(shared)} of shared working time, every weekday`
-        : "Work moves forward while you sleep";
-  const sentence =
-    diff === 0
-      ? "We work in your time zone, so calls and quick questions fit your normal day."
-      : `Pakistan is ${hours(Math.abs(diff))} ${diff > 0 ? "ahead of" : "behind"} ${place ?? label} today. ${
-          shared > 0
-            ? "Calls and reviews fit inside the hours we share."
-            : "We agree a short daily overlap for calls and hand over at the end of each day."
-        }`;
+  const title = diff === 0 ? t.tovTitleSame : shared > 0 ? t.tovTitleShared(shared) : t.tovTitleNone;
+  const sentence = diff === 0 ? t.tovSame : t.tovSentence(Math.abs(diff), diff > 0, place ?? label, shared > 0);
 
   return (
     <div className="vt-tov">
@@ -123,12 +115,12 @@ export function TimeOverlap({ tz, label, place }: { tz: string; label: string; p
             <span>{label}</span>
             <div className="vt-tov__track">
               <i className="vt-tov__work" style={{ left: pct(OPEN), width: pct(CLOSE - OPEN) }}>
-                09:00 to 18:00
+                {locale === "en" ? "09:00 to 18:00" : "09:00-18:00"}
               </i>
             </div>
           </div>
           <div className="vt-tov__row">
-            <span>Pakistan</span>
+            <span>{t.pakistan}</span>
             <div className="vt-tov__track">
               {ours.map((s) => (
                 <i key={s[0]} className="vt-tov__work vt-tov__work--us" style={{ left: pct(s[0]), width: pct(s[1] - s[0]) }}>
@@ -147,7 +139,7 @@ export function TimeOverlap({ tz, label, place }: { tz: string; label: string; p
           </div>
         </div>
       )}
-      {diff === 0 ? null : <p className="vt-tov__note">9:00 to 18:00 in each country, shown in {label} time.</p>}
+      {diff === 0 ? null : <p className="vt-tov__note">{t.tovNote(label)}</p>}
     </div>
   );
 }

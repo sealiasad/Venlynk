@@ -13,7 +13,7 @@
   --line-dark: rgba(252, 252, 252, 0.14);
 
   /* Type */
-  --font-sans: var(--font-grotesk), "Helvetica Neue", Arial, sans-serif;
+  --font-sans: "Venlynk Ext", "Venlynk Arabic", var(--font-grotesk), "Helvetica Neue", Arial, sans-serif;
   --font-serif: var(--font-instrument), Georgia, serif;
   --t-mega: clamp(3.4rem, 10.4vw, 11rem);
   --t-display: clamp(2.9rem, 7.4vw, 7.6rem);

@@ -15,6 +15,10 @@ type PageMetaInput = {
   /** Use the title as is, without the site template. */
   absolute?: boolean;
   publishedTime?: string;
+  /** hreflang alternates, e.g. { en: "/x", ar: "/ar/x", "x-default": "/x" }. */
+  languages?: Record<string, string>;
+  /** Open Graph locale, e.g. "ar_AE". Defaults to en_GB. */
+  ogLocale?: string;
 };
 
 const DEFAULT_IMAGE = "/opengraph-image";
@@ -32,17 +36,19 @@ export function pageMeta({
   type = "website",
   absolute = false,
   publishedTime,
+  languages,
+  ogLocale = "en_GB",
 }: PageMetaInput): Metadata {
   const fullTitle = absolute ? title : `${title} | ${SITE.name}`;
   const images = [{ url: image ?? DEFAULT_IMAGE, alt: imageAlt ?? fullTitle }];
   return {
     title: absolute ? { absolute: title } : title,
     description,
-    alternates: { canonical: path },
+    alternates: { canonical: path, ...(languages && Object.keys(languages).length > 2 ? { languages } : {}) },
     openGraph: {
       type,
       siteName: SITE.name,
-      locale: "en_GB",
+      locale: ogLocale,
       url: path,
       title: fullTitle,
       description,

@@ -13,6 +13,7 @@ import { CATEGORIES } from "@/content/catalog";
 import { LOCATIONS } from "@/content/locations";
 import { PAGE_SEO } from "@/content/seo";
 import { SITE } from "@/content/site";
+import { alternatesFor } from "@/i18n/registry";
 import { pageMeta } from "@/lib/seo";
 import {
   BRANDS,
@@ -31,7 +32,7 @@ import {
   WORK_ROWS,
 } from "@/content/home";
 
-export const metadata: Metadata = pageMeta({ ...PAGE_SEO.home, path: "/", absolute: true });
+export const metadata: Metadata = pageMeta({ ...PAGE_SEO.home, path: "/", absolute: true, languages: alternatesFor("/") });
 
 const AREA_TONES = ["lav", "paper", "blue", "ink"] as const;
 

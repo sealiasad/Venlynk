@@ -3,11 +3,14 @@
 import Link from "next/link";
 import { useEffect, useState } from "react";
 
+import { ui, type Locale } from "@/i18n/ui";
+
 /**
  * In-page section links that stay under the header while scrolling, with the
  * current section underlined. On phones it becomes a sticky quote bar instead.
  */
-export function SectionNav({ items, whatsapp }: { items: { id: string; label: string }[]; whatsapp: string }) {
+export function SectionNav({ items, whatsapp, locale = "en" }: { items: { id: string; label: string }[]; whatsapp: string; locale?: Locale }) {
+  const t = ui(locale);
   const [active, setActive] = useState<string | null>(null);
   const [bar, setBar] = useState(false);
 
@@ -39,7 +42,7 @@ export function SectionNav({ items, whatsapp }: { items: { id: string; label: st
 
   return (
     <>
-      <nav className="vt-subnav" aria-label="On this page">
+      <nav className="vt-subnav" aria-label={t.onThisPage}>
         <div className="wrap vt-subnav__in">
           <ul>
             {items.map((i) => (
@@ -51,15 +54,15 @@ export function SectionNav({ items, whatsapp }: { items: { id: string; label: st
             ))}
           </ul>
           <Link className="vt-btn vt-btn--primary vt-btn--sm" href="/contact">
-            Get a fixed quote
+            {t.getQuote}
           </Link>
         </div>
       </nav>
       <div className={`vt-mbar${bar ? " is-on" : ""}`}>
         <Link className="vt-btn vt-btn--primary" href="/contact">
-          Get a fixed quote
+          {t.getQuote}
         </Link>
-        <a className="vt-btn vt-btn--ghost vt-mbar__wa" href={whatsapp} rel="noopener" target="_blank" aria-label="WhatsApp us">
+        <a className="vt-btn vt-btn--ghost vt-mbar__wa" href={whatsapp} rel="noopener" target="_blank" aria-label={t.whatsapp}>
           <svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true">
             <path d="M4 20l1.3-4A8 8 0 1 1 8 18.7L4 20Z" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinejoin="round" />
           </svg>

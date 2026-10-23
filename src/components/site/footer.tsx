@@ -128,6 +128,12 @@ export function Footer() {
               Privacy
             </Link>
             <ConsentLink />
+            <Link href="/ar" className="link" hrefLang="ar" lang="ar">
+              العربية
+            </Link>
+            <Link href="/tr" className="link" hrefLang="tr" lang="tr">
+              Türkçe
+            </Link>
             <a href="#top" className="link">
               Back to top
             </a>

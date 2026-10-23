@@ -185,7 +185,7 @@ export function ToolTiles({ tools }: { tools: string[] }) {
   );
 }
 
-const LABEL_TONE: Record<Engagement, string> = {
+export const LABEL_TONE: Record<Engagement, string> = {
   "Delivered by Venlynk": "brand",
   "Ongoing retainer": "lav",
   "Collaborative engagement": "line",

@@ -1,7 +1,7 @@
 import { buildRouteMap, type LatLng } from "@/lib/route-map";
 
 /** Borderless land map with a route from Pakistan to the client's country or city. */
-export function RouteMapVisual({ to, label, id }: { to: LatLng | null; label: string; id: string }) {
+export function RouteMapVisual({ to, label, id, fromLabel = "Pakistan" }: { to: LatLng | null; label: string; id: string; fromLabel?: string }) {
   const m = buildRouteMap(to);
   const k = m.k;
   // Labels sit on the outer side of each pin so they never cross the route.
@@ -17,7 +17,8 @@ export function RouteMapVisual({ to, label, id }: { to: LatLng | null; label: st
       viewBox={m.viewBox}
       preserveAspectRatio="xMidYMid slice"
       role="img"
-      aria-label={m.to ? `Route from Pakistan to ${label}, about ${m.km.toLocaleString("en-GB")} km` : "Pakistan"}
+      aria-label={m.to ? `${fromLabel} → ${label}, ${m.km.toLocaleString("en-GB")} km` : fromLabel}
+      direction="ltr"
     >
       <defs>
         <pattern id={`${id}-dots`} width={dot} height={dot} patternUnits="userSpaceOnUse">
@@ -55,7 +56,7 @@ export function RouteMapVisual({ to, label, id }: { to: LatLng | null; label: st
         <circle className="rmap__pulse" cx={m.from[0]} cy={m.from[1]} r={6 * k} fill="none" stroke="#a5a6ff" strokeWidth="1.5" vectorEffect="non-scaling-stroke" />
         <circle cx={m.from[0]} cy={m.from[1]} r={5 * k} fill="#f6f6f3" />
         <text x={m.from[0] + dx(fromSide)} y={m.from[1] + 5 * k} textAnchor={fromSide} className="rmap__label" style={{ fontSize: 16 * k, strokeWidth: 4 * k }}>
-          Pakistan
+          {fromLabel}
         </text>
       </g>
       {m.to ? (
