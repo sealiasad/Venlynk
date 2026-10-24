@@ -114,9 +114,9 @@ export const FOUNDER = {
   bio: "Ali has spent more than 14 years building for the web. He started on brand websites at Creative Chaos, moved into product engineering at VentureDive, then led UX and front end at Dawaai.pk and Global Rescue. Today he leads engineering teams and brings AI and agentic workflows into how software gets planned, built and shipped.",
   skills: ["Engineering leadership", "AI and agentic systems", "React and Next.js", "Flutter and React Native", "UX research"],
   linkedin: "https://www.linkedin.com/in/iali-asad",
-  /** Replace with the portrait from the photo shoot. */
-  photo: null as string | null,
-  /** Small round photo used on the consultation pill. Swap after the shoot. */
+  /** Founder portrait, used on the homepage and About page. */
+  photo: "/images/team/ali-asad.webp" as string | null,
+  /** Small round photo used on the consultation pill. */
   avatar: "/images/team/ali-avatar.webp",
 };
 

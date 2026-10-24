@@ -24,7 +24,7 @@ export default function AboutPage() {
           description: FOUNDER.bio,
           knowsAbout: FOUNDER.skills,
           sameAs: [FOUNDER.linkedin],
-          image: absUrl(FOUNDER.avatar),
+          image: absUrl(FOUNDER.photo ?? FOUNDER.avatar),
         }}
       />
       <PageHead eyebrow="About Venlynk" title={ABOUT.title} lead={ABOUT.lead} />
@@ -51,7 +51,7 @@ export default function AboutPage() {
         <div className="ha-founder">
           <div className="ha-fcard" data-fade="">
             {FOUNDER.photo ? (
-              <Image src={FOUNDER.photo} alt={FOUNDER.name} fill sizes="(max-width: 900px) 100vw, 50vw" />
+              <Image src={FOUNDER.photo} alt={`${FOUNDER.name}, ${FOUNDER.role} of Venlynk`} fill sizes="(max-width: 900px) 100vw, 50vw" />
             ) : (
               <>
                 <BrandMark />

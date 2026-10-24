@@ -95,7 +95,7 @@ export function ConsultPill({
         </span>
         <span className="ha-consult__text">
           <b>
-            Talk to {name.split(" ").pop()}
+            Talk to {name.split(" ")[0]}
             <span className="ha-consult__role">, the founder</span>
           </b>
           <span>Free 30 minute consultation call</span>

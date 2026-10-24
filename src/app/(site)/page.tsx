@@ -238,7 +238,7 @@ export default function HomePage() {
         <div className="ha-founder">
           <div className="ha-fcard" data-fade="">
             {FOUNDER.photo ? (
-              <Image src={FOUNDER.photo} alt={FOUNDER.name} fill sizes="(max-width: 900px) 100vw, 50vw" />
+              <Image src={FOUNDER.photo} alt={`${FOUNDER.name}, ${FOUNDER.role} of Venlynk`} fill sizes="(max-width: 900px) 100vw, 50vw" />
             ) : (
               <>
                 <BrandMark />
