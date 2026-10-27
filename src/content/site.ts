@@ -40,7 +40,7 @@ export const SOCIALS = [
 
 /** Team track record: the people behind Venlynk, across their careers. */
 export const STATS = [
-  { value: 14, suffix: "+", label: "years building for the web" },
+  { value: 10, suffix: "+", label: "years building for the web" },
   { value: 80, suffix: "+", label: "projects shipped by the team" },
   { value: 25, suffix: "+", label: "brands partnered with" },
   { value: 6, suffix: "", label: "markets served, from London to Dubai" },

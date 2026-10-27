@@ -111,7 +111,7 @@ export const INDUSTRIES = [
 export const FOUNDER = {
   role: "Founder and CEO",
   name: "Ali Asad",
-  bio: "Ali has spent more than 14 years building for the web. He started on brand websites at Creative Chaos, moved into product engineering at VentureDive, then led UX and front end at Dawaai.pk and Global Rescue. Today he leads engineering teams and brings AI and agentic workflows into how software gets planned, built and shipped.",
+  bio: "Ali has spent more than 10 years building for the web. He started on brand websites at Creative Chaos, moved into product engineering at VentureDive, then led UX and front end at Dawaai.pk and Global Rescue. Today he leads engineering teams and brings AI and agentic workflows into how software gets planned, built and shipped.",
   skills: ["Engineering leadership", "AI and agentic systems", "React and Next.js", "Flutter and React Native", "UX research"],
   linkedin: "https://www.linkedin.com/in/iali-asad",
   /** Founder portrait, used on the homepage and About page. */
@@ -121,7 +121,7 @@ export const FOUNDER = {
 };
 
 export const NUMBERS = [
-  { value: 14, suffix: "+", label: "years building for the web" },
+  { value: 10, suffix: "+", label: "years building for the web" },
   { value: 80, suffix: "+", label: "projects shipped by the team" },
   { value: 25, suffix: "+", label: "brands partnered with" },
   { value: 6, suffix: "", label: "countries, from London to Dubai" },
